@@ -57,5 +57,9 @@ public class Candidat {
   @OneToMany(mappedBy = "candidat")
   private List<Diplome> diplomes;
 
+  //experiences owned by the candidate, a candidate can have many experiences or one experience
+  @OneToMany(mappedBy = "candidat")
+  private List<ExperienceProf> experiences;
+
 
 }
