@@ -3,7 +3,6 @@ package ensate.ma.SpringAPI.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 public class Candidat {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,14 +40,6 @@ public class Candidat {
   private String CvScanne;
   private String CinScanne;
 
-  public Candidat(Long id, String nom, String prenom, String email, String CIN, String telephone) {
-    this.id = id;
-    this.nom = nom;
-    this.prenom = prenom;
-    this.email = email;
-    this.CIN = CIN;
-    this.telephone = telephone;
-  }
 
   //langues spoken by the candidate, a condidat can speak many languages or one language
   @OneToMany(mappedBy = "candidat")

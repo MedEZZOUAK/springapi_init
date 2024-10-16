@@ -42,6 +42,11 @@ public class ProfesseurController {
     return professeurService.findAllProfesseurs();
   }
 
+  @GetMapping ("/test")
+  public ResponseEntity<String> testsecurity() {
+    return ResponseEntity.ok("Security is working");
+  }
+
 
 
 
