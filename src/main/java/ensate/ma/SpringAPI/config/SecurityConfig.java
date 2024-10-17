@@ -26,6 +26,9 @@ public class SecurityConfig {
       .authorizeHttpRequests()
       .requestMatchers("/api/v1/auth/**")
       .permitAll()
+      .requestMatchers("/Professeur/**").hasRole("Professeur")
+      .requestMatchers("/CED/**").hasRole("CED")
+      .requestMatchers("/Candidat/**").hasRole("Candidat")
       .anyRequest()
       .authenticated()
       .and()
@@ -34,13 +37,6 @@ public class SecurityConfig {
       .and()
       .authenticationProvider(authenticationProvider)
       .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
-
-
-
-
-
-
-
     return http.build();
   }
 
