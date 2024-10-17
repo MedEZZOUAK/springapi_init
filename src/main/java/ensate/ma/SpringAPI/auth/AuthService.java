@@ -1,6 +1,8 @@
 package ensate.ma.SpringAPI.auth;
 
 
+import ensate.ma.SpringAPI.Exception.EmailAlreadyExistsException;
+import ensate.ma.SpringAPI.Exception.InvalidCredentialsException;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
 import ensate.ma.SpringAPI.config.JwtService;
@@ -24,6 +26,10 @@ public class AuthService {
 
 
   public AuthenticationResponse register(RegisterRequest registerRequest) {
+    // Check if the email already exists : if it does, throw an exception
+    if (loginRepo.findByEmail(registerRequest.getEmail()).isPresent()) {
+      throw new EmailAlreadyExistsException("Email already exists");
+    }
     var candidat = Candidat.builder()
       .nom(registerRequest.getNom())
       .prenom(registerRequest.getPrenom())
@@ -45,11 +51,15 @@ public class AuthService {
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-    authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
-    );
+    try {
+      authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
+      );
+    }catch (Exception e) {
+      throw new InvalidCredentialsException("Invalid credentials");
+    }
     var user = loginRepo.findByEmail(authenticationRequest.getEmail())
-      .orElseThrow(() -> new RuntimeException("User not found"));
+      .orElseThrow(() -> new InvalidCredentialsException("User not found"));
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder()
       .Token(jwtToken)
