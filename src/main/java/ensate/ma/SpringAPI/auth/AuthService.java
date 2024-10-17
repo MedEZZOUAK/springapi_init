@@ -9,6 +9,7 @@ import ensate.ma.SpringAPI.config.JwtService;
 import ensate.ma.SpringAPI.user.Role;
 import ensate.ma.SpringAPI.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import ensate.ma.SpringAPI.Repository.loginRepo;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
   private final loginRepo loginRepo;
   private final PasswordEncoder passwordEncoder;
@@ -30,6 +32,7 @@ public class AuthService {
     if (loginRepo.findByEmail(registerRequest.getEmail()).isPresent()) {
       throw new EmailAlreadyExistsException("Email already exists");
     }
+    log.info("Register request: {}", registerRequest.getCIN());
     var candidat = Candidat.builder()
       .nom(registerRequest.getNom())
       .prenom(registerRequest.getPrenom())
@@ -37,6 +40,7 @@ public class AuthService {
       .telephone(registerRequest.getTelephone())
       .email(registerRequest.getEmail())
       .build();
+    log.info("New candidat: {}", candidat);
     candidatRepo.save(candidat);
     var user = User.builder()
       .email(registerRequest.getEmail())
@@ -47,6 +51,7 @@ public class AuthService {
     var jwtToken= jwtService.generateToken(user);
     return AuthenticationResponse.builder()
       .Token(jwtToken)
+      .role(user.getRole())
       .build();
   }
 
