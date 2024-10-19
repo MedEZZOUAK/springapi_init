@@ -26,4 +26,8 @@ public class AdminController {
         cedService.AddCed(ced);
         return "Ced added successfully";
     }
+    // todo : modify the ced
+    // todo reset password for the professeur
+    //  todo : reset password for the candidat
+
 }

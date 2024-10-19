@@ -2,9 +2,11 @@ package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Langue;
+import ensate.ma.SpringAPI.Repository.LangueRepo;
 import ensate.ma.SpringAPI.Services.CandidatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,8 @@ public class CandidatController {
 
       @Autowired
       private CandidatService candidatService ;
+      @Autowired
+        private LangueRepo LangueRepo;
 
       //add a new Candidat
       @PostMapping("/add")
@@ -59,7 +63,13 @@ public class CandidatController {
 
         // add langues to a candidat
         @PostMapping("/addLangue/{id}")
-        public Candidat addLangue(@PathVariable Long id, @RequestBody List<Langue> langues) {
-            return candidatService.addLangue(id, langues);
+        public ResponseEntity addLangue(@PathVariable Long id, @RequestBody List<Langue> langues) {
+            candidatService.addLangue(id, langues);
+            return ResponseEntity.ok().body("Langues added successfully");
         }
+
+        // todo add diplome to a candidat
+    // todo modify password
+
+
 }

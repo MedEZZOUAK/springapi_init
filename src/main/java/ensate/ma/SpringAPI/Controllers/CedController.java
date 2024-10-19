@@ -33,5 +33,10 @@ public class CedController {
         cedService.AddCed(struct);
         return "Structure added successfully";
     }
+  // TODO: 19/10/2024 update the structure
+  // TODO: 19/10/2024 delete the structure
+  // todo : modify the ced
+  // todo reset password for the professeur
+  //
 
 }

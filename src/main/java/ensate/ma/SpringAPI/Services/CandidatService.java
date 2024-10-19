@@ -47,13 +47,11 @@ public class CandidatService {
         return candidatRepo.save(candidat);
     }
 
-    public Candidat addLangue(Long id, List<Langue> langue) {
+    public void addLangue(Long id, List<Langue> langue) {
       //set candidat_id for each langue
-      langue.forEach(lang -> lang.setCandidat_id(Math.toIntExact(id)));
+      langue.forEach(lang -> lang.setCandidat(candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"))));
       //save all languages
       langueRepo.saveAll(langue);
-      //get candidat by id
-      return langueRepo.findByCandidat_id(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCandidat();
     }
 
 }
