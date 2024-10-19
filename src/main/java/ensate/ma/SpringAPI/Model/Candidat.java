@@ -54,6 +54,9 @@ public class Candidat {
   @OneToMany(mappedBy = "candidat")
   private List<ExperienceProf> experiences;
 
+//candidat can have max 3 candidatures
+  @OneToMany(mappedBy = "candidat")
+  private List<Candidature> candidatures;
 
 
 }

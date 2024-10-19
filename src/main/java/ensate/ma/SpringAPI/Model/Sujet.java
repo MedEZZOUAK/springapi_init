@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,6 +35,11 @@ public class Sujet {
   @ManyToOne
   @JoinColumn(name = "structureRecherche_id", referencedColumnName = "id", insertable = false, updatable = false)
   private StructureRecherche structureRecherche;
+
+  //a sujet can have many candidatures , but a candidature is for one sujet
+  @OneToMany(mappedBy = "sujet")
+  private List<Candidature> candidatures;
+
 
 
 
