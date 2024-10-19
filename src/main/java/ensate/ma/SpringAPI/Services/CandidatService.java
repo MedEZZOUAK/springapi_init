@@ -53,7 +53,7 @@ public class CandidatService {
       //save all languages
       langueRepo.saveAll(langue);
       //get candidat by id
-      return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
+      return langueRepo.findByCandidat_id(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCandidat();
     }
 
 }

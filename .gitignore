@@ -37,3 +37,5 @@ build/
 docker-compose.yml
 pgadmindata
 postgresdata
+
+docker-compose.yml
