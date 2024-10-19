@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.Primary;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,7 +52,7 @@ public class Candidat {
 
   //langues spoken by the candidate, a condidat can speak many languages or one language
   @OneToMany(mappedBy = "candidat")
-  private List<Langue> langues;
+  private List<Langue> langues = new ArrayList<>();
 
   //diplomes owned by the candidate, a candidate can have many diplomes or one diplome
   @OneToMany(mappedBy = "candidat")
@@ -60,6 +61,7 @@ public class Candidat {
   //experiences owned by the candidate, a candidate can have many experiences or one experience
   @OneToMany(mappedBy = "candidat")
   private List<ExperienceProf> experiences;
+
 
 
 }

@@ -4,7 +4,6 @@ import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +40,16 @@ public class ProfesseurController {
   public List<Professeur> findAllProfesseurs() {
     return professeurService.findAllProfesseurs();
   }
+
+  @GetMapping("/find/{id}")
+    public Professeur findProfesseurById(@PathVariable Long id) {
+        return professeurService.findProfesseurById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Professeur updateProfesseur(@PathVariable Long id, @RequestBody Professeur professeurDetails) {
+        return professeurService.updateProfesseur(id, professeurDetails);
+    }
 
 
 
