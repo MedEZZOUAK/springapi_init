@@ -1,6 +1,8 @@
 package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.Model.Professeur;
+import ensate.ma.SpringAPI.Model.StructureRecherche;
+import ensate.ma.SpringAPI.Services.CedService;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CedController {
   @Autowired
   private ProfesseurService professeurService;
+  @Autowired
+    private CedService cedService;
 
   @PostMapping("/addProfesseur")
   public String addProfesseur(@RequestBody Professeur professeur) {
@@ -23,5 +27,11 @@ public class CedController {
 
     return "Professeur added successfully";
   }
+
+  @PostMapping("/addStructure")
+    public String addStructure(@RequestBody StructureRecherche struct) {
+        cedService.AddCed(struct);
+        return "Structure added successfully";
+    }
 
 }

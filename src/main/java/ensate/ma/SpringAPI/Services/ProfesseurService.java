@@ -6,6 +6,7 @@ import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
 import ensate.ma.SpringAPI.config.AppConfig;
 import ensate.ma.SpringAPI.user.Role;
 import ensate.ma.SpringAPI.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,18 +16,13 @@ import ensate.ma.SpringAPI.Repository.loginRepo;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfesseurService {
   private final ProfesseurRepo professeurRepo;
   @Autowired
   private final loginRepo loginRepo;
   @Autowired
   private final PasswordEncoder passwordEncoder;
-
-  public ProfesseurService(ProfesseurRepo professeurRepo, ensate.ma.SpringAPI.Repository.loginRepo loginRepo, PasswordEncoder passwordEncoder) {
-    this.professeurRepo = professeurRepo;
-    this.loginRepo = loginRepo;
-    this.passwordEncoder = passwordEncoder;
-  }
 
 
   public List<Professeur> findAllProfesseurs() {
