@@ -17,27 +17,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
   private final JwtAuthFilter authFilter;
   private final AuthenticationProvider authenticationProvider;
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
 
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-      .csrf()
-      .disable()
-      .authorizeHttpRequests()
-      .requestMatchers("/api/v1/auth/**")
-      .permitAll()
-      .requestMatchers("/Professeur/**").hasRole("Professeur")
-      .requestMatchers("/CED/**").hasRole("CED")
-      .requestMatchers("/Candidat/**").hasRole("Candidat")
-      .anyRequest()
-      .authenticated()
-      .and()
-      .sessionManagement()
-      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-      .and()
-      .authenticationProvider(authenticationProvider)
-      .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+            .csrf()
+            .disable()
+            .authorizeHttpRequests()
+            .requestMatchers("/api/v1/auth/**").permitAll()
+            .requestMatchers("/Professeur/**").hasAuthority("Professeur")
+            .requestMatchers("/CED/**").hasAuthority("CED")
+            .requestMatchers("/Candidat/**").hasAuthority("Candidat")
+            .anyRequest()
+            .authenticated()
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
-
 }
