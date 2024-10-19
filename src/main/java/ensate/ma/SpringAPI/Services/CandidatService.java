@@ -47,7 +47,7 @@ public class CandidatService {
     public Candidat addLangue(Long id, List<Langue> langue) {
         Candidat candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
         candidat.setLangues(langue);
-        return candidatRepo.save(candidat);
+        
     }
 
 }
