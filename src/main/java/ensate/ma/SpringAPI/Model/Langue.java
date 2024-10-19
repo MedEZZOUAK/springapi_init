@@ -28,5 +28,8 @@ public class Langue {
   private Candidat candidat;
 
 
+  public void setCandidat(Candidat candidat) {
+    this.candidat = candidat;
+  }
 
 }
