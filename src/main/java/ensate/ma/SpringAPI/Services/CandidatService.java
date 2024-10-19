@@ -3,6 +3,7 @@ package ensate.ma.SpringAPI.Services;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Langue;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
+import ensate.ma.SpringAPI.Repository.LangueRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,11 @@ import java.util.List;
 @Service
 public class CandidatService {
     private final CandidatRepo candidatRepo;
+    private final LangueRepo langueRepo;
 
-    public CandidatService(CandidatRepo candidatRepo) {
+    public CandidatService(CandidatRepo candidatRepo, LangueRepo langueRepo) {
         this.candidatRepo = candidatRepo;
+      this.langueRepo = langueRepo;
     }
 
     public List<Candidat> findAllCandidats() {
@@ -45,9 +48,12 @@ public class CandidatService {
     }
 
     public Candidat addLangue(Long id, List<Langue> langue) {
-        Candidat candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
-        candidat.setLangues(langue);
-        
+      //set candidat_id for each langue
+      langue.forEach(lang -> lang.setCandidat_id(Math.toIntExact(id)));
+      //save all languages
+      langueRepo.saveAll(langue);
+      //get candidat by id
+      return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
     }
 
 }
