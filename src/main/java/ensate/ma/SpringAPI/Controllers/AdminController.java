@@ -4,10 +4,7 @@ package ensate.ma.SpringAPI.Controllers;
 import ensate.ma.SpringAPI.Model.CED;
 import ensate.ma.SpringAPI.Services.AdminService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/restricted")
@@ -27,7 +24,19 @@ public class AdminController {
         return "Ced added successfully";
     }
     // todo : modify the ced
+    @PostMapping("/updateCed/{id}")
+    public String updateCed(@PathVariable Long id, @RequestBody CED ced) {
+        cedService.updateCed(id, ced);
+        return "Ced updated successfully";
+    }
+
     // todo reset password for the professeur
+    @PostMapping("/resetPassword/{id}")
+    public String resetPassword(@PathVariable Integer id) {
+        cedService.resetPassword(id);
+        return "Password reset successfully";
+    }
     //  todo : reset password for the candidat
+
 
 }

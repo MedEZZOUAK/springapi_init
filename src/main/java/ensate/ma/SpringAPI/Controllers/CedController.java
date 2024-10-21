@@ -6,10 +6,7 @@ import ensate.ma.SpringAPI.Services.CedService;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/CED")
@@ -34,9 +31,31 @@ public class CedController {
         return "Structure added successfully";
     }
   // TODO: 19/10/2024 update the structure
+  @PostMapping("/updateStructure/{id}")
+  public String updateStructure(@PathVariable Long id, @RequestBody StructureRecherche struct) {
+    try {
+      StructureRecherche updatedStruct = cedService.updateStructureRecherche(id, struct); // Pass id here
+      if (updatedStruct != null) {
+        return "Structure updated successfully";
+      } else {
+        return "Structure not found";
+      }
+    } catch (Exception e) {
+      log.error("Error updating structure", e);
+      return "Error updating structure: " + e.getMessage();
+    }
+  }
+
   // TODO: 19/10/2024 delete the structure
-  // todo : modify the ced
-  // todo reset password for the professeur
-  //
+    @DeleteMapping("/deleteStructure/{id}")
+    public String deleteStructure(@PathVariable Long id) {
+        try {
+            cedService.deleteStructureRecherche(id);
+            return "Structure deleted successfully";
+        } catch (Exception e) {
+            log.error("Error deleting structure", e);
+            return "Error deleting structure: " + e.getMessage();
+        }
+    }
 
 }

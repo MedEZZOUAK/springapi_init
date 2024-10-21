@@ -30,6 +30,21 @@ public class AdminService {
         cedRepo.save(ced);
     }
 
+    // update ced
+    public CED updateCed(Long id, CED ced) {
+        CED ced1 = cedRepo.findById(id).orElseThrow(() -> new RuntimeException("Ced not found"));
+        ced1.setNom(ced.getNom());
+        ced1.setEmail(ced.getEmail());
+
+        return cedRepo.save(ced1);
+    }
+
+    // reset password for the professeur
+    public void resetPassword(Integer id) {
+        User user = loginRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPassword(passwordEncoder.encode("welcome123"));
+        loginRepo.save(user);
+    }
 
 }
 
