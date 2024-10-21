@@ -30,8 +30,13 @@ public class Diplome {
   private double Moyenne;//mentionGeneral
   private String Type;
   @Nullable
-  private String RelevetNoteScanne;
-  private String DiplomeScanne;
+  @Lob
+  private byte[] DiplomeScanne;
+  private String DiplomeScanneName;
+  @Nullable
+  @Lob
+  private byte[] RelevetNoteScanne;
+  private String RelevetNoteScanneName;
   private Integer candidat_id;
   //a candidat can have many diplomes , but a diplome can be owned by one candidate
   @ManyToOne

@@ -1,6 +1,5 @@
 package ensate.ma.SpringAPI.Model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,22 +40,15 @@ public class Candidat {
   private String CvScanne;
   private String CinScanne;
 
-
-  //langues spoken by the candidate, a condidat can speak many languages or one language
-  @OneToMany(mappedBy = "candidat")
+  @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Langue> langues = new ArrayList<>();
 
-  //diplomes owned by the candidate, a candidate can have many diplomes or one diplome
-  @OneToMany(mappedBy = "candidat")
+  @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Diplome> diplomes;
 
-  //experiences owned by the candidate, a candidate can have many experiences or one experience
-  @OneToMany(mappedBy = "candidat")
+  @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<ExperienceProf> experiences;
 
-//candidat can have max 3 candidatures
-  @OneToMany(mappedBy = "candidat")
+  @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Candidature> candidatures;
-
-
 }

@@ -2,10 +2,7 @@ package ensate.ma.SpringAPI.Model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 
@@ -15,6 +12,7 @@ import java.sql.Date;
 @Table(name = "candidatures")
 @Setter
 @Getter
+@Builder
 public class Candidature {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +21,9 @@ public class Candidature {
 
   private String Statuts;
   private Date date;
+  private Integer Sujet_id;
+  private Integer Candidat_id;
+
 
   //a candidature is for a sujet , but a sujet can have many candidatures
   @ManyToOne

@@ -1,7 +1,9 @@
 package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.Model.Candidat;
+import ensate.ma.SpringAPI.Model.Diplome;
 import ensate.ma.SpringAPI.Model.Langue;
+import ensate.ma.SpringAPI.Repository.CandidatRepo;
 import ensate.ma.SpringAPI.Repository.LangueRepo;
 import ensate.ma.SpringAPI.Services.CandidatService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Candidat")
@@ -21,26 +24,10 @@ public class CandidatController {
       private CandidatService candidatService ;
       @Autowired
         private LangueRepo LangueRepo;
+  @Autowired
+  private CandidatRepo candidatRepo;
 
-      //add a new Candidat
-      @PostMapping("/add")
-
-      public String addCandidat(@RequestBody Candidat candidat) {
-     //check if the candidat if the data is valid
-     log.info("Candidat data is being validated");
-     //print the data of the candidat
-     log.info(candidat.toString());
-     if (candidat.getNom() == null || candidat.getPrenom() == null || candidat.getEmail() == null ) {
-        log.error("Candidat data is not valid");
-        return "Candidat data is not valid";
-     }
-     log.info("Candidat data is valid");
-     candidatService.AddCandidat(candidat);
-     return "Candidat added successfully";
-      }
-
-
-      @PostMapping("/delete/{id}")
+  @PostMapping("/delete/{id}")
       public String deleteCandidat(@PathVariable Long id) {
      candidatService.deleteCandidat(id);
      return "Candidat deleted successfully";
@@ -69,7 +56,24 @@ public class CandidatController {
         }
 
         // todo add diplome to a candidat
-    // todo modify password
+        @PostMapping("/addDiplome/{id}")
+          public ResponseEntity<String> addDiplome(@PathVariable Long id, @RequestBody List<Diplome> diplomes) {
+              String response = candidatService.addDiplome(id, diplomes);
+              return ResponseEntity.ok().body(response);
+        }
 
 
+        // todo modify password
+        @PostMapping("/modifyPassword/{id}")
+        public ResponseEntity modifyPassword(@PathVariable Long id, @RequestBody String password) {
+
+            return ResponseEntity.ok().body(candidatService.ChangePassword(password, id));
+        }
+
+  @GetMapping("/getinfo/{id}")
+  public ResponseEntity<Candidat> getCandidatInfo(@PathVariable Long id) {
+    Candidat candidat = candidatService.getCandidatById(id);
+    return ResponseEntity.ok(candidat);
+  }
 }
+

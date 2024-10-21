@@ -4,7 +4,9 @@ package ensate.ma.SpringAPI.auth;
 import ensate.ma.SpringAPI.Exception.EmailAlreadyExistsException;
 import ensate.ma.SpringAPI.Exception.InvalidCredentialsException;
 import ensate.ma.SpringAPI.Model.Candidat;
+import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
+import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
 import ensate.ma.SpringAPI.config.JwtService;
 import ensate.ma.SpringAPI.user.Role;
 import ensate.ma.SpringAPI.user.User;
@@ -25,6 +27,7 @@ public class AuthService {
   private final CandidatRepo candidatRepo;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final ProfesseurRepo profRepo;
 
 
   public AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -66,9 +69,25 @@ public class AuthService {
     var user = loginRepo.findByEmail(authenticationRequest.getEmail())
       .orElseThrow(() -> new InvalidCredentialsException("User not found"));
     var jwtToken = jwtService.generateToken(user);
+    Integer userId = null;
+    switch (user.getRole()) {
+      case Candidat:
+
+        Candidat candidat = candidatRepo.findByEmail(user.getEmail())
+          .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
+        userId= Math.toIntExact(candidat.getId());
+        break;
+      case Professeur:
+        Professeur prof = profRepo.findByEmail(user.getEmail())
+          .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
+        userId= Math.toIntExact(prof.getId());
+        break;
+    }
+
     return AuthenticationResponse.builder()
       .Token(jwtToken)
       .role(user.getRole())
+      .id(userId)
       .build();
   }
 }
