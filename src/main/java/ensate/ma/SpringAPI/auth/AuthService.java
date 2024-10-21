@@ -3,9 +3,11 @@ package ensate.ma.SpringAPI.auth;
 
 import ensate.ma.SpringAPI.Exception.EmailAlreadyExistsException;
 import ensate.ma.SpringAPI.Exception.InvalidCredentialsException;
+import ensate.ma.SpringAPI.Model.CED;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
+import ensate.ma.SpringAPI.Repository.CedRepo;
 import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
 import ensate.ma.SpringAPI.config.JwtService;
 import ensate.ma.SpringAPI.user.Role;
@@ -28,6 +30,7 @@ public class AuthService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final ProfesseurRepo profRepo;
+  private final CedRepo cedRepo;
 
 
   public RegisterResponse register(RegisterRequest registerRequest) {
@@ -80,6 +83,11 @@ public class AuthService {
         Professeur prof = profRepo.findByEmail(user.getEmail())
           .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
         userId= Math.toIntExact(prof.getId());
+        break;
+      case CED:
+        CED ced = cedRepo.findByEmail(user.getEmail())
+          .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
+        userId= Math.toIntExact(ced.getId());
         break;
     }
 
