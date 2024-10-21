@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/restricted")
 @Slf4j
 @RequiredArgsConstructor
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
     private final AdminService cedService;
     private final CandidatService candidatService;

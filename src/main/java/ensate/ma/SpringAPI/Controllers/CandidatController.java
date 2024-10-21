@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Candidat")
 @Slf4j
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class CandidatController {
 
       @Autowired

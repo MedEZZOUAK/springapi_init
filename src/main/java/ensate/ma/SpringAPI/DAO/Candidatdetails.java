@@ -21,4 +21,5 @@ public class Candidatdetails {
   private String cin;
   private String telephone;
   private List<Candidature> candidatures;
+
 }
