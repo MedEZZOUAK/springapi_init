@@ -19,4 +19,5 @@ public class ExperienceDTO {
   private String SecteurActivite;
   private Date DateDebut;
   private Date DateFin;
+  private int candidat_id;
 }

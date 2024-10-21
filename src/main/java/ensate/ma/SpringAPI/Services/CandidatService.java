@@ -4,10 +4,7 @@ import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Diplome;
 import ensate.ma.SpringAPI.Model.Langue;
-import ensate.ma.SpringAPI.Repository.CandidatRepo;
-import ensate.ma.SpringAPI.Repository.DiplomeRepo;
-import ensate.ma.SpringAPI.Repository.LangueRepo;
-import ensate.ma.SpringAPI.Repository.loginRepo;
+import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +24,7 @@ public class CandidatService {
   @Autowired
   private final PasswordEncoder passwordEncoder;
   private final DiplomeRepo diplomeRepo;
-
+  private final Experience experienceRepo;
 
     public List<Candidat> findAllCandidats() {
         return candidatRepo.findAll();
@@ -144,32 +141,30 @@ public class CandidatService {
   }
 
   public String addExperience(Long id, List<ExperienceDTO> experience) {
-  Optional<Candidat> candidat = candidatRepo.findById(id);
-  if (candidat.isEmpty()) {
-    return "Candidat not found";
-  }
-  //set candidat_id for each experience using the Model
-  var experiences = experience.stream().map(exp -> {
-    var experienceProf = new ensate.ma.SpringAPI.Model.ExperienceProf();
-    experienceProf.setExperience(exp.getExperience());
-    experienceProf.setEtablissement(exp.getEtablissement());
-    experienceProf.setFonction(exp.getFonction());
-    experienceProf.setSecteurActivite(exp.getSecteurActivite());
-    experienceProf.setDateDebut(exp.getDateDebut());
-    experienceProf.setDateFin(exp.getDateFin());
-    experienceProf.setCandidat_id(Math.toIntExact(id));
-    experienceProf.setCandidat(candidat.get());
-    return experienceProf;
-  }).toList();
-  //save all experiences
-  try {
-    //loooop through the list of experiences and save each one
-    experiences.forEach(experienceProf -> candidat.get().getExperiences().add(experienceProf));
-    return "Experience added successfully";
-  } catch (RuntimeException e) {
-    e.printStackTrace(); // Log the stack trace for debugging
-    return "Error while adding experience: " + e.getMessage();
-  }
+    Optional<Candidat> candidat = candidatRepo.findById(id);
+    if (candidat.isEmpty()) {
+      return "Candidat not found";
+    }
+    //set candidat_id for each experience
+    experience.forEach(exp -> exp.setCandidat_id(Math.toIntExact(id)));
+    //save all experiences
+    try {
+      //trandform experienceDTO to experience
+      experience.forEach(exp -> {
+        var experienceProf = new ensate.ma.SpringAPI.Model.ExperienceProf();
+        experienceProf.setExperience(exp.getExperience());
+        experienceProf.setEtablissement(exp.getEtablissement());
+        experienceProf.setFonction(exp.getFonction());
+        experienceProf.setSecteurActivite(exp.getSecteurActivite());
+        experienceProf.setDateDebut(exp.getDateDebut());
+        experienceProf.setDateFin(exp.getDateFin());
+        experienceProf.setCandidat_id(exp.getCandidat_id());
+        experienceRepo.save(experienceProf);
+      });
+      return "Experience added successfully";
+    }catch (RuntimeException e){
+      return "Error while adding experience"+e.getMessage();
+    }
 }
 }
 
