@@ -1,5 +1,8 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.Candidatdetails;
+import ensate.ma.SpringAPI.DAO.ExperienceDTO;
+import ensate.ma.SpringAPI.DAO.PasswordChangeRequest;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Diplome;
 import ensate.ma.SpringAPI.Model.Langue;
@@ -12,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/Candidat")
@@ -65,15 +67,32 @@ public class CandidatController {
 
         // todo modify password
         @PostMapping("/modifyPassword/{id}")
-        public ResponseEntity modifyPassword(@PathVariable Long id, @RequestBody String password) {
-
-            return ResponseEntity.ok().body(candidatService.ChangePassword(password, id));
+        public ResponseEntity modifyPassword(@PathVariable Long id, @RequestBody PasswordChangeRequest passwordChangeRequest) {
+          String password = passwordChangeRequest.getPassword();
+          log.info("password: " + password);
+          return ResponseEntity.ok().body(candidatService.ChangePassword(password, id));
         }
 
   @GetMapping("/getinfo/{id}")
-  public ResponseEntity<Candidat> getCandidatInfo(@PathVariable Long id) {
+  public ResponseEntity<Candidatdetails> getCandidatInfo(@PathVariable Long id) {
     Candidat candidat = candidatService.getCandidatById(id);
-    return ResponseEntity.ok(candidat);
+    Candidatdetails candidatdetails = new Candidatdetails();
+    candidatdetails.setNom(candidat.getNom());
+    candidatdetails.setPrenom(candidat.getPrenom());
+    candidatdetails.setEmail(candidat.getEmail());
+    candidatdetails.setTelephone(candidat.getTelephone());
+    candidatdetails.setCin(candidat.getCin());
+    candidatdetails.setCandidatures(candidat.getCandidatures());
+    return ResponseEntity.ok().body(candidatdetails);
+
   }
+
+  @GetMapping("/addExperience/{id}")
+  public ResponseEntity<String> addExperience(@PathVariable Long id, @RequestBody List<ExperienceDTO> experience) {
+    return ResponseEntity.ok().body(candidatService.addExperience(id, experience));
+  }
+
+
+
 }
 

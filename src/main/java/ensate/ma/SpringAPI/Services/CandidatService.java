@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Services;
 
+import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Diplome;
 import ensate.ma.SpringAPI.Model.Langue;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class CandidatService {
   @Autowired
   private final PasswordEncoder passwordEncoder;
   private final DiplomeRepo diplomeRepo;
+
 
     public List<Candidat> findAllCandidats() {
         return candidatRepo.findAll();
@@ -43,14 +46,40 @@ public class CandidatService {
     }
 
     public Candidat updateCandidat(Long id, Candidat candidatDetails) {
-        Candidat candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
-        candidat.setNom(candidatDetails.getNom());
-        candidat.setPrenom(candidatDetails.getPrenom());
-        candidat.setEmail(candidatDetails.getEmail());
-        candidat.setCIN(candidatDetails.getCIN());
-        candidat.setTelephone(candidatDetails.getTelephone());
-        return candidatRepo.save(candidat);
+    Optional<Candidat> candidatOptional = candidatRepo.findById(id);
+    if (candidatOptional.isEmpty()) {
+        return null;
     }
+    Candidat candidat = candidatOptional.get();
+
+    // Update all fields
+    candidat.setNom(candidatDetails.getNom());
+    candidat.setPrenom(candidatDetails.getPrenom());
+    candidat.setCin(candidatDetails.getCin());
+    candidat.setTelephone(candidatDetails.getTelephone());
+    candidat.setSituationFamiliale(candidatDetails.getSituationFamiliale());
+    candidat.setNationalite(candidatDetails.getNationalite());
+    candidat.setPrenomArabe(candidatDetails.getPrenomArabe());
+    candidat.setNomArabe(candidatDetails.getNomArabe());
+    candidat.setPayeNaissance(candidatDetails.getPayeNaissance());
+    candidat.setAdresse(candidatDetails.getAdresse());
+    candidat.setCodePostal(candidatDetails.getCodePostal());
+    candidat.setHandicap(candidatDetails.getHandicap());
+    candidat.setProfessionPere(candidatDetails.getProfessionPere());
+    candidat.setProfessionMere(candidatDetails.getProfessionMere());
+    candidat.setProvincePere(candidatDetails.getProvincePere());
+    candidat.setProvinceMere(candidatDetails.getProvinceMere());
+    candidat.setProfession(candidatDetails.getProfession());
+    candidat.setCvScanne(candidatDetails.getCvScanne());
+    candidat.setCinScanne(candidatDetails.getCinScanne());
+    candidat.setDateNaissance(candidatDetails.getDateNaissance());
+    candidat.setLangues(candidatDetails.getLangues());
+    candidat.setDiplomes(candidatDetails.getDiplomes());
+    candidat.setExperiences(candidatDetails.getExperiences());
+    candidat.setCandidatures(candidatDetails.getCandidatures());
+
+    return candidatRepo.save(candidat);
+}
 
     public String addLangue(Long id, List<Langue> langue) {
       //set candidat_id for each langue
@@ -64,7 +93,7 @@ public class CandidatService {
       }
     }
     public String ChangePassword(String newPassword , Long id) {
-      var email= candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getEmail();
+      var email= candidatRepo.findById(id).get().getEmail();
       //find the login by email
       var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
       try {
@@ -77,17 +106,70 @@ public class CandidatService {
 
     }
   public String addDiplome(Long id, List<Diplome> diplomes) {
-    Candidat candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
-    diplomes.forEach(diplome -> diplome.setCandidat(candidat));
+    Optional<Candidat> candidat = candidatRepo.findById(id);
+    if (candidat.isEmpty()) {
+      return "Candidat not found";
+    }
+    //set candidat_id for each diplome
+    diplomes.forEach(diplome -> diplome.setCandidat_id(Math.toIntExact(id)));
+    //save all diplomes
     try {
       diplomeRepo.saveAll(diplomes);
-      return "Diplomes added successfully";
-    } catch (RuntimeException e) {
-      return "Error while adding diplomes: " + e.getMessage();
+      return "Diplome added successfully";
+    }catch (RuntimeException e){
+      return "Error while adding diplome"+e.getMessage();
     }
   }
   public Candidat getCandidatById(Long id) {
     return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
   }
+
+  public String resetPassword(Integer id) {
+      //find the candidat
+    try {
+      var candidat =candidatRepo.findById(Long.valueOf(id));
+      if (candidat.isPresent()){
+        var email = candidat.get().getEmail();
+        //find the login by email
+        var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
+        login.setPassword(passwordEncoder.encode("password"));
+        loginRepo.save(login);
+        return "Password reset successfully";
+      }else {
+        return "Candidat not found";
+      }
+    }catch (RuntimeException e){
+      return "Error while resetting password"+e.getMessage();
+    }
+  }
+
+  public String addExperience(Long id, List<ExperienceDTO> experience) {
+  Optional<Candidat> candidat = candidatRepo.findById(id);
+  if (candidat.isEmpty()) {
+    return "Candidat not found";
+  }
+  //set candidat_id for each experience using the Model
+  var experiences = experience.stream().map(exp -> {
+    var experienceProf = new ensate.ma.SpringAPI.Model.ExperienceProf();
+    experienceProf.setExperience(exp.getExperience());
+    experienceProf.setEtablissement(exp.getEtablissement());
+    experienceProf.setFonction(exp.getFonction());
+    experienceProf.setSecteurActivite(exp.getSecteurActivite());
+    experienceProf.setDateDebut(exp.getDateDebut());
+    experienceProf.setDateFin(exp.getDateFin());
+    experienceProf.setCandidat_id(Math.toIntExact(id));
+    experienceProf.setCandidat(candidat.get());
+    return experienceProf;
+  }).toList();
+  //save all experiences
+  try {
+    //loooop through the list of experiences and save each one
+    experiences.forEach(experienceProf -> candidat.get().getExperiences().add(experienceProf));
+    return "Experience added successfully";
+  } catch (RuntimeException e) {
+    e.printStackTrace(); // Log the stack trace for debugging
+    return "Error while adding experience: " + e.getMessage();
+  }
+}
 }
 

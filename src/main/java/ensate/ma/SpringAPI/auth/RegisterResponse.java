@@ -1,5 +1,7 @@
 package ensate.ma.SpringAPI.auth;
 
+
+import ensate.ma.SpringAPI.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,13 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-
-  private String nom;
-  private String prenom;
-  private String email;
-  private String cin;
-  private String telephone;
-  private String password;
-
+public class RegisterResponse {
+  private Role role;
 }

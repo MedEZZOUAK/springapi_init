@@ -3,6 +3,7 @@ package ensate.ma.SpringAPI.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Candidat {
   private String nom;
   private String prenom;
   private String email;
-  private String CIN;
+  private String cin;
   private String telephone;
   private String SituationFamiliale;
   private String Nationalite;
@@ -39,6 +40,7 @@ public class Candidat {
   private String Profession;
   private String CvScanne;
   private String CinScanne;
+  private Date DateNaissance;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Langue> langues = new ArrayList<>();

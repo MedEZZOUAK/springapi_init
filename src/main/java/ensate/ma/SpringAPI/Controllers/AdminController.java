@@ -3,19 +3,19 @@ package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.Model.CED;
 import ensate.ma.SpringAPI.Services.AdminService;
+import ensate.ma.SpringAPI.Services.CandidatService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/restricted")
 @Slf4j
+@RequiredArgsConstructor
 
 public class AdminController {
     private final AdminService cedService;
-
-    public AdminController(AdminService cedService) {
-        this.cedService = cedService;
-    }
+    private final CandidatService candidatService;
 
     // crud for the ced
     @PostMapping("/addCed")
@@ -31,12 +31,16 @@ public class AdminController {
     }
 
     // todo reset password for the professeur
-    @PostMapping("/resetPassword/{id}")
+    @PostMapping("/resetPasswordProf/{id}")
     public String resetPassword(@PathVariable Integer id) {
         cedService.resetPassword(id);
         return "Password reset successfully";
     }
     //  todo : reset password for the candidat
+  @PostMapping("/resetPasswordCand/{id}")
+  public String resetPasswordCandidact(@PathVariable Integer id ){
+      return candidatService.resetPassword(id);
+  }
 
 
 }

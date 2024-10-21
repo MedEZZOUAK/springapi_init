@@ -30,16 +30,16 @@ public class AuthService {
   private final ProfesseurRepo profRepo;
 
 
-  public AuthenticationResponse register(RegisterRequest registerRequest) {
+  public RegisterResponse register(RegisterRequest registerRequest) {
     // Check if the email already exists : if it does, throw an exception
     if (loginRepo.findByEmail(registerRequest.getEmail()).isPresent()) {
       throw new EmailAlreadyExistsException("Email already exists");
     }
-    log.info("Register request: {}", registerRequest.getCIN());
+    log.info("Register request: {}", registerRequest.getCin());
     var candidat = Candidat.builder()
       .nom(registerRequest.getNom())
       .prenom(registerRequest.getPrenom())
-      .CIN(registerRequest.getCIN())
+      .cin(registerRequest.getCin())
       .telephone(registerRequest.getTelephone())
       .email(registerRequest.getEmail())
       .build();
@@ -52,8 +52,7 @@ public class AuthService {
       .build();
     loginRepo.save(user);
     var jwtToken= jwtService.generateToken(user);
-    return AuthenticationResponse.builder()
-      .Token(jwtToken)
+    return RegisterResponse.builder()
       .role(user.getRole())
       .build();
   }
