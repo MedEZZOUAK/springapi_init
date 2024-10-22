@@ -29,16 +29,16 @@ public class Sujet {
   //a sujet is owned by a professeur , but a professeur can have many sujets max 9
   @ManyToOne
   @JoinColumn(name = "professeur_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private Professeur professeur;
+  Professeur professeur;
 
   //a sujet is in a structure de recherche , but a structure de recherche can have many sujets
   @ManyToOne
   @JoinColumn(name = "structureRecherche_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private StructureRecherche structureRecherche;
+  StructureRecherche structureRecherche;
 
   //a sujet can have many candidatures , but a candidature is for one sujet
   @OneToMany(mappedBy = "sujet")
-  private List<Candidature> candidatures;
+  List<Candidature> candidatures;
 
 
 

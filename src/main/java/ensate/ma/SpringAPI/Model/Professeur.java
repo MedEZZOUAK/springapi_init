@@ -32,11 +32,11 @@ public class Professeur {
   //a professeur have one StructureRecherche , but a StructureRecherche can have many professeurs
   @ManyToOne
   @JoinColumn(name = "Centre_ID", referencedColumnName = "id", insertable = false, updatable = false)
-  private StructureRecherche structureRecherche;
+  StructureRecherche structureRecherche;
 
   //a professeur can have many sujets , but a sujet is owned by one professeur , max can have 9 sujets
   @OneToMany(mappedBy = "professeur")
-  private List<Sujet> sujets;
+  List<Sujet> sujets;
 
   @Override
   public String toString() {

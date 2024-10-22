@@ -91,6 +91,21 @@ public class CandidatController {
   public ResponseEntity<String> addExperience(@PathVariable Long id, @RequestBody List<ExperienceDTO> experience) {
     return ResponseEntity.ok().body(candidatService.addExperience(id, experience));
   }
+  @GetMapping("/alldetails/{id}")
+  public ResponseEntity<Candidatdetails> getCandidatDetails(@PathVariable Long id) {
+    Candidat candidat = candidatService.getCandidatById(id);
+    Candidatdetails candidatdetails = new Candidatdetails();
+    candidatdetails.setNom(candidat.getNom());
+    candidatdetails.setPrenom(candidat.getPrenom());
+    candidatdetails.setEmail(candidat.getEmail());
+    candidatdetails.setTelephone(candidat.getTelephone());
+    candidatdetails.setCin(candidat.getCin());
+    candidatdetails.setCandidatures(candidat.getCandidatures());
+    candidatdetails.setDiplomes(candidat.getDiplomes());
+    candidatdetails.setExperiences(candidat.getExperiences());
+    candidatdetails.setLangues(candidat.getLangue());
+    return ResponseEntity.ok().body(candidatdetails);
+  }
 
 
 

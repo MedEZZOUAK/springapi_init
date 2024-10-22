@@ -41,7 +41,7 @@ public class Diplome {
   //a candidat can have many diplomes , but a diplome can be owned by one candidate
   @ManyToOne
   @JoinColumn(name = "candidat_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private Candidat candidat;
+  Candidat candidat;
 
 
 

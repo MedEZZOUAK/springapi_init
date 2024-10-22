@@ -43,7 +43,8 @@ public class Candidat {
   private Date DateNaissance;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private List<Langue> langues = new ArrayList<>();
+
+  private List<Langue> langue = new ArrayList<>();
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Diplome> diplomes;

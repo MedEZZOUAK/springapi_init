@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@Table(name = "langues")
 public class Langue {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,5 +20,5 @@ public class Langue {
 
   @ManyToOne
   @JoinColumn(name = "candidat_id")
-  private Candidat candidat;
+  Candidat candidat;
 }

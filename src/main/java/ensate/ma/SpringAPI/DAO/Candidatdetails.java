@@ -6,7 +6,6 @@ import ensate.ma.SpringAPI.Model.ExperienceProf;
 import ensate.ma.SpringAPI.Model.Langue;
 import lombok.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,5 +20,9 @@ public class Candidatdetails {
   private String cin;
   private String telephone;
   private List<Candidature> candidatures;
+  private List<Langue> langues;
+  private List<Diplome> diplomes;
+  private List<ExperienceProf> experiences;
+
 
 }

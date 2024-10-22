@@ -28,12 +28,12 @@ public class Candidature {
   //a candidature is for a sujet , but a sujet can have many candidatures
   @ManyToOne
   @JoinColumn(name = "sujet_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private Sujet sujet;
+  Sujet sujet;
 
   //a cancidature is from a candidat , but a candidat can have many candidatures
   @ManyToOne
   @JoinColumn(name = "candidat_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private Candidat candidat;
+  Candidat candidat;
 
 
 }

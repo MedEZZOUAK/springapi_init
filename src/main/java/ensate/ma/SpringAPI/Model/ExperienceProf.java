@@ -30,6 +30,6 @@ public class ExperienceProf {
   //a candidat can have many experiences , but an experience can be owned by one candidate
   @ManyToOne
   @JoinColumn(name = "candidat_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private Candidat candidat;
+  Candidat candidat;
 
 }

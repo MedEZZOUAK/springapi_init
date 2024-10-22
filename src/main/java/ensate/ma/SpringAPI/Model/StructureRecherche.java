@@ -29,14 +29,14 @@ public class StructureRecherche {
   //a structure de recherche is in a CED , but a CED can have many structures de recherche
   @ManyToOne
   @JoinColumn(name = "ced_id", referencedColumnName = "id", insertable = false, updatable = false)
-  private CED ced;
+  CED ced;
   //a structure de recherche can have many professeurs , but a professeur can be in one structure de recherche
   @OneToMany(mappedBy = "structureRecherche")
-  private List<Professeur> professeurs;
+  List<Professeur> professeurs;
 
   //a structure de recherche can have many sujets , but a sujet is in one structure de recherche
   @OneToMany(mappedBy = "structureRecherche")
-  private List<Sujet> sujets;
+  List<Sujet> sujets;
 
 
 

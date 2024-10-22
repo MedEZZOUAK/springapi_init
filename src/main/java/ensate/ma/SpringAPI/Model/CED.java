@@ -26,7 +26,7 @@ public class CED {
 //A ced Have many StructureRecherche
 
   @OneToMany(mappedBy = "ced")
-  private List<StructureRecherche> structureRecherches;
+  List<StructureRecherche> structureRecherches;
 
 
 

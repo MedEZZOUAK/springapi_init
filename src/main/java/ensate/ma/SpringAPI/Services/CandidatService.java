@@ -70,7 +70,7 @@ public class CandidatService {
     candidat.setCvScanne(candidatDetails.getCvScanne());
     candidat.setCinScanne(candidatDetails.getCinScanne());
     candidat.setDateNaissance(candidatDetails.getDateNaissance());
-    candidat.setLangues(candidatDetails.getLangues());
+    candidat.setLangue(candidatDetails.getLangue());
     candidat.setDiplomes(candidatDetails.getDiplomes());
     candidat.setExperiences(candidatDetails.getExperiences());
     candidat.setCandidatures(candidatDetails.getCandidatures());
