@@ -55,4 +55,14 @@ public class CedService {
     public void deleteStructureRecherche(Long id) {
         structRepo.deleteById(id);
     }
+
+    // todo : get all structure by ced id
+    public Iterable<StructureRecherche> getStructuresByCedId(Long cedId) {
+        return structRepo.findAllByCed_id(cedId);
+    }
+    //todo : get all candidature by CED id
+    //todo : accepte and refuse candidature
+    // todo : accepter and refuse Bourse
+    // todo : get all bourse by CED id
+    //
 }

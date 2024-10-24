@@ -1,0 +1,19 @@
+todo :
+-- 1. Add dto for responses and requests
+-- 2. Add upload file to the server for the diplomes
+-- 3. Add the user profile
+
+
+
+
+
+
+
+files + data --> requetes 1
+
+data --> requetes1 --> requets2 ( id diplome) --> file diplome
+
+
+excel --> platforme
+
+

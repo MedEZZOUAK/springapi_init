@@ -58,5 +58,10 @@ public class CedController {
             return "Error deleting structure: " + e.getMessage();
         }
     }
+    // todo : Get all professeurs
+    @GetMapping("/professeurs")
+    public Iterable<Professeur> getProfesseurs() {
+        return professeurService.getAllProfesseurs();
+    }
 
 }

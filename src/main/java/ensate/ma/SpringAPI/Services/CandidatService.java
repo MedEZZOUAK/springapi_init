@@ -162,9 +162,18 @@ public class CandidatService {
         experienceRepo.save(experienceProf);
       });
       return "Experience added successfully";
-    }catch (RuntimeException e){
-      return "Error while adding experience"+e.getMessage();
+    }catch (RuntimeException e) {
+      return "Error while adding experience" + e.getMessage();
     }
 }
+
+// todo : demande bourse
+  // todo :  add cv as a file
+  // todo :  add cin as a file  // do some research about how to add file in spring boot
+  // todo :  get all candidature by candidat id
+  // todo : get Bourssier by candidat id
+
+
+
 }
 

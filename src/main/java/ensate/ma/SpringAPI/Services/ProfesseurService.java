@@ -60,4 +60,11 @@ public class ProfesseurService {
   }
 
 
+    public List<Professeur> getAllProfesseurs() {
+      return professeurRepo.findAll();
+    }
+    //todo  accepte and refuse candidature
+    //todo  get all candidature by prof id
+
+
 }
