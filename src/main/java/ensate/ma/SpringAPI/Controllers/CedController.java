@@ -64,4 +64,5 @@ public class CedController {
         return professeurService.getAllProfesseurs();
     }
 
+    // todo get structure de recherche by id ced
 }

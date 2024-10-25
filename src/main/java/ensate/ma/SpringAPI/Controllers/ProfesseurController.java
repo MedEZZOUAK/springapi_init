@@ -1,7 +1,9 @@
 package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.Model.Professeur;
+import ensate.ma.SpringAPI.Model.Sujet;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
+import ensate.ma.SpringAPI.Services.SujetService;
 import ensate.ma.SpringAPI.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class ProfesseurController {
 
   @Autowired
   private ProfesseurService professeurService ;
+    @Autowired
+    private SujetService SujetService;
 
   @PostMapping("/delete/{id}")
   public String deleteProfesseur(@PathVariable Long id) {
@@ -38,8 +42,20 @@ public class ProfesseurController {
         return professeurService.updateProfesseur(id, professeurDetails);
     }
 
+    @PostMapping("/addSujet")
+    public String addSujet(@RequestBody Sujet sujet) {
+      SujetService.AddSujet(sujet);
+        return "Sujet added successfully";
+    }
 
-
-
-
+  @PostMapping("/updateSujet/{id}")
+  public String updateSujet(@PathVariable Long id, @RequestBody Sujet sujet) {
+    SujetService.UpdateSujet(id, sujet);
+    return "Sujet updated successfully";
+  }
+  @PostMapping("/deleteSujet/{id}")
+  public String deleteSujet(@PathVariable Long id){
+    SujetService.DeleteSujet(id);
+    return "sujet deleted successfully";
+  }
 }
