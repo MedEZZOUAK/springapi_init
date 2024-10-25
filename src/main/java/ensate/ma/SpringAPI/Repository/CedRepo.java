@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface CedRepo extends JpaRepository<CED, Long> {
 
-    Optional<CED> findByEmail(String email);
+  Optional<CED> findByEmail(String email);
 }

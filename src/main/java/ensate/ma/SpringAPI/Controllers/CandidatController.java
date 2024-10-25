@@ -24,60 +24,57 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CandidatController {
 
-      @Autowired
-      private CandidatService candidatService ;
-      @Autowired
-        private LangueRepo LangueRepo;
+  @Autowired
+  private CandidatService candidatService;
+  @Autowired
+  private LangueRepo LangueRepo;
   @Autowired
   private CandidatRepo candidatRepo;
 
   @PostMapping("/delete/{id}")
-      public String deleteCandidat(@PathVariable Long id) {
-     candidatService.deleteCandidat(id);
-     return "Candidat deleted successfully";
-      }
+  public String deleteCandidat(@PathVariable Long id) {
+    candidatService.deleteCandidat(id);
+    return "Candidat deleted successfully";
+  }
 
-      @GetMapping("/all")
-      public List<Candidat> findAllCandidats() {
-     return candidatService.findAllCandidats();
-      }
+  @GetMapping("/all")
+  public List<Candidat> findAllCandidats() {
+    return candidatService.findAllCandidats();
+  }
 
-      @GetMapping("/find/{id}")
-        public Candidat findCandidatById(@PathVariable Long id) {
-            return candidatService.findCandidatById(id);
-        }
+  @GetMapping("/find/{id}")
+  public Candidat findCandidatById(@PathVariable Long id) {
+    return candidatService.findCandidatById(id);
+  }
 
-        @PutMapping("/update/{id}")
-        public Candidat updateCandidat(@PathVariable Long id, @RequestBody Candidat candidatDetails) {
-            return candidatService.updateCandidat(id, candidatDetails);
-        }
+  @PutMapping("/update/{id}")
+  public Candidat updateCandidat(@PathVariable Long id, @RequestBody Candidat candidatDetails) {
+    return candidatService.updateCandidat(id, candidatDetails);
+  }
 
-        // add langues to a candidat
-        @PostMapping("/addLangue/{id}")
-        public ResponseEntity addLangue(@PathVariable Long id, @RequestBody List<Langue> langues) {
-            candidatService.addLangue(id, langues);
-            return ResponseEntity.ok().body("Langues added successfully");
-        }
+  // add langues to a candidat
+  @PostMapping("/addLangue/{id}")
+  public ResponseEntity addLangue(@PathVariable Long id, @RequestBody List<Langue> langues) {
+    candidatService.addLangue(id, langues);
+    return ResponseEntity.ok().body("Langues added successfully");
+  }
 
-        // todo add diplome to a candidat
-        @PostMapping("/addDiplome/{id}")
-        public ResponseEntity<String> addDiplome(
-            @PathVariable Long id,
-            @RequestPart("diplome") Diplome diplome,
-            @RequestPart("file1") MultipartFile file1,
-            @RequestPart("file2") MultipartFile file2) {
-            log.warn("diplome: " + diplome);
-            log.warn("file1: " + file1);
-            log.warn("file2: " + file2);
-            return ResponseEntity.ok().body("test");
-        }
-        // todo modify password
-        @PostMapping("/modifyPassword/{id}")
-        public ResponseEntity modifyPassword(@PathVariable Long id, @RequestBody PasswordChangeRequest passwordChangeRequest) {
-          String password = passwordChangeRequest.getPassword();
-          log.info("password: " + password);
-          return ResponseEntity.ok().body(candidatService.ChangePassword(password, id));
-        }
+  // todo add diplome to a candidat
+  @PostMapping("/addDiplome/{id}")
+  public ResponseEntity<String> addDiplome(@PathVariable Long id, @RequestPart("diplome") Diplome diplome, @RequestPart("file1") MultipartFile file1, @RequestPart("file2") MultipartFile file2) {
+    log.warn("diplome: " + diplome);
+    log.warn("file1: " + file1);
+    log.warn("file2: " + file2);
+    return ResponseEntity.ok().body("test");
+  }
+
+  // todo modify password
+  @PostMapping("/modifyPassword/{id}")
+  public ResponseEntity modifyPassword(@PathVariable Long id, @RequestBody PasswordChangeRequest passwordChangeRequest) {
+    String password = passwordChangeRequest.getPassword();
+    log.info("password: " + password);
+    return ResponseEntity.ok().body(candidatService.ChangePassword(password, id));
+  }
 
   @GetMapping("/getinfo/{id}")
   public ResponseEntity<Candidatdetails> getCandidatInfo(@PathVariable Long id) {
@@ -97,6 +94,7 @@ public class CandidatController {
   public ResponseEntity<String> addExperience(@PathVariable Long id, @RequestBody List<ExperienceDTO> experience) {
     return ResponseEntity.ok().body(candidatService.addExperience(id, experience));
   }
+
   @GetMapping("/alldetails/{id}")
   public ResponseEntity<Candidatdetails> getCandidatDetails(@PathVariable Long id) {
     Candidat candidat = candidatService.getCandidatById(id);
@@ -112,26 +110,22 @@ public class CandidatController {
     candidatdetails.setLangues(candidat.getLangue());
     return ResponseEntity.ok().body(candidatdetails);
   }
+
   @PostMapping("/addCv/{id}")
   public ResponseEntity<String> addCv(@PathVariable Long id, @RequestBody MultipartFile cv) {
     return ResponseEntity.ok().body(candidatService.addCv(id, cv));
   }
+
   @PostMapping("/addCin/{id}")
   public ResponseEntity<String> addCin(@PathVariable Long id, @RequestBody MultipartFile cin) {
     return ResponseEntity.ok().body(candidatService.addCin(id, cin));
   }
+
   @GetMapping("/getcv/{id}")
-public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
+  public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
     byte[] cv = candidatService.getCv(id);
-    return ResponseEntity.ok()
-            .header("Content-Disposition", "attachment; filename=cv.pdf")
-            .contentType(MediaType.APPLICATION_PDF)
-            .body(cv);
-}
-
-
-
-
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cv.pdf").contentType(MediaType.APPLICATION_PDF).body(cv);
+  }
 
 
 }

@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +14,10 @@ import java.sql.Date;
 @Getter
 @Table(name = "diplomes")
 public class Diplome {
+  //a candidat can have many diplomes , but a diplome can be owned by one candidate
+  @ManyToOne
+  @JoinColumn(name = "candidat_id", referencedColumnName = "id", insertable = false, updatable = false)
+  Candidat candidat;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
@@ -38,11 +40,6 @@ public class Diplome {
   private byte[] RelevetNoteScanne;
   private String RelevetNoteScanneName;
   private Integer candidat_id;
-  //a candidat can have many diplomes , but a diplome can be owned by one candidate
-  @ManyToOne
-  @JoinColumn(name = "candidat_id", referencedColumnName = "id", insertable = false, updatable = false)
-  Candidat candidat;
-
 
 
 }

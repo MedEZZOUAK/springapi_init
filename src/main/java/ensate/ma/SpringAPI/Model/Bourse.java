@@ -28,5 +28,4 @@ public class Bourse {
   private Candidature candidature;
 
 
-
 }

@@ -16,7 +16,7 @@ public class CedController {
   @Autowired
   private ProfesseurService professeurService;
   @Autowired
-    private CedService cedService;
+  private CedService cedService;
 
   @PostMapping("/addProfesseur")
   public String addProfesseur(@RequestBody Professeur professeur) {
@@ -25,10 +25,11 @@ public class CedController {
   }
 
   @PostMapping("/addStructure")
-    public String addStructure(@RequestBody StructureRecherche struct) {
-        cedService.AddCed(struct);
-        return "Structure added successfully";
-    }
+  public String addStructure(@RequestBody StructureRecherche struct) {
+    cedService.AddCed(struct);
+    return "Structure added successfully";
+  }
+
   // TODO: 19/10/2024 update the structure
   @PostMapping("/updateStructure/{id}")
   public String updateStructure(@PathVariable Long id, @RequestBody StructureRecherche struct) {
@@ -46,21 +47,22 @@ public class CedController {
   }
 
   // TODO: 19/10/2024 delete the structure
-    @DeleteMapping("/deleteStructure/{id}")
-    public String deleteStructure(@PathVariable Long id) {
-        try {
-            cedService.deleteStructureRecherche(id);
-            return "Structure deleted successfully";
-        } catch (Exception e) {
-            log.error("Error deleting structure", e);
-            return "Error deleting structure: " + e.getMessage();
-        }
+  @DeleteMapping("/deleteStructure/{id}")
+  public String deleteStructure(@PathVariable Long id) {
+    try {
+      cedService.deleteStructureRecherche(id);
+      return "Structure deleted successfully";
+    } catch (Exception e) {
+      log.error("Error deleting structure", e);
+      return "Error deleting structure: " + e.getMessage();
     }
-    // todo : Get all professeurs
-    @GetMapping("/professeurs")
-    public Iterable<Professeur> getProfesseurs() {
-        return professeurService.getAllProfesseurs();
-    }
+  }
 
-    // todo get structure de recherche by id ced
+  // todo : Get all professeurs
+  @GetMapping("/professeurs")
+  public Iterable<Professeur> getProfesseurs() {
+    return professeurService.getAllProfesseurs();
+  }
+
+  // todo get structure de recherche by id ced
 }

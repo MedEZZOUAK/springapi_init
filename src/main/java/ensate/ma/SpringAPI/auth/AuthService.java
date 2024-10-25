@@ -9,6 +9,7 @@ import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
 import ensate.ma.SpringAPI.Repository.CedRepo;
 import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
+import ensate.ma.SpringAPI.Repository.loginRepo;
 import ensate.ma.SpringAPI.config.JwtService;
 import ensate.ma.SpringAPI.user.Role;
 import ensate.ma.SpringAPI.user.User;
@@ -18,7 +19,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ensate.ma.SpringAPI.Repository.loginRepo;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +54,7 @@ public class AuthService {
       .role(Role.Candidat)
       .build();
     loginRepo.save(user);
-    var jwtToken= jwtService.generateToken(user);
+    var jwtToken = jwtService.generateToken(user);
     return RegisterResponse.builder()
       .role(user.getRole())
       .build();
@@ -65,7 +65,7 @@ public class AuthService {
       authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
       );
-    }catch (Exception e) {
+    } catch (Exception e) {
       throw new InvalidCredentialsException("Invalid credentials");
     }
     var user = loginRepo.findByEmail(authenticationRequest.getEmail())
@@ -77,17 +77,17 @@ public class AuthService {
 
         Candidat candidat = candidatRepo.findByEmail(user.getEmail())
           .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
-        userId= Math.toIntExact(candidat.getId());
+        userId = Math.toIntExact(candidat.getId());
         break;
       case Professeur:
         Professeur prof = profRepo.findByEmail(user.getEmail())
           .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
-        userId= Math.toIntExact(prof.getId());
+        userId = Math.toIntExact(prof.getId());
         break;
       case CED:
         CED ced = cedRepo.findByEmail(user.getEmail())
           .orElseThrow(() -> new InvalidCredentialsException("Candidat not found"));
-        userId= Math.toIntExact(ced.getId());
+        userId = Math.toIntExact(ced.getId());
         break;
     }
 

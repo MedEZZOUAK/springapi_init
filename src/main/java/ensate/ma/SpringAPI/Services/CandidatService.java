@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import java.io.IOException;
 import java.util.List;
@@ -18,9 +16,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CandidatService {
-    private final CandidatRepo candidatRepo;
-    private final LangueRepo langueRepo;
-    private final loginRepo loginRepo;
+  private final CandidatRepo candidatRepo;
+  private final LangueRepo langueRepo;
+  private final loginRepo loginRepo;
   @Autowired
   private final PasswordEncoder passwordEncoder;
   private final DiplomeRepo diplomeRepo;
@@ -28,26 +26,26 @@ public class CandidatService {
   private final BourseRepo bourseRepo;
   private final CandidatureRepo candidatureRepo;
 
-    public List<Candidat> findAllCandidats() {
-        return candidatRepo.findAll();
-    }
+  public List<Candidat> findAllCandidats() {
+    return candidatRepo.findAll();
+  }
 
-    public void AddCandidat(Candidat candidat) {
-        candidatRepo.save(candidat);
-    }
+  public void AddCandidat(Candidat candidat) {
+    candidatRepo.save(candidat);
+  }
 
-    public void deleteCandidat(Long id) {
-        candidatRepo.deleteById(id);
-    }
+  public void deleteCandidat(Long id) {
+    candidatRepo.deleteById(id);
+  }
 
-    public Candidat findCandidatById(Long id) {
-        return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
-    }
+  public Candidat findCandidatById(Long id) {
+    return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
+  }
 
-    public Candidat updateCandidat(Long id, Candidat candidatDetails) {
+  public Candidat updateCandidat(Long id, Candidat candidatDetails) {
     Optional<Candidat> candidatOptional = candidatRepo.findById(id);
     if (candidatOptional.isEmpty()) {
-        return null;
+      return null;
     }
     Candidat candidat = candidatOptional.get();
 
@@ -78,32 +76,34 @@ public class CandidatService {
     candidat.setCandidatures(candidatDetails.getCandidatures());
 
     return candidatRepo.save(candidat);
-}
+  }
 
-    public String addLangue(Long id, List<Langue> langue) {
-      //set candidat_id for each langue
-      langue.forEach(lang -> lang.setCandidat(candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"))));
-      //save all languages
-      try {
-        langueRepo.saveAll(langue);
-        return "Langue added successfully";
-      }catch (RuntimeException e){
-        return "Error while adding langue";
-      }
+  public String addLangue(Long id, List<Langue> langue) {
+    //set candidat_id for each langue
+    langue.forEach(lang -> lang.setCandidat(candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"))));
+    //save all languages
+    try {
+      langueRepo.saveAll(langue);
+      return "Langue added successfully";
+    } catch (RuntimeException e) {
+      return "Error while adding langue";
     }
-    public String ChangePassword(String newPassword , Long id) {
-      var email= candidatRepo.findById(id).get().getEmail();
-      //find the login by email
-      var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
-      try {
-        login.setPassword(passwordEncoder.encode(newPassword));
-        loginRepo.save(login);
-        return "Password changed successfully";
-      }catch (RuntimeException e){
-        return "Error while changing password"+e.getMessage();
-      }
+  }
 
+  public String ChangePassword(String newPassword, Long id) {
+    var email = candidatRepo.findById(id).get().getEmail();
+    //find the login by email
+    var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
+    try {
+      login.setPassword(passwordEncoder.encode(newPassword));
+      loginRepo.save(login);
+      return "Password changed successfully";
+    } catch (RuntimeException e) {
+      return "Error while changing password" + e.getMessage();
     }
+
+  }
+
   public String addDiplome(Long id, List<Diplome> diplomes) {
     Optional<Candidat> candidat = candidatRepo.findById(id);
     if (candidat.isEmpty()) {
@@ -115,30 +115,31 @@ public class CandidatService {
     try {
       diplomeRepo.saveAll(diplomes);
       return "Diplome added successfully";
-    }catch (RuntimeException e){
-      return "Error while adding diplome"+e.getMessage();
+    } catch (RuntimeException e) {
+      return "Error while adding diplome" + e.getMessage();
     }
   }
+
   public Candidat getCandidatById(Long id) {
     return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
   }
 
   public String resetPassword(Integer id) {
-      //find the candidat
+    //find the candidat
     try {
-      var candidat =candidatRepo.findById(Long.valueOf(id));
-      if (candidat.isPresent()){
+      var candidat = candidatRepo.findById(Long.valueOf(id));
+      if (candidat.isPresent()) {
         var email = candidat.get().getEmail();
         //find the login by email
         var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
         login.setPassword(passwordEncoder.encode("password"));
         loginRepo.save(login);
         return "Password reset successfully";
-      }else {
+      } else {
         return "Candidat not found";
       }
-    }catch (RuntimeException e){
-      return "Error while resetting password"+e.getMessage();
+    } catch (RuntimeException e) {
+      return "Error while resetting password" + e.getMessage();
     }
   }
 
@@ -164,56 +165,60 @@ public class CandidatService {
         experienceRepo.save(experienceProf);
       });
       return "Experience added successfully";
-    }catch (RuntimeException e) {
+    } catch (RuntimeException e) {
       return "Error while adding experience" + e.getMessage();
     }
-}
-
-// todo : demande bourse ( aka add bourse)
-public String demandeBourse(long id_Candidature) {
-  // Find the candidature
-  Candidature candidature = candidatureRepo.findById((int) id_Candidature).orElseThrow(() -> new RuntimeException("Candidature not found"));
-  var bourse = Bourse.builder()
-    .date(new java.sql.Date(System.currentTimeMillis()))
-    .statut("En attente")
-    .candidature(candidature)
-    .build();
-  try {
-    bourseRepo.save(bourse);
-    return "Bourse added successfully";
-  } catch (RuntimeException e) {
-    return "Error while adding bourse: " + e.getMessage();
   }
-}
+
+  // todo : demande bourse ( aka add bourse)
+  public String demandeBourse(long id_Candidature) {
+    // Find the candidature
+    Candidature candidature = candidatureRepo.findById((int) id_Candidature).orElseThrow(() -> new RuntimeException("Candidature not found"));
+    var bourse = Bourse.builder()
+      .date(new java.sql.Date(System.currentTimeMillis()))
+      .statut("En attente")
+      .candidature(candidature)
+      .build();
+    try {
+      bourseRepo.save(bourse);
+      return "Bourse added successfully";
+    } catch (RuntimeException e) {
+      return "Error while adding bourse: " + e.getMessage();
+    }
+  }
+
   // todo :  add cv as a file
-  public String addCv(Long id, MultipartFile cv){
+  public String addCv(Long id, MultipartFile cv) {
     try {
       var candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
       candidat.setCvScanne(cv.getBytes());
       candidatRepo.save(candidat);
       return "Cv added successfully";
-    }catch (RuntimeException | IOException e){
-      return "Error while adding cv"+e.getMessage();
+    } catch (RuntimeException | IOException e) {
+      return "Error while adding cv" + e.getMessage();
     }
   }
+
   // todo :  add cin as a file  // do some research about how to add file in spring boot
-  public String addCin(Long id, MultipartFile cin){
+  public String addCin(Long id, MultipartFile cin) {
     try {
       var candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
       candidat.setCinScanne(cin.getBytes());
       candidatRepo.save(candidat);
       return "Cin added successfully";
-    }catch (RuntimeException | IOException e){
-      return "Error while adding cin"+e.getMessage();
+    } catch (RuntimeException | IOException e) {
+      return "Error while adding cin" + e.getMessage();
     }
   }
+
   // todo :  get all candidature by candidat id
   public List<Candidature> getCandidatureByCandidatId(Long id) {
     return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCandidatures();
   }
+
   // todo : get Bourse by candidat id
   public List<Bourse> getBourseByCandidatId(Long id) {
-      return null;
+    return null;
   }
 
 

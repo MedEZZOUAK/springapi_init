@@ -15,21 +15,16 @@ import java.util.List;
 @Setter
 @Getter
 public class CED {
+  @OneToMany(mappedBy = "ced")
+  List<StructureRecherche> structureRecherches;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-
   private String Nom;
-  private String email;
 
 //A ced Have many StructureRecherche
-
-  @OneToMany(mappedBy = "ced")
-  List<StructureRecherche> structureRecherches;
-
-
-
+  private String email;
 
 
 }

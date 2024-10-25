@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CandidatureRequest {
 
-    private String Statuts;
-    private String date;
-    private Integer Sujet_id;
-    private Integer Candidat_id;
+  private String Statuts;
+  private String date;
+  private Integer Sujet_id;
+  private Integer Candidat_id;
 }

@@ -21,23 +21,23 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-            .cors()
-            .and()
-            .csrf()
-            .disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/api/v1/auth/**").permitAll()
+      .cors()
+      .and()
+      .csrf()
+      .disable()
+      .authorizeHttpRequests()
+      .requestMatchers("/api/v1/auth/**").permitAll()
 //            .requestMatchers("/Professeur/**").hasAuthority("Professeur")
 //            .requestMatchers("/CED/**").hasAuthority("CED")
 //            .requestMatchers("/Candidat/**").hasAuthority("Candidat")
-            .anyRequest()
-            .authenticated()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+      .anyRequest()
+      .authenticated()
+      .and()
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authenticationProvider(authenticationProvider)
+      .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 }

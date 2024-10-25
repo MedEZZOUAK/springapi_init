@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface CandidatRepo extends JpaRepository<Candidat, Long> {
   //find by email
-  Optional<Candidat> findByEmail(String email) ;
+  Optional<Candidat> findByEmail(String email);
+
   Optional<Candidat> findAllByEmailAndCandidaturesIsNullOrderByCinAsc(String email);
 
 

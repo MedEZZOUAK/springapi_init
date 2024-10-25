@@ -58,6 +58,4 @@ public class Candidat {
   private List<Candidature> candidatures;
 
 
-
-
 }

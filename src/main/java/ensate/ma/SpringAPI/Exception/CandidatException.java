@@ -1,7 +1,6 @@
 package ensate.ma.SpringAPI.Exception;
 
 
-
-public class CandidatException extends RuntimeException{
+public class CandidatException extends RuntimeException {
 
 }

@@ -1,9 +1,9 @@
 package ensate.ma.SpringAPI.config;
 
+import ensate.ma.SpringAPI.Repository.loginRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ensate.ma.SpringAPI.Repository.loginRepo;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,22 +17,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AppConfig {
   private final loginRepo loginRepo;
+
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> loginRepo.findByEmail(username)
       .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
+
   @Bean
-  public AuthenticationProvider authenticationProvider(){
-    DaoAuthenticationProvider authenticationProvider =new DaoAuthenticationProvider();
+  public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setUserDetailsService(userDetailsService());
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
   }
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
     return config.getAuthenticationManager();

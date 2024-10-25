@@ -14,32 +14,34 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
-    private final AdminService cedService;
-    private final CandidatService candidatService;
+  private final AdminService cedService;
+  private final CandidatService candidatService;
 
-    // crud for the ced
-    @PostMapping("/addCed")
-    public String addCed(@RequestBody CED ced) {
-        cedService.AddCed(ced);
-        return "Ced added successfully";
-    }
-    // todo : modify the ced
-    @PostMapping("/updateCed/{id}")
-    public String updateCed(@PathVariable Long id, @RequestBody CED ced) {
-        cedService.updateCed(id, ced);
-        return "Ced updated successfully";
-    }
+  // crud for the ced
+  @PostMapping("/addCed")
+  public String addCed(@RequestBody CED ced) {
+    cedService.AddCed(ced);
+    return "Ced added successfully";
+  }
 
-    // todo reset password for the professeur
-    @PostMapping("/resetPasswordProf/{id}")
-    public String resetPassword(@PathVariable Integer id) {
-        cedService.resetPassword(id);
-        return "Password reset successfully";
-    }
-    //  todo : reset password for the candidat
+  // todo : modify the ced
+  @PostMapping("/updateCed/{id}")
+  public String updateCed(@PathVariable Long id, @RequestBody CED ced) {
+    cedService.updateCed(id, ced);
+    return "Ced updated successfully";
+  }
+
+  // todo reset password for the professeur
+  @PostMapping("/resetPasswordProf/{id}")
+  public String resetPassword(@PathVariable Integer id) {
+    cedService.resetPassword(id);
+    return "Password reset successfully";
+  }
+
+  //  todo : reset password for the candidat
   @PostMapping("/resetPasswordCand/{id}")
-  public String resetPasswordCandidact(@PathVariable Integer id ){
-      return candidatService.resetPassword(id);
+  public String resetPasswordCandidact(@PathVariable Integer id) {
+    return candidatService.resetPassword(id);
   }
 
 

@@ -1,8 +1,5 @@
 package ensate.ma.SpringAPI.DAO;
 
-import ensate.ma.SpringAPI.Model.Candidat;
-import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

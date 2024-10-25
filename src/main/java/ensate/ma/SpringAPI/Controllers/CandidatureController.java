@@ -17,38 +17,35 @@ import java.sql.Date;
 @RequestMapping("/Candidature")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CandidatureController {
-    // todo add candidature
-    // todo delete candidature
-    // todo preview candidature
+  // todo add candidature
+  // todo delete candidature
+  // todo preview candidature
   @Autowired
   private final CandidatureRepo candidatureRepo;
 
   public CandidatureController(CandidatureRepo candidatureRepo) {
     this.candidatureRepo = candidatureRepo;
   }
+
   @PostMapping("/add")
   public ResponseEntity<String> addCandidature(CandidatureRequest candidatureRequest) {
-    var candidature = Candidature.builder()
-      .Statuts(candidatureRequest.getStatuts())
-      .date(Date.valueOf(candidatureRequest.getDate()))
-      .Sujet_id(candidatureRequest.getSujet_id())
-      .Candidat_id(candidatureRequest.getCandidat_id())
-      .build();
+    var candidature = Candidature.builder().Statuts(candidatureRequest.getStatuts()).date(Date.valueOf(candidatureRequest.getDate())).Sujet_id(candidatureRequest.getSujet_id()).Candidat_id(candidatureRequest.getCandidat_id()).build();
     //save the candidature
     candidatureRepo.save(candidature);
     return ResponseEntity.ok("Candidature added successfully");
   }
+
   @PostMapping("/delete")
   public ResponseEntity<String> deleteCandidature(Long id) {
     candidatureRepo.deleteById(Math.toIntExact(id));
     return ResponseEntity.ok("Candidature deleted successfully");
   }
+
   @PostMapping("/preview")
   public ResponseEntity<Candidature> findCandidatureById(Long id) {
     var candidature = candidatureRepo.findById(Math.toIntExact(id));
     return ResponseEntity.ok(candidature.orElse(null));
   }
-
 
 
 }
