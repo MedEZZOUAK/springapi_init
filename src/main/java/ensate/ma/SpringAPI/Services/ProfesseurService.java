@@ -34,18 +34,19 @@ public class ProfesseurService {
     if (loginRepo.findByEmail(professeur.getEmail()).isPresent()) {
       throw new IllegalStateException("Email " + professeur.getEmail() + " already taken");
     }
+
     // Check if email already exists in professeur repository
     if (professeurRepo.findByEmail(professeur.getEmail()).isPresent()) {
       throw new IllegalStateException("Email " + professeur.getEmail() + " already taken");
     }
+
     // If email is unique, proceed with user creation
     String password = "Welcome123";
-    var login = User.builder()
+    var login= User.builder()
       .email(professeur.getEmail())
       .password(passwordEncoder.encode(password))
       .role(Role.Professeur)
       .build();
-    // Save both entities
     loginRepo.save(login);
     professeurRepo.save(professeur);
   }
