@@ -11,8 +11,10 @@ import ensate.ma.SpringAPI.Repository.LangueRepo;
 import ensate.ma.SpringAPI.Services.CandidatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -59,12 +61,16 @@ public class CandidatController {
 
         // todo add diplome to a candidat
         @PostMapping("/addDiplome/{id}")
-          public ResponseEntity<String> addDiplome(@PathVariable Long id, @RequestBody List<Diplome> diplomes) {
-              String response = candidatService.addDiplome(id, diplomes);
-              return ResponseEntity.ok().body(response);
+        public ResponseEntity<String> addDiplome(
+            @PathVariable Long id,
+            @RequestPart("diplome") Diplome diplome,
+            @RequestPart("file1") MultipartFile file1,
+            @RequestPart("file2") MultipartFile file2) {
+            log.warn("diplome: " + diplome);
+            log.warn("file1: " + file1);
+            log.warn("file2: " + file2);
+            return ResponseEntity.ok().body("test");
         }
-
-
         // todo modify password
         @PostMapping("/modifyPassword/{id}")
         public ResponseEntity modifyPassword(@PathVariable Long id, @RequestBody PasswordChangeRequest passwordChangeRequest) {
@@ -106,6 +112,25 @@ public class CandidatController {
     candidatdetails.setLangues(candidat.getLangue());
     return ResponseEntity.ok().body(candidatdetails);
   }
+  @PostMapping("/addCv/{id}")
+  public ResponseEntity<String> addCv(@PathVariable Long id, @RequestBody MultipartFile cv) {
+    return ResponseEntity.ok().body(candidatService.addCv(id, cv));
+  }
+  @PostMapping("/addCin/{id}")
+  public ResponseEntity<String> addCin(@PathVariable Long id, @RequestBody MultipartFile cin) {
+    return ResponseEntity.ok().body(candidatService.addCin(id, cin));
+  }
+  @GetMapping("/getcv/{id}")
+public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
+    byte[] cv = candidatService.getCv(id);
+    return ResponseEntity.ok()
+            .header("Content-Disposition", "attachment; filename=cv.pdf")
+            .contentType(MediaType.APPLICATION_PDF)
+            .body(cv);
+}
+
+
+
 
 
 

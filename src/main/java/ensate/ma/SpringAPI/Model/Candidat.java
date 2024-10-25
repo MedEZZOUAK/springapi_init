@@ -38,8 +38,10 @@ public class Candidat {
   private String ProvincePere;
   private String ProvinceMere;
   private String Profession;
-  private String CvScanne;
-  private String CinScanne;
+  @Lob
+  private byte[] CvScanne;
+  @Lob
+  private byte[] CinScanne;
   private Date DateNaissance;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -54,4 +56,8 @@ public class Candidat {
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Candidature> candidatures;
+
+
+
+
 }

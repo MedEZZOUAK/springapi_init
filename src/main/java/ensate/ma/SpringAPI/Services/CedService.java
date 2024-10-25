@@ -61,6 +61,7 @@ public class CedService {
         return structRepo.findAllByCed_id(cedId);
     }
     //todo : get all candidature by CED id
+
     //todo : accepte and refuse candidature
     // todo : accepter and refuse Bourse
     // todo : get all bourse by CED id

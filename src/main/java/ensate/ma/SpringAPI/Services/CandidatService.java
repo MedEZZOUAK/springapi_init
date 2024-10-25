@@ -1,17 +1,17 @@
 package ensate.ma.SpringAPI.Services;
 
 import ensate.ma.SpringAPI.DAO.ExperienceDTO;
-import ensate.ma.SpringAPI.Model.Candidat;
-import ensate.ma.SpringAPI.Model.Diplome;
-import ensate.ma.SpringAPI.Model.Langue;
+import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +25,8 @@ public class CandidatService {
   private final PasswordEncoder passwordEncoder;
   private final DiplomeRepo diplomeRepo;
   private final Experience experienceRepo;
+  private final BourseRepo bourseRepo;
+  private final CandidatureRepo candidatureRepo;
 
     public List<Candidat> findAllCandidats() {
         return candidatRepo.findAll();
@@ -167,13 +169,56 @@ public class CandidatService {
     }
 }
 
-// todo : demande bourse
+// todo : demande bourse ( aka add bourse)
+public String demandeBourse(long id_Candidature) {
+  // Find the candidature
+  Candidature candidature = candidatureRepo.findById((int) id_Candidature).orElseThrow(() -> new RuntimeException("Candidature not found"));
+  var bourse = Bourse.builder()
+    .date(new java.sql.Date(System.currentTimeMillis()))
+    .statut("En attente")
+    .candidature(candidature)
+    .build();
+  try {
+    bourseRepo.save(bourse);
+    return "Bourse added successfully";
+  } catch (RuntimeException e) {
+    return "Error while adding bourse: " + e.getMessage();
+  }
+}
   // todo :  add cv as a file
+  public String addCv(Long id, MultipartFile cv){
+    try {
+      var candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
+      candidat.setCvScanne(cv.getBytes());
+      candidatRepo.save(candidat);
+      return "Cv added successfully";
+    }catch (RuntimeException | IOException e){
+      return "Error while adding cv"+e.getMessage();
+    }
+  }
   // todo :  add cin as a file  // do some research about how to add file in spring boot
+  public String addCin(Long id, MultipartFile cin){
+    try {
+      var candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
+      candidat.setCinScanne(cin.getBytes());
+      candidatRepo.save(candidat);
+      return "Cin added successfully";
+    }catch (RuntimeException | IOException e){
+      return "Error while adding cin"+e.getMessage();
+    }
+  }
   // todo :  get all candidature by candidat id
-  // todo : get Bourssier by candidat id
+  public List<Candidature> getCandidatureByCandidatId(Long id) {
+    return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCandidatures();
+  }
+  // todo : get Bourse by candidat id
+  public List<Bourse> getBourseByCandidatId(Long id) {
+      return null;
+  }
 
 
-
+  public byte[] getCv(Long id) {
+    return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCvScanne();
+  }
 }
 

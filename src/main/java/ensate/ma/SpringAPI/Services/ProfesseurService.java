@@ -3,7 +3,6 @@ package ensate.ma.SpringAPI.Services;
 
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
-import ensate.ma.SpringAPI.config.AppConfig;
 import ensate.ma.SpringAPI.user.Role;
 import ensate.ma.SpringAPI.user.User;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProfesseurService {
-  private final ProfesseurRepo professeurRepo;
+  @Autowired
+  private  ProfesseurRepo professeurRepo;
   @Autowired
   private final loginRepo loginRepo;
   @Autowired
@@ -30,12 +30,22 @@ public class ProfesseurService {
   }
 
   public void AddProfesseur(Professeur professeur) {
+    // Check if email already exists in login repository
+    if (loginRepo.findByEmail(professeur.getEmail()).isPresent()) {
+      throw new IllegalStateException("Email " + professeur.getEmail() + " already taken");
+    }
+    // Check if email already exists in professeur repository
+    if (professeurRepo.findByEmail(professeur.getEmail()).isPresent()) {
+      throw new IllegalStateException("Email " + professeur.getEmail() + " already taken");
+    }
+    // If email is unique, proceed with user creation
     String password = "Welcome123";
-    var login= User.builder()
+    var login = User.builder()
       .email(professeur.getEmail())
       .password(passwordEncoder.encode(password))
       .role(Role.Professeur)
       .build();
+    // Save both entities
     loginRepo.save(login);
     professeurRepo.save(professeur);
   }

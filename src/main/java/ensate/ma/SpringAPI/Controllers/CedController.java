@@ -20,9 +20,7 @@ public class CedController {
 
   @PostMapping("/addProfesseur")
   public String addProfesseur(@RequestBody Professeur professeur) {
-
     professeurService.AddProfesseur(professeur);
-
     return "Professeur added successfully";
   }
 
