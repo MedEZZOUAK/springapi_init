@@ -5,6 +5,7 @@ import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -224,6 +225,48 @@ public class CandidatService {
 
   public byte[] getCv(Long id) {
     return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCvScanne();
+  }
+  public String addBac(Long id ,MultipartFile file) {
+    //get the id of the bac diploma using the id of the candidat
+
+    Optional<Diplome> optional = Optional.ofNullable(diplomeRepo.findDiplomeByCandidat_idAndType(id, "Bac").orElseThrow(() -> new RuntimeException("Diplome not found")));
+    if (optional.isEmpty()) {
+      return "Diplome not found";
+    }
+    Diplome diplome = optional.get();
+    try {
+      diplome.setDiplomeScanne(file.getBytes());
+      diplomeRepo.save(diplome);
+      return "Bac added successfully";
+    } catch (IOException e) {
+      return "Error while adding bac" + e.getMessage();
+    }
+  }
+
+  public String addLicence(Long id, MultipartFile lisencescanne, MultipartFile licensereleve) {
+    //get the id of the bac diploma using the id of the candidat
+    Diplome diplome = diplomeRepo.findDiplomeByCandidat_idAndType(id, "Licence").orElseThrow(() -> new RuntimeException("Diplome not found"));
+    try {
+      diplome.setDiplomeScanne(lisencescanne.getBytes());
+      diplome.setRelevetNoteScanne(licensereleve.getBytes());
+      diplomeRepo.save(diplome);
+      return "Licence added successfully";
+    } catch (IOException e) {
+      return "Error while adding licence" + e.getMessage();
+    }
+  }
+
+  public String addMaster(Long id, MultipartFile masterscanne, MultipartFile masterreleve) {
+    //get the id of the bac diploma using the id of the candidat
+    Diplome diplome = diplomeRepo.findDiplomeByCandidat_idAndType(id, "Master").orElseThrow(() -> new RuntimeException("Diplome not found"));
+    try {
+      diplome.setDiplomeScanne(masterscanne.getBytes());
+      diplome.setRelevetNoteScanne(masterreleve.getBytes());
+      diplomeRepo.save(diplome);
+      return "Master added successfully";
+    } catch (IOException e) {
+      return "Error while adding master" + e.getMessage();
+    }
   }
 }
 

@@ -20,3 +20,7 @@ list (structure de recherche) in sujet ✅
 entretien accepter date  ezzouak
 
 statuts : an cours preselectionner , accpter refuser
+
+
+adding cin and cv  ✅✅
+

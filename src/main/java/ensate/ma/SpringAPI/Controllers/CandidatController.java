@@ -115,15 +115,12 @@ public class CandidatController {
     return ResponseEntity.ok().body(candidatdetails);
   }
 
-  @PostMapping("/addCv/{id}")
-  public ResponseEntity<String> addCv(@PathVariable Long id, @RequestBody MultipartFile cv) {
-    return ResponseEntity.ok().body(candidatService.addCv(id, cv));
-  }
-
-  @PostMapping("/addCin/{id}")
-  public ResponseEntity<String> addCin(@PathVariable Long id, @RequestBody MultipartFile cin) {
-    return ResponseEntity.ok().body(candidatService.addCin(id, cin));
-  }
+  @PostMapping("/addDocuments/{id}")
+public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("cv") MultipartFile cv, @RequestPart("cin") MultipartFile cin) {
+  candidatService.addCv(id, cv);
+  candidatService.addCin(id, cin);
+  return ResponseEntity.ok().body("Documents added successfully");
+}
 
   @GetMapping("/getcv/{id}")
   public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
@@ -136,6 +133,15 @@ public class CandidatController {
     List<CEDDETAILS> ceddetails = cedService.getallCEDinfos();
     return ResponseEntity.ok().body(ceddetails);
   }
+  //upload Documents
+  @PostMapping("/AdddiplomesFiles/{id}")
+  public ResponseEntity<String> addDiplomeFiles(@PathVariable Long id, @RequestPart("bacscanne") MultipartFile bacscanne, @RequestPart("lisencescanne") MultipartFile lisencescanne, @RequestPart("masterscanne") MultipartFile masterscanne, @RequestPart("licensereleve") MultipartFile licensereleve, @RequestPart("masterreleve") MultipartFile masterreleve) {
+    ;
+    String message = candidatService.addBac(id, bacscanne) + " /n  " + candidatService.addLicence(id, lisencescanne, licensereleve) + " " + candidatService.addMaster(id, masterscanne, masterreleve);
+
+    return ResponseEntity.ok().body(message);
+  }
+
 
 
 
