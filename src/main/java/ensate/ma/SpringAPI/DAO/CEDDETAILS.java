@@ -13,7 +13,5 @@ public class CEDDETAILS {
     @JsonProperty("ced_name")
     private String CED;
     private Integer id;
-
-    @JsonProperty("structures")
-    private List<String> structuresname;
+    private List<StructureRechercheDTO> structuresname;
 }

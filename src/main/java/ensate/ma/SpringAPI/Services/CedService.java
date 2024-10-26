@@ -87,9 +87,10 @@ public class CedService {
     List<CEDDETAILS> ceddetails = new ArrayList<>();
     List<CED> ceds = cedRepo.findAll();
     for (CED ced : ceds) {
-        List<String> structuresname = new ArrayList<>();
+        List<StructureRechercheDTO> structuresname = new ArrayList<>();
         structRepo.findAllByCed_id(ced.getId()).forEach(structureRecherche -> {
-            structuresname.add(structureRecherche.getNom());
+            structuresname.add(StructureRechercheDTO.builder().id(structureRecherche.getId()).nom(structureRecherche.getNom())
+              .build());
         });
         ceddetails.add(CEDDETAILS.builder().CED(ced.getNom()).id(Math.toIntExact(ced.getId())).
           structuresname(structuresname).build());
@@ -104,9 +105,7 @@ public class CedService {
   private StructureRechercheDTO convertToDTO(StructureRecherche structure) {
     return new StructureRechercheDTO(
             structure.getId(),
-            structure.getNom(),
-            structure.getDomaine(),
-            structure.getEtablissement()
+            structure.getNom()
     );
   }
 

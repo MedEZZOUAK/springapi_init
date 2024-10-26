@@ -1,0 +1,45 @@
+###
+POST http://localhost:8081/restricted/addCed
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
+
+{
+  "nom": "Ced4",
+  "email": "ced4@email.com"
+}
+
+<> 2024-10-26T165506.200.txt
+<> 2024-10-26T165435.200.txt
+<> 2024-10-26T165428.200.txt
+<> 2024-10-26T165420.200.txt
+
+###
+GET http://localhost:8081/Candidat/GetCED
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
+
+<> 2024-10-26T170525.200.json
+<> 2024-10-26T170115.200.json
+<> 2024-10-26T170053.200.json
+<> 2024-10-26T165946.200.json
+<> 2024-10-26T165508.200.json
+<> 2024-10-26T165454.200.json
+
+
+###
+POST http://localhost:8081/CED/addStructure
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
+
+{
+  "nom": "structure2",
+  "domaine": "Info",
+  "etablissement": "uae",
+  "ced_id": 4
+}
+
+<> 2024-10-26T170111.200.txt
+<> 2024-10-26T170049.200.txt
+
+###
+GET http://localhost:8081/CED/structure/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4

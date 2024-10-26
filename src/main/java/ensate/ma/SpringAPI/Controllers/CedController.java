@@ -11,6 +11,8 @@ import ensate.ma.SpringAPI.Repository.SujetRepo;
 import ensate.ma.SpringAPI.Services.CedService;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
 import ensate.ma.SpringAPI.Services.SujetService;
+import ensate.ma.SpringAPI.Services.structureService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +26,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/CED")
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
 public class CedController {
   @Autowired
   private ProfesseurService professeurService;
   @Autowired
   private CedService cedService;
-
   @Autowired
   private SujetService sujetService;
   @Autowired
   private SujetRepo sujetRepo;
+  @Autowired
+  private final structureService structureService;
 
   @PostMapping("/addProfesseur")
   public String addProfesseur(@RequestBody Professeur professeur) {
@@ -42,8 +46,8 @@ public class CedController {
   }
 
   @PostMapping("/addStructure")
-  public String addStructure(@RequestBody CED ced) {
-    cedService.AddCed(ced);
+  public String addStructure(@RequestBody StructureRecherche struct) {
+    structureService.AddStructure(struct);
     return "Structure added successfully";
   }
 
@@ -121,5 +125,7 @@ public class CedController {
   public ResponseEntity<List<CandidatureRequest>> getCandidatures(@PathVariable Long id) {
     return ResponseEntity.ok(cedService.getCandidaturesByCedId(id));
   }
+  //Gett all the professeur by ced id
+
 
 }

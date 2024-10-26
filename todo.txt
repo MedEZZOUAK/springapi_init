@@ -1,21 +1,22 @@
 todo :
--- 1. Add dto for responses and requests
--- 2. Add upload file to the server for the diplomes
--- 3. Add the user profile add image 
+-- 1. Add dto for responses and requests ✅
+-- 2. Add upload file to the server for the diplomes ezzouak
+-- 3. Add the user profile add image
 files + data --> requetes 1
 data --> requetes1 --> requets2 ( id diplome) --> file diplome
 excel --> platforme
-Bourse + Candidat + Candidature
-DTO : shiit that exist + what ever u find + Professeur
-fix add professeur
-list CDE and structure de recherche
-subject by structure de recherche id
-Gett all the professeur by ced id
-professeur : Detaills ??? sujet
-Accepte refuse candidature
-list bourse by ced
-Accepter /refuser bourse
-list sujet by professeur
-list (structure de recherche) in sujet
-entretien accepter date
+Bourse + Candidat + Candidature ✅
+DTO : shiit that exist + what ever u find + Professeur ✅
+fix add professeur   ✅
+list CDE and structure de recherche ✅
+subject by structure de recherche id ✅
+Gett all the professeur by ced id  waiil
+professeur : Detaills ??? sujet  ?????
+Accepte refuse candidature  waiil
+list bourse by ced(id) waiil
+Accepter /refuser bourse waill
+list sujet by professeur ✅
+list (structure de recherche) in sujet ✅
+entretien accepter date  ezzouak
+
 statuts : an cours preselectionner , accpter refuser
