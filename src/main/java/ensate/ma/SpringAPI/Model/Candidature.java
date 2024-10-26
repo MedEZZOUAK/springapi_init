@@ -22,6 +22,8 @@ public class Candidature {
   @ManyToOne
   @JoinColumn(name = "candidat_id", referencedColumnName = "id", insertable = false, updatable = false)
   Candidat candidat;
+
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)

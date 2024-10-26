@@ -5,6 +5,8 @@ import ensate.ma.SpringAPI.Repository.SujetRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,9 +35,22 @@ public class SujetService {
     sujetRepo.deleteById(id);
   }
 
-//  // get sujet by structure id
-//  public Sujet getSujetByStructureId(Long id) {
-//
-//  }
+  // get sujet by structure id
+  public List<Sujet> getSujetByStructureId(Long structureId) {
+    List<Sujet> sujets = sujetRepo.findByStructureRecherche_id(structureId);
+    if (sujets.isEmpty()) {
+      throw new RuntimeException("No subjects found for structure with id: " + structureId);
+    }
+    return sujets;
+  }
+
+  // get sujet by professor id
+  public List<Sujet> getSujetByProfesseurId(Long professorId) {
+    List<Sujet> sujets = sujetRepo.findByProfesseur_id(professorId);
+    if (sujets.isEmpty()) {
+      throw new RuntimeException("No subjects found for professor with id: " + professorId);
+    }
+    return sujets;
+  }
 
 }

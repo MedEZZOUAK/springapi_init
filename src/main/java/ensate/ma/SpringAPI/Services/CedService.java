@@ -1,16 +1,33 @@
 package ensate.ma.SpringAPI.Services;
 
 
+import ensate.ma.SpringAPI.DAO.CandidatureRequest;
+import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.StructureRecherche;
+import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.StructRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
+
+import java.sql.Date;
+import java.util.stream.Collectors;
+import java.text.SimpleDateFormat;
+
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Service
 @RequiredArgsConstructor
 public class CedService {
-  private final StructRepo structRepo;
+  private static final Logger log = LoggerFactory.getLogger(CedService.class);
+  @Autowired
+  private StructRepo structRepo;
+  @Autowired
+  private CandidatureRepo candidatureRepo;
 
   // add structure de recherche
   public void AddCed(StructureRecherche struct) {
@@ -55,10 +72,44 @@ public class CedService {
   }
 
   // todo : get all structure by ced id
-  public Iterable<StructureRecherche> getStructuresByCedId(Long cedId) {
-    return structRepo.findAllByCed_id(cedId);
+  public List<StructureRechercheDTO> getStructuresByCedId(Long cedId) {
+    List<StructureRecherche> structures = structRepo.findByCedId(cedId);
+    return structures.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
   }
+
+  private StructureRechercheDTO convertToDTO(StructureRecherche structure) {
+    return new StructureRechercheDTO(
+            structure.getId(),
+            structure.getNom(),
+            structure.getDomaine(),
+            structure.getEtablissement()
+    );
+  }
+
+
   //todo : get all candidature by CED id
+  public List<CandidatureRequest> getCandidaturesByCedId(Long cedId) {
+    List<Candidature> candidatures = candidatureRepo.findByCedId(cedId);
+    return candidatures.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+  }
+
+  private CandidatureRequest convertToDTO(Candidature candidature) {
+    CandidatureRequest dto = new CandidatureRequest();
+    //dto.setId(candidature.getId());
+    dto.setStatuts(candidature.getStatuts());
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // specify your date format here
+    String dateString = dateFormat.format(candidature.getDate());
+    dto.setDate(dateString);
+
+    dto.setSujet_id(candidature.getSujet_id());
+    dto.setCandidat_id(candidature.getCandidat_id());
+    return dto;
+  }
 
   //todo : accepte and refuse candidature
   // todo : accepter and refuse Bourse

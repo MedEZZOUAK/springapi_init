@@ -1,12 +1,23 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.CandidatureRequest;
+import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
+import ensate.ma.SpringAPI.DAO.SujetDTO;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.StructureRecherche;
+import ensate.ma.SpringAPI.Model.Sujet;
+import ensate.ma.SpringAPI.Repository.SujetRepo;
 import ensate.ma.SpringAPI.Services.CedService;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
+import ensate.ma.SpringAPI.Services.SujetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/CED")
@@ -17,6 +28,11 @@ public class CedController {
   private ProfesseurService professeurService;
   @Autowired
   private CedService cedService;
+
+  @Autowired
+  private SujetService sujetService;
+  @Autowired
+  private SujetRepo sujetRepo;
 
   @PostMapping("/addProfesseur")
   public String addProfesseur(@RequestBody Professeur professeur) {
@@ -65,4 +81,44 @@ public class CedController {
   }
 
   // todo get structure de recherche by id ced
+  @GetMapping("/structures/{cedId}")
+  public ResponseEntity<?> getStructuresByCedId(@PathVariable Long cedId) {
+    try {
+      List<StructureRechercheDTO> structures = cedService.getStructuresByCedId(cedId);
+      if (structures.isEmpty()) {
+        return ResponseEntity.ok()
+                .body(Map.of("message", "No structures found for CED with ID: " + cedId));
+      }
+      return ResponseEntity.ok(structures);
+    } catch (Exception e) {
+      log.error("Error fetching structures for CED with id: " + cedId, e);
+      return ResponseEntity.badRequest()
+              .body(Map.of("error", "Error fetching structures: " + e.getMessage()));
+    }
+  }
+
+  // get sujet by structure id
+  @GetMapping("/structure/{id}")
+  public List<SujetDTO> getSujets(@PathVariable Long id) {
+    try {
+      return sujetService.getSujetByStructureId(id).stream()
+              .map(sujet -> new SujetDTO(
+                      sujet.getId(),
+                      sujet.getTitre(),
+                      sujet.getDescription(),
+                      sujet.getThematique()
+              ))
+              .collect(Collectors.toList());
+    } catch (RuntimeException e) {
+      log.error("Error fetching subjects for professor with id: " + id, e);
+      return List.of();
+    }
+  }
+
+  // get candidature by ced id
+  @GetMapping("/candidature/{id}")
+  public ResponseEntity<List<CandidatureRequest>> getCandidatures(@PathVariable Long id) {
+    return ResponseEntity.ok(cedService.getCandidaturesByCedId(id));
+  }
+
 }

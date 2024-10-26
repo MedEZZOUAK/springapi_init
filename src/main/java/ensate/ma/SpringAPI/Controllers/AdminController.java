@@ -6,16 +6,18 @@ import ensate.ma.SpringAPI.Services.AdminService;
 import ensate.ma.SpringAPI.Services.CandidatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/restricted")
 @Slf4j
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
-  private final AdminService cedService;
-  private final CandidatService candidatService;
+  @Autowired
+  private  AdminService cedService;
+  @Autowired
+  private  CandidatService candidatService;
 
   // crud for the ced
   @PostMapping("/addCed")

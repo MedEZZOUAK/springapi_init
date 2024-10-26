@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 
@@ -28,11 +31,27 @@ public class CandidatureController {
   }
 
   @PostMapping("/add")
-  public ResponseEntity<String> addCandidature(CandidatureRequest candidatureRequest) {
-    var candidature = Candidature.builder().Statuts(candidatureRequest.getStatuts()).date(Date.valueOf(candidatureRequest.getDate())).Sujet_id(candidatureRequest.getSujet_id()).Candidat_id(candidatureRequest.getCandidat_id()).build();
-    //save the candidature
+  public ResponseEntity<String> addCandidature(@RequestBody CandidatureRequest request) {
+    if (request.getDate() == null || request.getDate().isEmpty()) {
+      return new ResponseEntity<>("Date cannot be null or empty", HttpStatus.BAD_REQUEST);
+    }
+
+    Date date;
+    try {
+      date = Date.valueOf(request.getDate());
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
+    }
+
+    Candidature candidature = Candidature.builder()
+            .Statuts(request.getStatuts())
+            .date(date)
+            .Sujet_id(request.getSujet_id())
+            .Candidat_id(request.getCandidat_id())
+            .build();
+
     candidatureRepo.save(candidature);
-    return ResponseEntity.ok("Candidature added successfully");
+    return new ResponseEntity<>("Candidature added successfully", HttpStatus.OK);
   }
 
   @PostMapping("/delete")

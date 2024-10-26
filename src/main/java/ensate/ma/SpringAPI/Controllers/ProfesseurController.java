@@ -1,7 +1,9 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.SujetDTO;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.Sujet;
+import ensate.ma.SpringAPI.Repository.SujetRepo;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
 import ensate.ma.SpringAPI.Services.SujetService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/Professeur")
@@ -20,6 +23,8 @@ public class ProfesseurController {
   private ProfesseurService professeurService;
   @Autowired
   private SujetService SujetService;
+    @Autowired
+    private SujetRepo sujetRepo;
 
   @PostMapping("/delete/{id}")
   public String deleteProfesseur(@PathVariable Long id) {
@@ -59,4 +64,22 @@ public class ProfesseurController {
     SujetService.DeleteSujet(id);
     return "sujet deleted successfully";
   }
+
+  @GetMapping("/getSujetByProfId/{id}")
+  public List<SujetDTO> getSujets(@PathVariable Long id) {
+    try {
+      return SujetService.getSujetByProfesseurId(id).stream()
+              .map(sujet -> new SujetDTO(
+                      sujet.getId(),
+                      sujet.getTitre(),
+                      sujet.getDescription(),
+                      sujet.getThematique()
+              ))
+              .collect(Collectors.toList());
+    } catch (RuntimeException e) {
+      log.error("Error fetching subjects for professor with id: " + id, e);
+      return List.of();
+    }
+  }
+
 }
