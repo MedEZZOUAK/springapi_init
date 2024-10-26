@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.CEDDETAILS;
 import ensate.ma.SpringAPI.DAO.Candidatdetails;
 import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.DAO.PasswordChangeRequest;
@@ -9,6 +10,7 @@ import ensate.ma.SpringAPI.Model.Langue;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
 import ensate.ma.SpringAPI.Repository.LangueRepo;
 import ensate.ma.SpringAPI.Services.CandidatService;
+import ensate.ma.SpringAPI.Services.CedService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,6 +32,8 @@ public class CandidatController {
   private LangueRepo LangueRepo;
   @Autowired
   private CandidatRepo candidatRepo;
+  @Autowired
+  private CedService cedService;
 
   @PostMapping("/delete/{id}")
   public String deleteCandidat(@PathVariable Long id) {
@@ -125,6 +129,12 @@ public class CandidatController {
   public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
     byte[] cv = candidatService.getCv(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cv.pdf").contentType(MediaType.APPLICATION_PDF).body(cv);
+  }
+
+  @GetMapping("/GetCED")
+  public ResponseEntity<List<CEDDETAILS>> getCED() {
+    List<CEDDETAILS> ceddetails = cedService.getallCEDinfos();
+    return ResponseEntity.ok().body(ceddetails);
   }
 
 

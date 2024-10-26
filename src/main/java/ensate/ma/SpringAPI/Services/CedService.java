@@ -1,38 +1,24 @@
 package ensate.ma.SpringAPI.Services;
 
 
-import ensate.ma.SpringAPI.DAO.CandidatureRequest;
-import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.StructureRecherche;
-import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.StructRepo;
+import ensate.ma.SpringAPI.Repository.SujetRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
 
-import java.sql.Date;
-import java.util.stream.Collectors;
-import java.text.SimpleDateFormat;
-
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 @Service
 @RequiredArgsConstructor
 public class CedService {
-  private static final Logger log = LoggerFactory.getLogger(CedService.class);
-  @Autowired
-  private StructRepo structRepo;
-  @Autowired
-  private CandidatureRepo candidatureRepo;
+  private final StructRepo structRepo;
 
-  // add structure de recherche
-  public void AddCed(StructureRecherche struct) {
-    structRepo.save(struct);
-  }
+  @Autowired
+  private final SujetRepo sujetRepo;
+
+
 
 
   public StructureRecherche updateStructureRecherche(Long id, StructureRecherche updatedStruct) {
@@ -77,6 +63,24 @@ public class CedService {
     return structures.stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
+  }
+
+  public List<CEDDETAILS> getallCEDinfos() {
+    List<CEDDETAILS> ceddetails = new ArrayList<>();
+    List<CED> ceds = cedRepo.findAll();
+    for (CED ced : ceds) {
+        List<String> structuresname = new ArrayList<>();
+        structRepo.findAllByCed_id(ced.getId()).forEach(structureRecherche -> {
+            structuresname.add(structureRecherche.getNom());
+        });
+        ceddetails.add(CEDDETAILS.builder().CED(ced.getNom()).id(Math.toIntExact(ced.getId())).
+          structuresname(structuresname).build());
+    }
+    return ceddetails;
+}
+
+  public void AddCed(CED ced) {
+    cedRepo.save(ced);
   }
 
   private StructureRechercheDTO convertToDTO(StructureRecherche structure) {
