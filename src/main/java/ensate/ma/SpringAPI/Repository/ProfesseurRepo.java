@@ -15,8 +15,8 @@ public interface ProfesseurRepo extends JpaRepository<Professeur, Long> {
   Optional<Professeur> findByEmail(String email);
   // find by ced id, list of professeurs
 
-  @Query(value = "SELECT new ensate.ma.SpringAPI.DAO.ProfesseurDTO(p.nom, p.prenom, p.Centre_ID) " +
-          "FROM Professeur p " +
+  @Query(value = "SELECT new ensate.ma.SpringAPI.DAO.ProfesseurDTO(p.nom, p.prenom, p.Centre_ID, s.nom, s.etablissement) " +
+          "FROM Professeur  p " +
           "JOIN StructureRecherche s ON p.Centre_ID = s.id " +
           "WHERE s.ced_id = :cedId", nativeQuery = false)
   List<ProfesseurDTO> findByCedId(@Param("cedId") Long cedId);

@@ -32,7 +32,7 @@ public class StructureRecherche {
   private Long id;
   private String nom;
   private String domaine;
-  private String Etablissement;
+  private String etablissement;
   private Long ced_id;
 
 

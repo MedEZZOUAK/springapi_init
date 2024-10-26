@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.DAO.SujetDTO;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.Sujet;
@@ -38,8 +39,15 @@ public class ProfesseurController {
   }
 
   @GetMapping("/find/{id}")
-  public Professeur findProfesseurById(@PathVariable Long id) {
-    return professeurService.findProfesseurById(id);
+  public ProfesseurDTO findProfesseurById(@PathVariable Long id) {
+    Professeur professeur = professeurService.findProfesseurById(id);
+    return new ProfesseurDTO(
+            professeur.getNom(),
+            professeur.getPrenom(),
+            professeur.getCentre_ID(),
+            professeur.getStructureRecherche().getNom(),
+            professeur.getStructureRecherche().getEtablissement()
+    );
   }
 
   @PutMapping("/update/{id}")

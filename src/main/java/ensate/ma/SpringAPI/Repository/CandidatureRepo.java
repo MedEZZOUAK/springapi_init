@@ -15,4 +15,7 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
             "WHERE sr.ced_id = :cedId",
             nativeQuery = true)
     List<Candidature> findByCedId(@Param("cedId") Long cedId);
+
+    // find candidature by id
+    Candidature findById(Long id);
 }

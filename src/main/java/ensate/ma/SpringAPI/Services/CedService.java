@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
+import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,6 +135,14 @@ public class CedService {
   }
 
   //todo : accepte and refuse candidature
+  public void accepteCandidature(Long id) {
+    Candidature candidature = candidatureRepo.findById(id);
+    if (candidature == null) {
+      throw new CandidatureNotFoundException("Candidature with id " + id + " not found");
+    }
+    candidature.setStatuts("Accepted");
+    candidatureRepo.save(candidature);
+  }
   // todo : accepter and refuse Bourse
   // todo : get all bourse by CED id
   //
