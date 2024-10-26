@@ -1,6 +1,7 @@
 package ensate.ma.SpringAPI.Services;
 
 
+import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
 import ensate.ma.SpringAPI.Repository.loginRepo;
@@ -71,6 +72,14 @@ public class ProfesseurService {
   public List<Professeur> getAllProfesseurs() {
     return professeurRepo.findAll();
   }
+
+  // get professeur by ced id
+  public List<ProfesseurDTO> getProfesseurByCedId(Long id) {
+    return professeurRepo.findByCedId(id);
+  }
+
+
+
   //todo  accepte and refuse candidature
   //todo  get all candidature by prof id
 

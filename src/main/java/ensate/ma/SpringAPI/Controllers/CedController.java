@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.Model.CED;
 import ensate.ma.SpringAPI.DAO.CandidatureRequest;
 import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
@@ -125,7 +126,11 @@ public class CedController {
   public ResponseEntity<List<CandidatureRequest>> getCandidatures(@PathVariable Long id) {
     return ResponseEntity.ok(cedService.getCandidaturesByCedId(id));
   }
-  //Gett all the professeur by ced id
+  //Get all the professeur by ced id
+  @GetMapping("/professeur/{id}")
+  public List<ProfesseurDTO> getProfesseurByCedId(@PathVariable Long id) {
+    return professeurService.getProfesseurByCedId(id);
+  }
 
 
 }

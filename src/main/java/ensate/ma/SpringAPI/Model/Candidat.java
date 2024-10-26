@@ -46,7 +46,7 @@ public class Candidat {
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 
-  private List<Langue> langue = new ArrayList<>();
+  private List<Langue> langues = new ArrayList<>();
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Diplome> diplomes;

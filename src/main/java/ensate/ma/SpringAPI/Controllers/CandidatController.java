@@ -111,7 +111,7 @@ public class CandidatController {
     candidatdetails.setCandidatures(candidat.getCandidatures());
     candidatdetails.setDiplomes(candidat.getDiplomes());
     candidatdetails.setExperiences(candidat.getExperiences());
-    candidatdetails.setLangues(candidat.getLangue());
+    candidatdetails.setLangues(candidat.getLangues());
     return ResponseEntity.ok().body(candidatdetails);
   }
 
