@@ -1,13 +1,24 @@
 package ensate.ma.SpringAPI.Services;
 
 
+import ensate.ma.SpringAPI.DAO.CEDDETAILS;
+import ensate.ma.SpringAPI.DAO.CandidatureRequest;
+import ensate.ma.SpringAPI.Model.CED;
+import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.StructureRecherche;
+import ensate.ma.SpringAPI.Repository.CandidatureRepo;
+import ensate.ma.SpringAPI.Repository.CedRepo;
 import ensate.ma.SpringAPI.Repository.StructRepo;
 import ensate.ma.SpringAPI.Repository.SujetRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -17,6 +28,13 @@ public class CedService {
 
   @Autowired
   private final SujetRepo sujetRepo;
+  @Autowired
+  private CedRepo cedRepo;
+
+  @Autowired
+  private final CandidatureRepo candidatureRepo;
+
+
 
 
 
