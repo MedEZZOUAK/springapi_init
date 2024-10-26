@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.Model.CED;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.StructureRecherche;
 import ensate.ma.SpringAPI.Services.CedService;
@@ -25,8 +26,8 @@ public class CedController {
   }
 
   @PostMapping("/addStructure")
-  public String addStructure(@RequestBody StructureRecherche struct) {
-    cedService.AddCed(struct);
+  public String addStructure(@RequestBody CED ced) {
+    cedService.AddCed(ced);
     return "Structure added successfully";
   }
 
