@@ -1,21 +1,20 @@
 package ensate.ma.SpringAPI.Services;
 
 
+import ensate.ma.SpringAPI.DAO.BourseDTO;
 import ensate.ma.SpringAPI.DAO.CEDDETAILS;
 import ensate.ma.SpringAPI.DAO.CandidatureRequest;
+import ensate.ma.SpringAPI.Model.Bourse;
 import ensate.ma.SpringAPI.Model.CED;
 import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.StructureRecherche;
-import ensate.ma.SpringAPI.Repository.CandidatureRepo;
-import ensate.ma.SpringAPI.Repository.CedRepo;
-import ensate.ma.SpringAPI.Repository.StructRepo;
-import ensate.ma.SpringAPI.Repository.SujetRepo;
+import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
 import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
-
+import ensate.ma.SpringAPI.Exception.BourseNotFoundException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +34,9 @@ public class CedService {
 
   @Autowired
   private final CandidatureRepo candidatureRepo;
+
+    @Autowired
+    private BourseRepo bourseRepo;
 
 
 
@@ -154,7 +156,39 @@ public class CedService {
         candidatureRepo.save(candidature);
     }
 
-  // todo : accepter and refuse Bourse
+  // todo : accepter Bourse
+  public void accepteBourse(Integer id) {
+    Bourse bourse = bourseRepo.findById(id)
+            .orElseThrow(() -> new BourseNotFoundException("Bourse with id " + id + " not found"));
+
+    bourse.setStatut("Acceptée");
+    bourseRepo.save(bourse);
+  }
+
+    // todo : refuse Bourse
+    public void refuseBourse(Integer id) {
+      Bourse bourse = bourseRepo.findById(id)
+              .orElseThrow(() -> new BourseNotFoundException("Bourse with id " + id + " not found"));
+
+      bourse.setStatut("Refusée");
+      bourseRepo.save(bourse);
+    }
+
   // todo : get all bourse by CED id
-  //
+public List<BourseDTO> getAllBoursesByCedId(Integer cedId) {
+  return bourseRepo.findByCedId(cedId)
+          .stream()
+          .map(bourse -> {
+            BourseDTO dto = new BourseDTO();
+            dto.setId(Math.toIntExact(bourse.getId())); // Convert Long to Integer
+            dto.setStatut(bourse.getStatut());
+            dto.setDateCreation(bourse.getDate()); // Ensure this method exists in Bourse
+
+            // Ensure toCandidatureDTO method exists in CedService
+
+            return dto;
+          })
+          .collect(Collectors.toList());
+}
+
 }

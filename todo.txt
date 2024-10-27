@@ -13,8 +13,8 @@ subject by structure de recherche id ✅
 Gett all the professeur by ced id  ✅
 professeur : Detaills ??? sujet  ?????
 Accepte refuse candidature ✅
-list bourse by ced(id) waiil
-Accepter /refuser bourse waill
+list bourse by ced(id) ✅
+Accepter /refuser bourse ✅
 list sujet by professeur ✅
 list (structure de recherche) in sujet ✅
 entretien accepter date  ezzouak

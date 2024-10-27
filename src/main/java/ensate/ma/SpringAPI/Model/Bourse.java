@@ -22,7 +22,6 @@ public class Bourse {
   private Date date;
   private Integer candidature_id;
 
-
   @ManyToOne
   @JoinColumn(name = "candidature_id", referencedColumnName = "id", insertable = false, updatable = false)
   private Candidature candidature;

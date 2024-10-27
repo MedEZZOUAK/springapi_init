@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
   public ResponseEntity<String> handleCandidatureNotFoundException(CandidatureNotFoundException ex) {
     return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
   }
+
+    @ExceptionHandler(BourseNotFoundException.class)
+    public ResponseEntity<String> handleBourseNotFoundException(BourseNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

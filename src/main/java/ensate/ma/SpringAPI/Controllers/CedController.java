@@ -1,13 +1,7 @@
 package ensate.ma.SpringAPI.Controllers;
 
-import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
-import ensate.ma.SpringAPI.Model.CED;
-import ensate.ma.SpringAPI.DAO.CandidatureRequest;
-import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
-import ensate.ma.SpringAPI.DAO.SujetDTO;
-import ensate.ma.SpringAPI.Model.Professeur;
-import ensate.ma.SpringAPI.Model.StructureRecherche;
-import ensate.ma.SpringAPI.Model.Sujet;
+import ensate.ma.SpringAPI.DAO.*;
+import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.SujetRepo;
 import ensate.ma.SpringAPI.Services.CedService;
 import ensate.ma.SpringAPI.Services.ProfesseurService;
@@ -144,6 +138,26 @@ public class CedController {
     public String rejectCandidature(@PathVariable Long id) {
       cedService.refuseCandidature(id);
       return "Candidature rejected successfully";
+    }
+
+    // accept bourse
+    @PostMapping("/acceptBourse/{id}")
+    public String acceptBourse(@PathVariable Integer id) {
+      cedService.accepteBourse(id);
+      return "Bourse accepted successfully";
+    }
+
+    // reject bourse
+    @PostMapping("/refuseBourse/{id}")
+    public String rejectBourse(@PathVariable Integer id) {
+      cedService.refuseBourse(id);
+      return "Bourse rejected successfully";
+    }
+
+    // get bourse by ced id
+    @GetMapping("/bourses/{cedId}")
+    public List<BourseDTO> getBoursesByCedId(@PathVariable Integer cedId) {
+      return cedService.getAllBoursesByCedId(cedId);
     }
 
 }

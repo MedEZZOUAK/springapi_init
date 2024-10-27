@@ -142,7 +142,10 @@ public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("
     return ResponseEntity.ok().body(message);
   }
 
-
+  @PostMapping("/addBourse/{id}")
+    public ResponseEntity<String> addBourse(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(candidatService.demandeBourse(id));
+    }
 
 
 }

@@ -172,14 +172,23 @@ public class CandidatService {
   }
 
   // todo : demande bourse ( aka add bourse)
-  public String demandeBourse(long id_Candidature) {
+  public String demandeBourse(Integer id_Candidature) {
     // Find the candidature
-    Candidature candidature = candidatureRepo.findById((int) id_Candidature).orElseThrow(() -> new RuntimeException("Candidature not found"));
+    Candidature candidature = candidatureRepo.findById(id_Candidature)
+            .orElseThrow(() -> new RuntimeException("Candidature not found"));
+
+    // Check if the candidature status is "Acceptée"
+    if (!"Acceptée".equals(candidature.getStatuts())) {
+      return "Candidature non acceptée pour que vous puissiez demander une bourse";
+    }
+
+    // Create and save the bourse
     var bourse = Bourse.builder()
-      .date(new java.sql.Date(System.currentTimeMillis()))
-      .statut("En attente")
-      .candidature(candidature)
-      .build();
+            .date(new java.sql.Date(System.currentTimeMillis()))
+            .statut("Non traitée")
+            .candidature(candidature)
+            .candidature_id(id_Candidature)
+            .build();
     try {
       bourseRepo.save(bourse);
       return "Bourse added successfully";
@@ -268,5 +277,8 @@ public class CandidatService {
       return "Error while adding master" + e.getMessage();
     }
   }
+
+
+
 }
 
