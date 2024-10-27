@@ -109,7 +109,7 @@ public class CandidatController {
   @PostMapping("/addDocuments/{id}")
 public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("cv") MultipartFile cv, @RequestPart("cin") MultipartFile cin,@RequestPart("photo") MultipartFile photo) {
 
-  return ResponseEntity.ok().body( candidatService.addCv(id, cv) + " /n  " + candidatService.addCin(id, cin) + " " + candidatService.addPhoto(id, photo));
+  return ResponseEntity.ok().body( candidatService.addCv(id, cv) + " \n" + candidatService.addCin(id, cin) + " \n" + candidatService.addPhoto(id, photo));
 }
 
   @GetMapping("/getcv/{id}")

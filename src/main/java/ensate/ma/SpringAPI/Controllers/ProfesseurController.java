@@ -2,6 +2,7 @@ package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.DAO.SujetDTO;
+import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.Sujet;
 import ensate.ma.SpringAPI.Repository.SujetRepo;
@@ -91,7 +92,10 @@ public class ProfesseurController {
     }
   }
   //list the entretien by professue id ( aka the candiddature preselectionner)
-//  @GetMapping("/entretien/{id}")
+  @GetMapping("/entretien/{id}")
+  public List<Candidature> getEntretien(@PathVariable Long id) {
+    return professeurService.getEntretien(id);
+  }
 
 
 

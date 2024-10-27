@@ -2,7 +2,9 @@ package ensate.ma.SpringAPI.Services;
 
 
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
+import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.Professeur;
+import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
 import ensate.ma.SpringAPI.Repository.loginRepo;
 import ensate.ma.SpringAPI.user.Role;
@@ -24,6 +26,8 @@ public class ProfesseurService {
   private final PasswordEncoder passwordEncoder;
   @Autowired
   private ProfesseurRepo professeurRepo;
+  @Autowired
+  private CandidatureRepo candidatureRepo;
 
   public List<Professeur> findAllProfesseurs() {
     return professeurRepo.findAll();
@@ -78,6 +82,10 @@ public class ProfesseurService {
     return professeurRepo.findByCedId(id);
   }
 
+  public List<Candidature> getEntretien(Long id) {
+    //find all the candidature with status entretien and prof id
+    return candidatureRepo.findByProfesseurIdAndStatus(id, "entretien");
+  }
 
 
   //todo  accepte and refuse candidature
