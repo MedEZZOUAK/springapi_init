@@ -44,8 +44,8 @@ public class ProfesseurController {
     Professeur professeur = professeurService.findProfesseurById(id);
     return new ProfesseurDTO(
             professeur.getNom(),
-            professeur.getEmail(),
             professeur.getPrenom(),
+            professeur.getEmail(),
             professeur.getCentre_id(),
             professeur.getStructureRecherche().getNom(),
             professeur.getStructureRecherche().getEtablissement()
