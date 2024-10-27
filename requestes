@@ -1,11 +1,34 @@
-###
-POST http://localhost:8081/restricted/addCed
+POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
 
 {
-  "nom": "Ced4",
-  "email": "ced4@email.com"
+  "nom": "wail",
+  "prenom": "madani",
+  "email": "wailmad0222@gmail.com",
+  "cin": "L66525E6",
+  "telephone": "+21267876876",
+  "password": "wailmadani"
+}
+
+###
+POST http://localhost:8080/api/v1/auth/authentication
+Content-Type: application/json
+
+{
+  "email": "wailmad02@gmail.com",
+  "password": "wailmadani"
+}
+
+###
+
+
+POST http://localhost:8080/restricted/addCed
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTY3MjMzLCJleHAiOjE3MzA4MzEyMzN9.l0NOL4iP28HUJmo8t4M1YqznqlUC74srLdI6oQWAfFU
+
+{
+  "nom": "Ced88",
+  "email": "ced7663453534@email.com"
 }
 
 <> 2024-10-26T165506.200.txt
@@ -14,8 +37,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhd
 <> 2024-10-26T165420.200.txt
 
 ###
-GET http://localhost:8081/Candidat/GetCED
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
+GET http://localhost:8080/Candidat/GetCED
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTY3MjMzLCJleHAiOjE3MzA4MzEyMzN9.l0NOL4iP28HUJmo8t4M1YqznqlUC74srLdI6oQWAfFU
 
 <> 2024-10-26T170525.200.json
 <> 2024-10-26T170115.200.json
@@ -26,20 +49,153 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhd
 
 
 ###
-POST http://localhost:8081/CED/addStructure
+POST http://localhost:8080/CED/addStructure
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTY3MjMzLCJleHAiOjE3MzA4MzEyMzN9.l0NOL4iP28HUJmo8t4M1YqznqlUC74srLdI6oQWAfFU
 
 {
-  "nom": "structure2",
-  "domaine": "Info",
-  "etablissement": "uae",
-  "ced_id": 4
+  "nom": "strudgssfqqdefzefcture37zss73",
+  "domaine": "resedsefedefsqau",
+  "etablissement": "uit",
+  "ced_id": 3
 }
 
 <> 2024-10-26T170111.200.txt
 <> 2024-10-26T170049.200.txt
 
 ###
-GET http://localhost:8081/CED/structure/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsImlhdCI6MTcyOTk1Nzk2OCwiZXhwIjoxNzMwODIxOTY4fQ.mCbCLu14c5E8EUsuy7giB7do7tw8CylBlY9tlfJHrx4
+GET http://localhost:8080/CED/structures/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTY3MjMzLCJleHAiOjE3MzA4MzEyMzN9.l0NOL4iP28HUJmo8t4M1YqznqlUC74srLdI6oQWAfFU
+
+###
+
+
+<> 2024-10-26T172534.200.json
+
+###
+POST http://localhost:8080/CED/addProfesseur
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+{
+  "nom": "prof",
+  "prenom": "test",
+  "email": "testprof22@gmail.com",
+  "centre_ID": 1
+}
+
+<> 2024-10-26T232248.200.txt
+<> 2024-10-26T230749.200.txt
+<> 2024-10-26T230714.200.txt
+<> 2024-10-26T230701.200.txt
+
+###
+GET http://localhost:8080/CED/professeur/3
+
+###
+POST http://localhost:8080/Candidat/addDiplome/3
+Content-Type: application/json
+
+###
+GET http://localhost:8080/Professeur/find/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-26T234543.200.json
+<> 2024-10-26T232436.200.json
+<> 2024-10-26T231008.200.json
+
+###
+POST http://localhost:8080/Candidature/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+{
+  "statuts": "En cours",
+  "date": "2022-10-26",
+  "sujet_id": 2,
+  "candidat_id": 1
+}
+
+<> 2024-10-27T003909.200.txt
+<> 2024-10-27T003852.200.txt
+
+###
+POST http://localhost:8080/Professeur/addSujet
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+{
+  "titre": "AI",
+  "description": "DESC AI",
+  "thematique": "THEMATIQUE AI",
+  "professeur_id": 7,
+  "structureRecherche_id": 1
+}
+
+<> 2024-10-27T004536.200.txt
+<> 2024-10-27T003827.200.txt
+<> 2024-10-27T003813.200.txt
+
+
+###
+POST http://localhost:8080/CED/acceptCandidature/33
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-27T005528.404.txt
+<> 2024-10-27T005013.200.txt
+
+###
+POST http://localhost:8080/CED/refuseCandidature/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-27T005733.200.txt
+<> 2024-10-27T005729.404.txt
+<> 2024-10-27T005723.404.txt
+
+###
+GET http://localhost:8080/CED/professeur/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-27T010022.200.json
+<> 2024-10-27T010016.200.json
+<> 2024-10-27T010007.200.json
+<> 2024-10-27T005940.200.json
+
+###
+POST http://localhost:8080/Candidat/addBourse/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+
+<> 2024-10-27T024412.200.txt
+<> 2024-10-27T024212.200.txt
+<> 2024-10-27T024201.200.txt
+<> 2024-10-27T023005.200.txt
+<> 2024-10-27T022118.200.txt
+<> 2024-10-27T021824.200.txt
+<> 2024-10-27T021332.200.txt
+<> 2024-10-27T021256.200.txt
+<> 2024-10-27T021238.200.txt
+
+###
+POST http://localhost:8080/CED/acceptBourse/99
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-27T024915.404.txt
+<> 2024-10-27T024418.200.txt
+
+###
+POST http://localhost:8080/CED/refuseBourse/53
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-27T024501.200.txt
+
+###
+GET http://localhost:8080/CED/bourses/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YWlsbWFkMDJAZ21haWwuY29tIiwiaWF0IjoxNzI5OTgwMzQzLCJleHAiOjE3MzA4NDQzNDN9.Y52klPCsxmefucVFGxUYSddGwFLt-f0W-HF9o4BKDgs
+
+<> 2024-10-27T032104.200.json
+<> 2024-10-27T032048.200.json
+<> 2024-10-27T030145.200.json
+<> 2024-10-27T030138.200.json
+<> 2024-10-27T030130.200.json
