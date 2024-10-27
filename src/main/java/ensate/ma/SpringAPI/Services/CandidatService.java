@@ -288,5 +288,16 @@ public class CandidatService {
     candidatRepo.save(candidat);
     return ResponseEntity.ok().body(candidat);
   }
+
+  public String addPhoto(Long id, MultipartFile photo) {
+    try {
+      var candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
+      candidat.setPhoto(photo.getBytes());
+      candidatRepo.save(candidat);
+      return "Photo added successfully";
+    } catch (RuntimeException | IOException e) {
+      return "Error while adding photo" + e.getMessage();
+    }
+  }
 }
 

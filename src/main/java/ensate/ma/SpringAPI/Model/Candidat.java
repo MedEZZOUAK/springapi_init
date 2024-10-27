@@ -43,6 +43,8 @@ public class Candidat {
   @Lob
   private byte[] CinScanne;
   private Date dateNaissance;
+  @Lob
+  private byte[] photo;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 
