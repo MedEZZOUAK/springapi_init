@@ -2,6 +2,7 @@ package ensate.ma.SpringAPI.Repository;
 
 import ensate.ma.SpringAPI.DAO.CandidatureRequest;
 import ensate.ma.SpringAPI.Model.Candidature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,8 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
 
     // find candidature by id
     Optional<Candidature> findById(Long id);
+
+
+  @Query(value="SELECT * FROM candidatures WHERE professeur_id = :id AND status = :entretien", nativeQuery = true)
+  List<Candidature> findByProfesseurIdAndStatus(Long id, String entretien);
 }
