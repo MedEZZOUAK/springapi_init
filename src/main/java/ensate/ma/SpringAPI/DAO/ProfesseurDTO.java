@@ -13,12 +13,14 @@ public class ProfesseurDTO {
     private Integer Centre_ID;
     private String structnom;
     private String etablissement;
+    private String email;
 
-    public ProfesseurDTO(String nom, String prenom, Integer Centre_ID, String structnom, String etablissement) {
+    public ProfesseurDTO(String nom, String email, String prenom, Integer Centre_ID, String structnom, String etablissement) {
         this.nom = nom;
         this.prenom = prenom;
         this.Centre_ID = Centre_ID;
         this.structnom = structnom;
         this.etablissement = etablissement;
+        this.email = email;
     }
 }
