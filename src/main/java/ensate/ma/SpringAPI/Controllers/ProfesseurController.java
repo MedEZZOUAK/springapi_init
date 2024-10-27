@@ -45,7 +45,7 @@ public class ProfesseurController {
             professeur.getNom(),
             professeur.getEmail(),
             professeur.getPrenom(),
-            professeur.getCentre_ID(),
+            professeur.getCentre_id(),
             professeur.getStructureRecherche().getNom(),
             professeur.getStructureRecherche().getEtablissement()
     );

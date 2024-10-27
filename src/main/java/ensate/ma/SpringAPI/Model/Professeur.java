@@ -33,7 +33,7 @@ public class Professeur {
   private String nom;
   private String prenom;
   private String email;
-  private Integer centre_ID;
+  private Integer centre_id;
 
   @Override
   public String toString() {
@@ -41,7 +41,7 @@ public class Professeur {
       ", nom='" + nom + '\'' +
       ", prenom='" + prenom + '\'' +
       ", email='" + email + '\'' +
-      ", Centre_ID=" + centre_ID +
+      ", Centre_ID=" + centre_id +
       '}';
   }
 
