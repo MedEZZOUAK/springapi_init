@@ -299,5 +299,13 @@ public class CandidatService {
       return "Error while adding photo" + e.getMessage();
     }
   }
+
+  public byte[] getCin(Long id) {
+    return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getCinScanne();
+  }
+
+  public byte[] getPhoto(Long id) {
+    return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getPhoto();
+  }
 }
 

@@ -47,6 +47,7 @@ public class CandidatController {
   public Candidat findCandidatById(@PathVariable Long id) {
     return candidatService.findCandidatById(id);
   }
+
   // add langues to a candidat
   @PostMapping("/addLangue/{id}")
   public ResponseEntity addLangue(@PathVariable Long id, @RequestBody List<Langue> langues) {
@@ -103,14 +104,28 @@ public class CandidatController {
     candidatdetails.setDiplomes(candidat.getDiplomes());
     candidatdetails.setExperiences(candidat.getExperiences());
     candidatdetails.setLangues(candidat.getLangues());
+    candidatdetails.setSituationFamiliale(candidat.getSituationFamiliale());
+    candidatdetails.setNationalite(candidat.getNationalite());
+    candidatdetails.setPrenomArabe(candidat.getPrenomArabe());
+    candidatdetails.setNomArabe(candidat.getNomArabe());
+    candidatdetails.setPayeNaissance(candidat.getPayeNaissance());
+    candidatdetails.setAdresse(candidat.getAdresse());
+    candidatdetails.setCodePostal(candidat.getCodePostal());
+    candidatdetails.setHandicap(candidat.getHandicap());
+    candidatdetails.setProfessionPere(candidat.getProfessionPere());
+    candidatdetails.setProfessionMere(candidat.getProfessionMere());
+    candidatdetails.setProvincePere(candidat.getProvincePere());
+    candidatdetails.setProvinceMere(candidat.getProvinceMere());
+    candidatdetails.setProfession(candidat.getProfession());
+    candidatdetails.setDateNaissance(candidat.getDateNaissance());
     return ResponseEntity.ok().body(candidatdetails);
   }
 
   @PostMapping("/addDocuments/{id}")
-public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("cv") MultipartFile cv, @RequestPart("cin") MultipartFile cin,@RequestPart("photo") MultipartFile photo) {
+  public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("cv") MultipartFile cv, @RequestPart("cin") MultipartFile cin, @RequestPart("photo") MultipartFile photo) {
 
-  return ResponseEntity.ok().body( candidatService.addCv(id, cv) + " \n" + candidatService.addCin(id, cin) + " \n" + candidatService.addPhoto(id, photo));
-}
+    return ResponseEntity.ok().body(candidatService.addCv(id, cv) + " \n" + candidatService.addCin(id, cin) + " \n" + candidatService.addPhoto(id, photo));
+  }
 
   @GetMapping("/getcv/{id}")
   public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
@@ -123,24 +138,38 @@ public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("
     List<CEDDETAILS> ceddetails = cedService.getallCEDinfos();
     return ResponseEntity.ok().body(ceddetails);
   }
+
   //upload Documents
   @PostMapping("/AdddiplomesFiles/{id}")
   public ResponseEntity<String> addDiplomeFiles(@PathVariable Long id, @RequestPart("bacscanne") MultipartFile bacscanne, @RequestPart("lisencescanne") MultipartFile lisencescanne, @RequestPart("masterscanne") MultipartFile masterscanne, @RequestPart("licensereleve") MultipartFile licensereleve, @RequestPart("masterreleve") MultipartFile masterreleve) {
-    ;
     String message = candidatService.addBac(id, bacscanne) + " /n  " + candidatService.addLicence(id, lisencescanne, licensereleve) + " " + candidatService.addMaster(id, masterscanne, masterreleve);
 
     return ResponseEntity.ok().body(message);
   }
-  @PostMapping("/addBourse/{id}")
-    public ResponseEntity<String> addBourse(@PathVariable Integer id) {
-        return ResponseEntity.ok().body(candidatService.demandeBourse(id));
-    }
 
-    // add details to a candidat
-    @PostMapping("/addDetails/{id}")
-    public ResponseEntity<Candidat> addDetails(@PathVariable Long id, @RequestBody AddCandidatedetailsRequest candidatdetails) {
-        return candidatService.addDetails(id, candidatdetails);
-    }
+  @PostMapping("/addBourse/{id}")
+  public ResponseEntity<String> addBourse(@PathVariable Integer id) {
+    return ResponseEntity.ok().body(candidatService.demandeBourse(id));
+  }
+
+  // add details to a candidat
+  @PostMapping("/addDetails/{id}")
+  public ResponseEntity<Candidat> addDetails(@PathVariable Long id, @RequestBody AddCandidatedetailsRequest candidatdetails) {
+    return candidatService.addDetails(id, candidatdetails);
+  }
+
+  // Get CIN
+  @GetMapping("/getCin/{id}")
+  public ResponseEntity<byte[]> getCin(@PathVariable Long id) {
+    byte[] cin = candidatService.getCin(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cin.pdf").contentType(MediaType.APPLICATION_PDF).body(cin);
+  }
+  // Get Photo
+  @GetMapping("/getPhoto/{id}")
+  public ResponseEntity<byte[]> getPhoto(@PathVariable Long id) {
+    byte[] photo = candidatService.getPhoto(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=photo.jpg").contentType(MediaType.IMAGE_JPEG).body(photo);
+  }
 
 
 }
