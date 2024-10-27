@@ -10,9 +10,9 @@ DTO : shiit that exist + what ever u find + Professeur ✅
 fix add professeur   ✅
 list CDE and structure de recherche ✅
 subject by structure de recherche id ✅
-Gett all the professeur by ced id  waiil
+Gett all the professeur by ced id  ✅
 professeur : Detaills ??? sujet  ?????
-Accepte refuse candidature  waiil
+Accepte refuse candidature ✅
 list bourse by ced(id) waiil
 Accepter /refuser bourse waill
 list sujet by professeur ✅

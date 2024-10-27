@@ -132,5 +132,18 @@ public class CedController {
     return professeurService.getProfesseurByCedId(id);
   }
 
+  // accept candidature
+    @PostMapping("/acceptCandidature/{id}")
+    public String acceptCandidature(@PathVariable Long id) {
+      cedService.accepteCandidature(id);
+      return "Candidature accepted successfully";
+    }
+
+    // reject candidature
+    @PostMapping("/refuseCandidature/{id}")
+    public String rejectCandidature(@PathVariable Long id) {
+      cedService.refuseCandidature(id);
+      return "Candidature rejected successfully";
+    }
 
 }

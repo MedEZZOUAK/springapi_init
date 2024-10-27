@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 public class StructureRechercheDTO {
     private Long id;
     private String nom;
+    private String domaine;
+    private String etablissement;
 }

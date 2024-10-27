@@ -107,7 +107,9 @@ public class CedService {
   private StructureRechercheDTO convertToDTO(StructureRecherche structure) {
     return new StructureRechercheDTO(
             structure.getId(),
-            structure.getNom()
+            structure.getNom(),
+            structure.getDomaine(),
+            structure.getEtablissement()
     );
   }
 
@@ -134,15 +136,24 @@ public class CedService {
     return dto;
   }
 
-  //todo : accepte and refuse candidature
+  //todo : accepter candidature
   public void accepteCandidature(Long id) {
-    Candidature candidature = candidatureRepo.findById(id);
-    if (candidature == null) {
-      throw new CandidatureNotFoundException("Candidature with id " + id + " not found");
-    }
-    candidature.setStatuts("Accepted");
+    Candidature candidature = candidatureRepo.findById(id)
+            .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+
+    candidature.setStatuts("Acceptée");
     candidatureRepo.save(candidature);
   }
+
+    // todo : refuse candidature
+    public void refuseCandidature(Long id) {
+        Candidature candidature = candidatureRepo.findById(id)
+                .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+
+        candidature.setStatuts("Refusée");
+        candidatureRepo.save(candidature);
+    }
+
   // todo : accepter and refuse Bourse
   // todo : get all bourse by CED id
   //

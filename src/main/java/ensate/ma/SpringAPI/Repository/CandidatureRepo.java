@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
     @Query(value = "SELECT c.* FROM candidatures c " +
@@ -17,5 +18,5 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
     List<Candidature> findByCedId(@Param("cedId") Long cedId);
 
     // find candidature by id
-    Candidature findById(Long id);
+    Optional<Candidature> findById(Long id);
 }

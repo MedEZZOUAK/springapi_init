@@ -17,4 +17,9 @@ public class GlobalExceptionHandler {
   public ResponseEntity<String> handleInvalidCredentialsException(InvalidCredentialsException ex) {
     return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
   }
+
+  @ExceptionHandler(CandidatureNotFoundException.class)
+  public ResponseEntity<String> handleCandidatureNotFoundException(CandidatureNotFoundException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+  }
 }
