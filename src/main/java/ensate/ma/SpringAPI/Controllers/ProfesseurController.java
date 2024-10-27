@@ -89,5 +89,9 @@ public class ProfesseurController {
       return List.of();
     }
   }
+  //list the entretien by professue id ( aka the candiddature preselectionner)
+//  @GetMapping("/entretien/{id}")
+
+
 
 }

@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Services;
 
+import ensate.ma.SpringAPI.DAO.AddCandidatedetailsRequest;
 import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
@@ -49,12 +50,7 @@ public class CandidatService {
       return null;
     }
     Candidat candidat = candidatOptional.get();
-
     // Update all fields
-    candidat.setNom(candidatDetails.getNom());
-    candidat.setPrenom(candidatDetails.getPrenom());
-    candidat.setCin(candidatDetails.getCin());
-    candidat.setTelephone(candidatDetails.getTelephone());
     candidat.setSituationFamiliale(candidatDetails.getSituationFamiliale());
     candidat.setNationalite(candidatDetails.getNationalite());
     candidat.setPrenomArabe(candidatDetails.getPrenomArabe());
@@ -68,13 +64,7 @@ public class CandidatService {
     candidat.setProvincePere(candidatDetails.getProvincePere());
     candidat.setProvinceMere(candidatDetails.getProvinceMere());
     candidat.setProfession(candidatDetails.getProfession());
-    candidat.setCvScanne(candidatDetails.getCvScanne());
-    candidat.setCinScanne(candidatDetails.getCinScanne());
     candidat.setDateNaissance(candidatDetails.getDateNaissance());
-    candidat.setLangues(candidatDetails.getLangues());
-    candidat.setDiplomes(candidatDetails.getDiplomes());
-    candidat.setExperiences(candidatDetails.getExperiences());
-    candidat.setCandidatures(candidatDetails.getCandidatures());
 
     return candidatRepo.save(candidat);
   }
@@ -279,6 +269,24 @@ public class CandidatService {
   }
 
 
-
+  public ResponseEntity<Candidat> addDetails(Long id, AddCandidatedetailsRequest candidatdetails) {
+    Candidat candidat = candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found"));
+    candidat.setAdresse(candidatdetails.getAdresse());
+    candidat.setHandicap(candidatdetails.getHandicap());
+    candidat.setNationalite(candidatdetails.getNationalite());
+    candidat.setNomArabe(candidatdetails.getNomArabe());
+    candidat.setPrenomArabe(candidatdetails.getPrenomArabe());
+    candidat.setProfession(candidatdetails.getProfession());
+    candidat.setProfessionMere(candidatdetails.getProfessionMere());
+    candidat.setProfessionPere(candidatdetails.getProfessionPere());
+    candidat.setProvinceMere(candidatdetails.getProvinceMere());
+    candidat.setProvincePere(candidatdetails.getProvincePere());
+    candidat.setSituationFamiliale(candidatdetails.getSituationFamiliale());
+    candidat.setDateNaissance(candidatdetails.getDateNaissance());
+    candidat.setCodePostal(candidatdetails.getCodePostal());
+    candidat.setPayeNaissance(candidatdetails.getPayeNaissance());
+    candidatRepo.save(candidat);
+    return ResponseEntity.ok().body(candidat);
+  }
 }
 

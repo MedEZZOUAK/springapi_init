@@ -21,6 +21,5 @@ entretien accepter date  ezzouak
 
 statuts : an cours preselectionner , accpter refuser
 
-
 adding cin and cv  ✅✅
 

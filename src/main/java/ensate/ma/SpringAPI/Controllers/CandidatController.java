@@ -1,9 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
-import ensate.ma.SpringAPI.DAO.CEDDETAILS;
-import ensate.ma.SpringAPI.DAO.Candidatdetails;
-import ensate.ma.SpringAPI.DAO.ExperienceDTO;
-import ensate.ma.SpringAPI.DAO.PasswordChangeRequest;
+import ensate.ma.SpringAPI.DAO.*;
 import ensate.ma.SpringAPI.Model.Candidat;
 import ensate.ma.SpringAPI.Model.Diplome;
 import ensate.ma.SpringAPI.Model.Langue;
@@ -50,12 +47,6 @@ public class CandidatController {
   public Candidat findCandidatById(@PathVariable Long id) {
     return candidatService.findCandidatById(id);
   }
-
-  @PutMapping("/update/{id}")
-  public Candidat updateCandidat(@PathVariable Long id, @RequestBody Candidat candidatDetails) {
-    return candidatService.updateCandidat(id, candidatDetails);
-  }
-
   // add langues to a candidat
   @PostMapping("/addLangue/{id}")
   public ResponseEntity addLangue(@PathVariable Long id, @RequestBody List<Langue> langues) {
@@ -141,10 +132,15 @@ public ResponseEntity<String> addDocuments(@PathVariable Long id, @RequestPart("
 
     return ResponseEntity.ok().body(message);
   }
-
   @PostMapping("/addBourse/{id}")
     public ResponseEntity<String> addBourse(@PathVariable Integer id) {
         return ResponseEntity.ok().body(candidatService.demandeBourse(id));
+    }
+
+    // add details to a candidat
+    @PostMapping("/addDetails/{id}")
+    public ResponseEntity<Candidat> addDetails(@PathVariable Long id, @RequestBody AddCandidatedetailsRequest candidatdetails) {
+        return candidatService.addDetails(id, candidatdetails);
     }
 
 
