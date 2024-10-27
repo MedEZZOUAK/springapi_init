@@ -43,6 +43,7 @@ public class ProfesseurController {
     Professeur professeur = professeurService.findProfesseurById(id);
     return new ProfesseurDTO(
             professeur.getNom(),
+            professeur.getEmail(),
             professeur.getPrenom(),
             professeur.getCentre_ID(),
             professeur.getStructureRecherche().getNom(),
