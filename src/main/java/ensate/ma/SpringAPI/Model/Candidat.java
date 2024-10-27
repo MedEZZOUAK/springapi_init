@@ -31,7 +31,7 @@ public class Candidat {
   private String nomArabe;
   private String payeNaissance;
   private String adresse;
-  private Integer CodePostal;
+  private Integer codePostal;
   private String handicap;
   private String professionPere;
   private String professionMere;
@@ -39,9 +39,9 @@ public class Candidat {
   private String provinceMere;
   private String profession;
   @Lob
-  private byte[] CvScanne;
+  private byte[] cvScanne;
   @Lob
-  private byte[] CinScanne;
+  private byte[] cinScanne;
   private Date dateNaissance;
   @Lob
   private byte[] photo;
