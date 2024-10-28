@@ -1,6 +1,7 @@
 package ensate.ma.SpringAPI.Services;
 
 import ensate.ma.SpringAPI.DAO.AddCandidatedetailsRequest;
+import ensate.ma.SpringAPI.DAO.CandidaturesCandidatId;
 import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
@@ -307,5 +308,11 @@ public class CandidatService {
   public byte[] getPhoto(Long id) {
     return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getPhoto();
   }
+
+//  public List<CandidaturesCandidatId> getCandidatures(Long id) {
+//    //get all the candidatures of the candidat with the id
+//    var candidatures = candidatureRepo.findAllByCandidat_id(id);
+//
+//  }
 }
 

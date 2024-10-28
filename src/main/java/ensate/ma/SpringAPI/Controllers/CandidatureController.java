@@ -3,6 +3,7 @@ package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.DAO.CandidatureRequest;
 import ensate.ma.SpringAPI.Model.Candidature;
+import ensate.ma.SpringAPI.Model.Statuts;
 import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class CandidatureController {
     }
 
     Candidature candidature = Candidature.builder()
-            .Statuts(request.getStatuts())
+            .statuts(Statuts.Encours)
             .date(date)
             .Sujet_id(request.getSujet_id())
             .Candidat_id(request.getCandidat_id())

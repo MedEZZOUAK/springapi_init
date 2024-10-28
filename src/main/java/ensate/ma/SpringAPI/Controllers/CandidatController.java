@@ -1,10 +1,7 @@
 package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.DAO.*;
-import ensate.ma.SpringAPI.Model.Candidat;
-import ensate.ma.SpringAPI.Model.Candidature;
-import ensate.ma.SpringAPI.Model.Diplome;
-import ensate.ma.SpringAPI.Model.Langue;
+import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
 import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.LangueRepo;
@@ -62,13 +59,10 @@ public class CandidatController {
     return ResponseEntity.ok().body("Langues added successfully");
   }
 
-  // todo add diplome to a candidat
+  // todo add diplome to a candidat list of diplomes
   @PostMapping("/addDiplome/{id}")
-  public ResponseEntity<String> addDiplome(@PathVariable Long id, @RequestPart("diplome") Diplome diplome, @RequestPart("file1") MultipartFile file1, @RequestPart("file2") MultipartFile file2) {
-    log.warn("diplome: " + diplome);
-    log.warn("file1: " + file1);
-    log.warn("file2: " + file2);
-    return ResponseEntity.ok().body("test");
+  public ResponseEntity<String> addDiplome(@PathVariable Long id,@RequestBody List<Diplome> diplomes) {
+    return ResponseEntity.ok().body(candidatService.addDiplome(id, diplomes));
   }
 
   // todo modify password
@@ -180,20 +174,10 @@ public class CandidatController {
 
   @PostMapping("/addCandidature")
   public ResponseEntity<String> addCandidature(@RequestBody CandidatureRequest request) {
-    if (request.getDate() == null || request.getDate().isEmpty()) {
-      return new ResponseEntity<>("Date cannot be null or empty", HttpStatus.BAD_REQUEST);
-    }
-
-    Date date;
-    try {
-      date = Date.valueOf(request.getDate());
-    } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
-    }
 
     Candidature candidature = Candidature.builder()
-            .Statuts(request.getStatuts())
-            .date(date)
+            .statuts(Statuts.Encours)
+            .date(null)
             .Sujet_id(request.getSujet_id())
             .Candidat_id(request.getCandidat_id())
             .build();
@@ -207,11 +191,11 @@ public class CandidatController {
     candidatureRepo.deleteById(Math.toIntExact(id));
     return ResponseEntity.ok("Candidature deleted successfully");
   }
-
-  @PostMapping("/previewCandidature")
-  public ResponseEntity<Candidature> findCandidatureById(Long id) {
-    var candidature = candidatureRepo.findById(Math.toIntExact(id));
-    return ResponseEntity.ok(candidature.orElse(null));
+  // Get all candidatures by candidat id
+  @GetMapping("/getCandidatures/{id}")
+  public ResponseEntity<List<CandidaturesCandidatId>> getCandidatures(@PathVariable Long id) {
+    List<CandidaturesCandidatId> candidatures = candidatService.getCandidatures(id);
+    return ResponseEntity.ok().body(candidatures);
   }
 
 

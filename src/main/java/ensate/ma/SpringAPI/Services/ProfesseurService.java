@@ -2,8 +2,10 @@ package ensate.ma.SpringAPI.Services;
 
 
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
+import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
 import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.Professeur;
+import ensate.ma.SpringAPI.Model.Statuts;
 import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
 import ensate.ma.SpringAPI.Repository.loginRepo;
@@ -87,9 +89,40 @@ public class ProfesseurService {
     return candidatureRepo.findByProfesseurIdAndStatus(id, "entretien");
   }
 
+    public String ChangePassword(String password, Long id) {
+      var email = professeurRepo.findById(id).get().getEmail();
+      //find the login by email
+      var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
+      try {
+        login.setPassword(passwordEncoder.encode(password));
+        loginRepo.save(login);
+        return "Password changed successfully";
+      } catch (RuntimeException e) {
+        return "Error while changing password" + e.getMessage();
+      }
+    }
 
-  //todo  accepte and refuse candidature
+
+    //todo  accepte and refuse candidature
+    public void accepteCandidature(Long id) {
+      Candidature candidature = candidatureRepo.findById(id)
+        .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+
+      candidature.setStatuts(Statuts.Acceptee);
+      candidatureRepo.save(candidature);
+    }
+  // todo : refuse candidature
+  public void refuseCandidature(Long id) {
+    Candidature candidature = candidatureRepo.findById(id)
+      .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+
+    candidature.setStatuts(Statuts.Refusee);
+    candidatureRepo.save(candidature);
+  }
   //todo  get all candidature by prof id
+//  public List<Candidature> getCandidatureByProfId(Long id) {
+//    return candidatureRepo.findByProfesseurId(id);
+//  }
 
 
 }

@@ -29,7 +29,8 @@ public class Candidature {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-  private String Statuts;
+  @Enumerated(EnumType.STRING)
+  private Statuts statuts;
   private Date date;
   private Integer Sujet_id;
   private Integer Candidat_id;

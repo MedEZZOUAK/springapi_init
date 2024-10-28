@@ -38,11 +38,9 @@ public class Diplome {
   @Nullable
   @Lob
   private byte[] DiplomeScanne;
-  private String DiplomeScanneName;
   @Nullable
   @Lob
   private byte[] RelevetNoteScanne;
-  private String RelevetNoteScanneName;
   private Integer candidat_id;
 
 

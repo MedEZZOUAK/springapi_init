@@ -4,10 +4,7 @@ package ensate.ma.SpringAPI.Services;
 import ensate.ma.SpringAPI.DAO.BourseDTO;
 import ensate.ma.SpringAPI.DAO.CEDDETAILS;
 import ensate.ma.SpringAPI.DAO.CandidatureRequest;
-import ensate.ma.SpringAPI.Model.Bourse;
-import ensate.ma.SpringAPI.Model.CED;
-import ensate.ma.SpringAPI.Model.Candidature;
-import ensate.ma.SpringAPI.Model.StructureRecherche;
+import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +126,7 @@ public class CedService {
   private CandidatureRequest convertToDTO(Candidature candidature) {
     CandidatureRequest dto = new CandidatureRequest();
     //dto.setId(candidature.getId());
-    dto.setStatuts(candidature.getStatuts());
+    dto.setStatuts(String.valueOf(candidature.getStatuts()));
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // specify your date format here
     String dateString = dateFormat.format(candidature.getDate());
@@ -145,7 +142,7 @@ public class CedService {
     Candidature candidature = candidatureRepo.findById(id)
             .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
 
-    candidature.setStatuts("Preselectionnee");
+    candidature.setStatuts(Statuts.preselectionnee);
     candidatureRepo.save(candidature);
   }
 
@@ -154,7 +151,7 @@ public class CedService {
         Candidature candidature = candidatureRepo.findById(id)
                 .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
 
-        candidature.setStatuts("Refusée");
+        candidature.setStatuts(Statuts.Refusee);
         candidatureRepo.save(candidature);
     }
 

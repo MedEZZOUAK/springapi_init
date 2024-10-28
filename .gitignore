@@ -38,4 +38,5 @@ docker-compose.yml
 pgadmindata
 postgresdata
 application.properties
+./src/main/resources/application.properties
 src/main/resources/application.properties

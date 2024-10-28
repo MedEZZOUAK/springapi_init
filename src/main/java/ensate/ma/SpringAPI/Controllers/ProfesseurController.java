@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.PasswordChangeRequest;
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.DAO.SujetDTO;
 import ensate.ma.SpringAPI.Model.Candidature;
@@ -10,6 +11,7 @@ import ensate.ma.SpringAPI.Services.ProfesseurService;
 import ensate.ma.SpringAPI.Services.SujetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -99,6 +101,13 @@ public class ProfesseurController {
   @GetMapping("/entretien/{id}")
   public List<Candidature> getEntretien(@PathVariable Long id) {
     return professeurService.getEntretien(id);
+  }
+
+  //modify password professeur
+  @GetMapping("/modifyPassword/{id}")
+  public ResponseEntity<String> modifyPassword(@PathVariable Long id, @RequestBody PasswordChangeRequest passwordChangeRequest) {
+    return ResponseEntity.ok().body(professeurService.ChangePassword(passwordChangeRequest.getPassword(), id));
+
   }
 
 
