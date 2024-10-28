@@ -127,11 +127,7 @@ public class CedService {
     CandidatureRequest dto = new CandidatureRequest();
     //dto.setId(candidature.getId());
     dto.setStatuts(String.valueOf(candidature.getStatuts()));
-
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // specify your date format here
-    String dateString = dateFormat.format(candidature.getDate());
-    dto.setDate(dateString);
-
+    dto.setDate(String.valueOf(candidature.getDate()));
     dto.setSujet_id(candidature.getSujet_id());
     dto.setCandidat_id(candidature.getCandidat_id());
     return dto;

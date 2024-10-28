@@ -7,6 +7,7 @@ import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.LangueRepo;
 import ensate.ma.SpringAPI.Services.CandidatService;
 import ensate.ma.SpringAPI.Services.CedService;
+import ensate.ma.SpringAPI.Services.SujetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/Candidat")
@@ -32,7 +34,8 @@ public class CandidatController {
   private CandidatRepo candidatRepo;
   @Autowired
   private CedService cedService;
-
+  @Autowired
+  private SujetService sujetService;
   @Autowired
   private  CandidatureRepo candidatureRepo;
 
@@ -196,6 +199,23 @@ public class CandidatController {
   public ResponseEntity<List<CandidaturesCandidatId>> getCandidatures(@PathVariable Long id) {
     List<CandidaturesCandidatId> candidatures = candidatService.getCandidatures(id);
     return ResponseEntity.ok().body(candidatures);
+  }
+  // get sujet by structure id
+  @GetMapping("/structure/{id}")
+  public List<SujetDTO> getSujets(@PathVariable Long id) {
+    try {
+      return sujetService.getSujetByStructureId(id).stream()
+        .map(sujet -> new SujetDTO(
+          sujet.getId(),
+          sujet.getTitre(),
+          sujet.getDescription(),
+          sujet.getThematique()
+        ))
+        .collect(Collectors.toList());
+    } catch (RuntimeException e) {
+      log.error("Error fetching subjects for professor with id: " + id, e);
+      return List.of();
+    }
   }
 
 

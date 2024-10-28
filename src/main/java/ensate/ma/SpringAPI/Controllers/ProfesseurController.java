@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Controllers;
 
+import ensate.ma.SpringAPI.DAO.EntretienDTO;
 import ensate.ma.SpringAPI.DAO.PasswordChangeRequest;
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.DAO.SujetDTO;
@@ -109,6 +110,21 @@ public class ProfesseurController {
     return ResponseEntity.ok().body(professeurService.ChangePassword(passwordChangeRequest.getPassword(), id));
 
   }
+  // todo accepter ou refuser une candidature
+  @GetMapping("/accepterCandidature/{id}")
+  public ResponseEntity<String> accepterCandidature(@PathVariable Long id) {
+    return ResponseEntity.ok().body(professeurService.accepterCandidature(id));
+  }
+  @GetMapping("/refuserCandidature/{id}")
+  public ResponseEntity<String> refuserCandidature(@PathVariable Long id) {
+    return ResponseEntity.ok().body(professeurService.refuserCandidature(id));
+  }
+  //list Candidat presselectionner by professeur id
+  @GetMapping("/getCandidature/{id}")
+  public List<EntretienDTO> getCandidature(@PathVariable Long id) {
+    return professeurService.getEntretienList(id);
+  }
+
 
 
 

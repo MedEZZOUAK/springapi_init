@@ -21,4 +21,6 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
 
   List<Candidature> findByCandidatId(Long id);
   List<Candidature> findAllByCandidat_id(Long id);
+  @Query(value = "SELECT * FROM candidatures WHERE professeur_id = :id", nativeQuery = true)
+  List<Candidature> findByProfesseurId(Long id);
 }
