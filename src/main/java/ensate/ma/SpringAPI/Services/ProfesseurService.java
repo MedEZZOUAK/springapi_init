@@ -18,8 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -121,42 +122,11 @@ public class ProfesseurService {
     candidature.setStatuts(Statuts.Refusee);
     candidatureRepo.save(candidature);
   }
-
-  public String accepterCandidature(Long id) {
-    try {
-      var Candidature = candidatureRepo.findById(id).get();
-      Candidature.setStatuts(Statuts.Acceptee);
-      candidatureRepo.save(Candidature);
-      return "Candidature accepted successfully";
-      } catch (RuntimeException e) {
-      return "Error while accepting candidature" + e.getMessage();}
-  }
-  public String refuserCandidature(Long id) {
-    try {
-      var Candidature = candidatureRepo.findById(id).get();
-      Candidature.setStatuts(Statuts.Refusee);
-      candidatureRepo.save(Candidature);
-      return "Candidature Rejete successfully";
-    } catch (RuntimeException e) {
-      return "Error while refusing candidature" + e.getMessage();}
-  }
-
-  public List<EntretienDTO> getEntretienList(Long id) {
-    List<Candidature> candidatures = candidatureRepo.findByProfesseurId(id);
-    List<EntretienDTO> result = new ArrayList<>();
-    for (Candidature candidature : candidatures) {
-      if (candidature.getStatuts().equals(Statuts.preselectionnee)) {
-        result.add(EntretienDTO.builder()
-            .nomCandidat(candidature.getCandidat().getNom()+" "+candidature.getCandidat().getPrenom())
-            .nomSujet(candidature.getSujet().getTitre())
-            .nomEtablissement(candidature.getSujet().getStructureRecherche().getEtablissement())
-            .id_candidature(candidature.getId())
-          .build());
-      }
-    }
-    return result;
-  }
   //todo  get all candidature by prof id
+
+  public List<EntretienDTO> getCandidatureByProfId(Long id) {
+    return candidatureRepo.findCandidaturesByProfesseurIdAndStatusPreselectionnee(id);
+  }
 
 
 }
