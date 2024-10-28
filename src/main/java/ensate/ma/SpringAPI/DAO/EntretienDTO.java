@@ -2,11 +2,13 @@ package ensate.ma.SpringAPI.DAO;
 
 import java.sql.Date;
 
-public class EntretienDTO {
-  private Date date;
-  private String statuts;
-  private Long candidat_id;
-  private String sujet_nom;
+import lombok.*;
 
+
+public interface EntretienDTO {
+  String getNom();
+  String getPrenom();
+  String getSujet_nom();
+  String getEtablissement();
 
 }

@@ -1,6 +1,7 @@
 package ensate.ma.SpringAPI.Services;
 
 
+import ensate.ma.SpringAPI.DAO.EntretienDTO;
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
 import ensate.ma.SpringAPI.Model.Candidature;
@@ -17,7 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -120,9 +123,10 @@ public class ProfesseurService {
     candidatureRepo.save(candidature);
   }
   //todo  get all candidature by prof id
-//  public List<Candidature> getCandidatureByProfId(Long id) {
-//    return candidatureRepo.findByProfesseurId(id);
-//  }
+
+  public List<EntretienDTO> getCandidatureByProfId(Long id) {
+    return candidatureRepo.findCandidaturesByProfesseurIdAndStatusPreselectionnee(id);
+  }
 
 
 }

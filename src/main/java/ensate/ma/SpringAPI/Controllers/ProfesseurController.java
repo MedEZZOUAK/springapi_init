@@ -3,6 +3,7 @@ package ensate.ma.SpringAPI.Controllers;
 import ensate.ma.SpringAPI.DAO.PasswordChangeRequest;
 import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
 import ensate.ma.SpringAPI.DAO.SujetDTO;
+import ensate.ma.SpringAPI.DAO.EntretienDTO;
 import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.Sujet;
@@ -110,6 +111,11 @@ public class ProfesseurController {
 
   }
 
+  // get candidature by professeur id (aka the candidature that has statuts preselectionnee)
+  @GetMapping("/candidature/{id}")
+  public List<EntretienDTO> getCandidature(@PathVariable Long id) {
+    return professeurService.getCandidatureByProfId(id);
+  }
 
 
 }
