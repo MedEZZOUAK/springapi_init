@@ -49,7 +49,9 @@ public class ProfesseurController {
             professeur.getCentre_id(),
             professeur.getStructureRecherche().getNom(),
             professeur.getStructureRecherche().getEtablissement(),
-            professeur.getStructureRecherche().getId()
+            professeur.getStructureRecherche().getId(),
+            professeur.getStructureRecherche().getDomaine()
+
     );
   }
 

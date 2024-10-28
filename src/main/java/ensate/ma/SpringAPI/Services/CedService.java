@@ -94,7 +94,9 @@ public class CedService {
         List<StructureRechercheDTO> structuresname = new ArrayList<>();
         structRepo.findAllByCed_id(ced.getId()).forEach(structureRecherche -> {
             structuresname.add(StructureRechercheDTO.builder().id(structureRecherche.getId()).nom(structureRecherche.getNom())
-              .build());
+                            .domaine(structureRecherche.getDomaine())
+                            .etablissement(structureRecherche.getEtablissement())
+                    .build());
         });
         ceddetails.add(CEDDETAILS.builder().CED(ced.getNom()).id(Math.toIntExact(ced.getId())).
           structuresname(structuresname).build());

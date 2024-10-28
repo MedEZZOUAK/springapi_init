@@ -1,20 +1,23 @@
 package ensate.ma.SpringAPI.DAO;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class ProfesseurDTO {
     private String nom;
     private String prenom;
+    private String email;
     private Integer Centre_ID;
     private String structnom;
     private String etablissement;
-    private String email;
     private Long structid;
+    private String domaine;
 
     public ProfesseurDTO(String nom, String email, String prenom, Integer Centre_ID, String structnom, String etablissement,Long structid) {
         this.nom = nom;

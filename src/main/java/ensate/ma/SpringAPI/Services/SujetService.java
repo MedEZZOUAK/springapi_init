@@ -23,10 +23,8 @@ public class SujetService {
   public Sujet UpdateSujet(Long id, Sujet sujetdetails) {
     Sujet sujet = sujetRepo.findById(id).orElseThrow(() -> new RuntimeException("sujet not found"));
     sujet.setDescription(sujetdetails.getDescription());
-    sujet.setProfesseur_id(sujetdetails.getProfesseur_id());
     sujet.setThematique(sujetdetails.getThematique());
     sujet.setTitre(sujetdetails.getTitre());
-    sujet.setStructureRecherche_id(sujetdetails.getStructureRecherche_id());
     return sujetRepo.save(sujet);
   }
 
