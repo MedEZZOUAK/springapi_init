@@ -145,7 +145,7 @@ public class CedService {
     Candidature candidature = candidatureRepo.findById(id)
             .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
 
-    candidature.setStatuts("Acceptée");
+    candidature.setStatuts("Preselectionnee");
     candidatureRepo.save(candidature);
   }
 

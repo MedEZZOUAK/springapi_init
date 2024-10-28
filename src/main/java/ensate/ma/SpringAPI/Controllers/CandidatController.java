@@ -2,19 +2,23 @@ package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.DAO.*;
 import ensate.ma.SpringAPI.Model.Candidat;
+import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.Diplome;
 import ensate.ma.SpringAPI.Model.Langue;
 import ensate.ma.SpringAPI.Repository.CandidatRepo;
+import ensate.ma.SpringAPI.Repository.CandidatureRepo;
 import ensate.ma.SpringAPI.Repository.LangueRepo;
 import ensate.ma.SpringAPI.Services.CandidatService;
 import ensate.ma.SpringAPI.Services.CedService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -31,6 +35,9 @@ public class CandidatController {
   private CandidatRepo candidatRepo;
   @Autowired
   private CedService cedService;
+
+  @Autowired
+  private  CandidatureRepo candidatureRepo;
 
   @PostMapping("/delete/{id}")
   public String deleteCandidat(@PathVariable Long id) {
@@ -169,6 +176,42 @@ public class CandidatController {
   public ResponseEntity<byte[]> getPhoto(@PathVariable Long id) {
     byte[] photo = candidatService.getPhoto(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=photo.jpg").contentType(MediaType.IMAGE_JPEG).body(photo);
+  }
+
+  @PostMapping("/addCandidature")
+  public ResponseEntity<String> addCandidature(@RequestBody CandidatureRequest request) {
+    if (request.getDate() == null || request.getDate().isEmpty()) {
+      return new ResponseEntity<>("Date cannot be null or empty", HttpStatus.BAD_REQUEST);
+    }
+
+    Date date;
+    try {
+      date = Date.valueOf(request.getDate());
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
+    }
+
+    Candidature candidature = Candidature.builder()
+            .Statuts(request.getStatuts())
+            .date(date)
+            .Sujet_id(request.getSujet_id())
+            .Candidat_id(request.getCandidat_id())
+            .build();
+
+    candidatureRepo.save(candidature);
+    return ResponseEntity.ok("Candidature added successfully");
+  }
+
+  @PostMapping("/deleteCandidature")
+  public ResponseEntity<String> deleteCandidature(Long id) {
+    candidatureRepo.deleteById(Math.toIntExact(id));
+    return ResponseEntity.ok("Candidature deleted successfully");
+  }
+
+  @PostMapping("/previewCandidature")
+  public ResponseEntity<Candidature> findCandidatureById(Long id) {
+    var candidature = candidatureRepo.findById(Math.toIntExact(id));
+    return ResponseEntity.ok(candidature.orElse(null));
   }
 
 
