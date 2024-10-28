@@ -1,6 +1,5 @@
 package ensate.ma.SpringAPI.Exception;
 
-import ensate.ma.SpringAPI.DAO.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,13 +33,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-  @ExceptionHandler(InvalidJwtException.class)
-  public ResponseEntity<ErrorResponse> handleInvalidJwtException(InvalidJwtException ex) {
-    logger.error("JWT expired:");
-    ErrorResponse errorResponse = new ErrorResponse(
-            "JWT expired",
-            "401"
-    );
-    return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
-  }
 }
