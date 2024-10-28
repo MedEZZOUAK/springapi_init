@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -309,10 +310,21 @@ public class CandidatService {
     return candidatRepo.findById(id).orElseThrow(() -> new RuntimeException("Candidat not found")).getPhoto();
   }
 
-//  public List<CandidaturesCandidatId> getCandidatures(Long id) {
-//    //get all the candidatures of the candidat with the id
-//    var candidatures = candidatureRepo.findAllByCandidat_id(id);
-//
-//  }
+  public List<CandidaturesCandidatId> getCandidatures(Long id) {
+    //get all the candidatures of the candidat with the id
+    var candidatures = candidatureRepo.findAllByCandidat_id(id);
+    List<CandidaturesCandidatId> candidaturesCandidatIds = new ArrayList<>();
+    candidatures.forEach(candidature -> {
+      var candidaturesCandidatId = new CandidaturesCandidatId();
+      //find the subject of the candidature
+      var sujet = candidature.getSujet();
+      candidaturesCandidatId.setSujetNom(sujet.getTitre());
+      candidaturesCandidatId.setThematique(sujet.getThematique());
+      candidaturesCandidatId.setEtablissement(sujet.getStructureRecherche().getEtablissement());
+      candidaturesCandidatId.setStatuts(candidature.getStatuts());
+      candidaturesCandidatIds.add(candidaturesCandidatId);
+    });
+    return candidaturesCandidatIds;
+  }
 }
 
