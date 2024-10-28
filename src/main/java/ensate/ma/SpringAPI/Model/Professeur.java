@@ -1,6 +1,7 @@
 package ensate.ma.SpringAPI.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class Professeur {
   //a professeur have one StructureRecherche , but a StructureRecherche can have many professeurs
   @ManyToOne
   @JoinColumn(name = "Centre_ID", referencedColumnName = "id", insertable = false, updatable = false)
+  @JsonBackReference
   StructureRecherche structureRecherche;
   //a professeur can have many sujets , but a sujet is owned by one professeur , max can have 9 sujets
   @OneToMany(mappedBy = "professeur")

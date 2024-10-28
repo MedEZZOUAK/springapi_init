@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 public class CED {
+  @JsonManagedReference
   @OneToMany(mappedBy = "ced")
   List<StructureRecherche> structureRecherches;
   @Id

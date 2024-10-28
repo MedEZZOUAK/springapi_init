@@ -1,5 +1,7 @@
 package ensate.ma.SpringAPI.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +15,8 @@ import lombok.*;
 public class Langue {
   @ManyToOne
   @JoinColumn(name = "candidat_id")
+  @JsonBackReference
+  @JsonIgnore
   Candidat candidat;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

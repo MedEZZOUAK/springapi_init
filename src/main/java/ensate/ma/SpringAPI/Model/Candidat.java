@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,13 +48,18 @@ public class Candidat {
   private byte[] photo;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JsonManagedReference
 
   private List<Langue> langues = new ArrayList<>();
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JsonManagedReference
+
   private List<Diplome> diplomes;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JsonManagedReference
+
   private List<ExperienceProf> experiences;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -48,7 +48,8 @@ public class ProfesseurController {
             professeur.getEmail(),
             professeur.getCentre_id(),
             professeur.getStructureRecherche().getNom(),
-            professeur.getStructureRecherche().getEtablissement()
+            professeur.getStructureRecherche().getEtablissement(),
+            professeur.getStructureRecherche().getId()
     );
   }
 
@@ -92,6 +93,7 @@ public class ProfesseurController {
     }
   }
   //list the entretien by professue id ( aka the candiddature preselectionner)
+
   @GetMapping("/entretien/{id}")
   public List<Candidature> getEntretien(@PathVariable Long id) {
     return professeurService.getEntretien(id);
