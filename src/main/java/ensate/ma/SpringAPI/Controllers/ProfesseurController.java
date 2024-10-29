@@ -114,17 +114,17 @@ public class ProfesseurController {
   // todo accepter ou refuser une candidature
   @GetMapping("/accepterCandidature/{id}")
   public ResponseEntity<String> accepterCandidature(@PathVariable Long id) {
-    return ResponseEntity.ok().body(professeurService.accepterCandidature(id));
+    return ResponseEntity.ok().body(professeurService.accepteCandidature(id));
   }
   @GetMapping("/refuserCandidature/{id}")
   public ResponseEntity<String> refuserCandidature(@PathVariable Long id) {
-    return ResponseEntity.ok().body(professeurService.refuserCandidature(id));
+    return ResponseEntity.ok().body(professeurService.refuseCandidature(id));
   }
-  //list Candidat presselectionner by professeur id
-  @GetMapping("/getCandidature/{id}")
-  public List<EntretienDTO> getCandidature(@PathVariable Long id) {
-    return professeurService.getEntretienList(id);
-  }
+//  //list Candidat presselectionner by professeur id
+//  @GetMapping("/getCandidature/{id}")
+//  public List<EntretienDTO> getCandidature(@PathVariable Long id) {
+//    return professeurService.getEntretienList(id);
+//  }
 
 
   // get candidature by professeur id (aka the candidature that has statuts preselectionnee)

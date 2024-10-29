@@ -107,20 +107,22 @@ public class ProfesseurService {
 
 
     //todo  accepte and refuse candidature
-    public void accepteCandidature(Long id) {
+    public String accepteCandidature(Long id) {
       Candidature candidature = candidatureRepo.findById(id)
         .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
 
       candidature.setStatuts(Statuts.Acceptee);
       candidatureRepo.save(candidature);
+      return "Candidature accepted successfully";
     }
   // todo : refuse candidature
-  public void refuseCandidature(Long id) {
+  public String refuseCandidature(Long id) {
     Candidature candidature = candidatureRepo.findById(id)
       .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
 
     candidature.setStatuts(Statuts.Refusee);
     candidatureRepo.save(candidature);
+    return "Candidature refused successfully";
   }
   //todo  get all candidature by prof id
 

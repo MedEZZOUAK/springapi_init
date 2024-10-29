@@ -326,5 +326,25 @@ public class CandidatService {
     });
     return candidaturesCandidatIds;
   }
+
+  public byte[] getBac(Long id) {
+    return diplomeRepo.findDiplomeByCandidat_idAndType(id, "Bac").orElseThrow(() -> new RuntimeException("Diplome not found")).getDiplomeScanne();
+  }
+
+  public byte[] getLicence(Long id) {
+    return diplomeRepo.findDiplomeByCandidat_idAndType(id, "Licence").orElseThrow(() -> new RuntimeException("Diplome not found")).getDiplomeScanne();
+  }
+
+  public byte[] getMaster(Long id) {
+    return diplomeRepo.findDiplomeByCandidat_idAndType(id, "Master").orElseThrow(() -> new RuntimeException("Diplome not found")).getDiplomeScanne();
+  }
+
+  public byte[] getLicenceReleve(Long id) {
+    return diplomeRepo.findDiplomeByCandidat_idAndType(id, "Licence").orElseThrow(() -> new RuntimeException("Diplome not found")).getRelevetNoteScanne();
+  }
+
+  public byte[] getMasterReleve(Long id) {
+    return diplomeRepo.findDiplomeByCandidat_idAndType(id, "Master").orElseThrow(() -> new RuntimeException("Diplome not found")).getRelevetNoteScanne();
+  }
 }
 

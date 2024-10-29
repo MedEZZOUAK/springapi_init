@@ -90,11 +90,10 @@ public class CandidatController {
 
   }
 
-  @GetMapping("/addExperience/{id}")
+  @PostMapping("/addExperience/{id}")
   public ResponseEntity<String> addExperience(@PathVariable Long id, @RequestBody List<ExperienceDTO> experience) {
     return ResponseEntity.ok().body(candidatService.addExperience(id, experience));
   }
-
   @GetMapping("/alldetails/{id}")
   public ResponseEntity<Candidatdetails> getCandidatDetails(@PathVariable Long id) {
     Candidat candidat = candidatService.getCandidatById(id);
@@ -217,6 +216,32 @@ public class CandidatController {
       return List.of();
     }
   }
+  @GetMapping("/GetDiplomesBacFiles/{id}")
+  public ResponseEntity<byte[]> getDiplomeFiles(@PathVariable Long id) {
+    byte[] bac = candidatService.getBac(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=bac.pdf").contentType(MediaType.APPLICATION_PDF).body(bac);
+  }
+  @GetMapping("/GetDiplomesLicenceFiles/{id}")
+  public ResponseEntity<byte[]> getLicenceFiles(@PathVariable Long id) {
+    byte[] licence = candidatService.getLicence(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=licence.pdf").contentType(MediaType.APPLICATION_PDF).body(licence);
+  }
+  @GetMapping("/GetDiplomesMasterFiles/{id}")
+  public ResponseEntity<byte[]> getMasterFiles(@PathVariable Long id) {
+    byte[] master = candidatService.getMaster(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=master.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
+  }
+  @GetMapping("/GetDiplomesLicenceReleveFiles/{id}")
+  public ResponseEntity<byte[]> getLicenceReleveFiles(@PathVariable Long id) {
+    byte[] licence = candidatService.getLicenceReleve(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=licencereleve.pdf").contentType(MediaType.APPLICATION_PDF).body(licence);
+  }
+  @GetMapping("/GetDiplomesMasterReleveFiles/{id}")
+  public ResponseEntity<byte[]> getMasterReleveFiles(@PathVariable Long id) {
+    byte[] master = candidatService.getMasterReleve(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=masterreleve.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
+  }
+
 
 
 }
