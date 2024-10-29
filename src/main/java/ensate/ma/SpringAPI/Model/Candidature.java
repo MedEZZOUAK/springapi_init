@@ -35,5 +35,4 @@ public class Candidature {
   private Integer Sujet_id;
   private Integer Candidat_id;
 
-
 }

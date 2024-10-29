@@ -1,15 +1,12 @@
 package ensate.ma.SpringAPI.Services;
 
 
-import ensate.ma.SpringAPI.DAO.EntretienDTO;
-import ensate.ma.SpringAPI.DAO.ProfesseurDTO;
+import ensate.ma.SpringAPI.DAO.*;
 import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
 import ensate.ma.SpringAPI.Model.Candidature;
 import ensate.ma.SpringAPI.Model.Professeur;
 import ensate.ma.SpringAPI.Model.Statuts;
-import ensate.ma.SpringAPI.Repository.CandidatureRepo;
-import ensate.ma.SpringAPI.Repository.ProfesseurRepo;
-import ensate.ma.SpringAPI.Repository.loginRepo;
+import ensate.ma.SpringAPI.Repository.*;
 import ensate.ma.SpringAPI.user.Role;
 import ensate.ma.SpringAPI.user.User;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +29,10 @@ public class ProfesseurService {
   private ProfesseurRepo professeurRepo;
   @Autowired
   private CandidatureRepo candidatureRepo;
+  @Autowired
+  private SujetRepo sujetRepo;
+  @Autowired
+  private CandidatRepo candidatRepo;
 
   public List<Professeur> findAllProfesseurs() {
     return professeurRepo.findAll();
@@ -92,33 +92,32 @@ public class ProfesseurService {
     return candidatureRepo.findByProfesseurIdAndStatus(id, "entretien");
   }
 
-    public String ChangePassword(String password, Long id) {
-      var email = professeurRepo.findById(id).get().getEmail();
-      //find the login by email
-      var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
-      try {
-        login.setPassword(passwordEncoder.encode(password));
-        loginRepo.save(login);
-        return "Password changed successfully";
-      } catch (RuntimeException e) {
-        return "Error while changing password" + e.getMessage();
-      }
+  public String ChangePassword(String password, Long id) {
+    var email = professeurRepo.findById(id).get().getEmail();
+    //find the login by email
+    var login = loginRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Login not found"));
+    try {
+      login.setPassword(passwordEncoder.encode(password));
+      loginRepo.save(login);
+      return "Password changed successfully";
+    } catch (RuntimeException e) {
+      return "Error while changing password" + e.getMessage();
     }
+  }
 
 
-    //todo  accepte and refuse candidature
-    public String accepteCandidature(Long id) {
-      Candidature candidature = candidatureRepo.findById(id)
-        .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+  //todo  accepte and refuse candidature
+  public String accepteCandidature(Long id, Date date) {
+    Candidature candidature = candidatureRepo.findById(id).orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+    candidature.setStatuts(Statuts.Acceptee);
+    candidature.setDate(date);
+    candidatureRepo.save(candidature);
+    return "Candidature accepted successfully";
+  }
 
-      candidature.setStatuts(Statuts.Acceptee);
-      candidatureRepo.save(candidature);
-      return "Candidature accepted successfully";
-    }
   // todo : refuse candidature
   public String refuseCandidature(Long id) {
-    Candidature candidature = candidatureRepo.findById(id)
-      .orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+    Candidature candidature = candidatureRepo.findById(id).orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
 
     candidature.setStatuts(Statuts.Refusee);
     candidatureRepo.save(candidature);
@@ -131,4 +130,12 @@ public class ProfesseurService {
   }
 
 
+  public CandidatureDTO getCandidatureDetails(Long id) {
+    //get candiature by id
+    var candidature = candidatureRepo.findById(id).orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+    var Candidat = candidatRepo.findById(Long.valueOf(candidature.getCandidat_id())).orElseThrow(() -> new CandidatureNotFoundException("Candidat with id " + candidature.getCandidat_id() + " not found"));
+    var sujet = sujetRepo.findById(Long.valueOf(candidature.getSujet_id())).orElseThrow(() -> new CandidatureNotFoundException("Sujet with id " + candidature.getSujet_id() + " not found"));
+    //Build the candidatureDTO
+    return CandidatureDTO.builder().candidatdetails(Candidatdetails.builder().nom(Candidat.getNom()).prenom(Candidat.getPrenom()).email(Candidat.getEmail()).cin(Candidat.getCin()).telephone(Candidat.getTelephone()).situationFamiliale(Candidat.getSituationFamiliale()).nationalite(Candidat.getNationalite()).prenomArabe(Candidat.getPrenomArabe()).nomArabe(Candidat.getNomArabe()).payeNaissance(Candidat.getPayeNaissance()).adresse(Candidat.getAdresse()).codePostal(Candidat.getCodePostal()).handicap(Candidat.getHandicap()).professionPere(Candidat.getProfessionPere()).professionMere(Candidat.getProfessionMere()).provincePere(Candidat.getProvincePere()).provinceMere(Candidat.getProvinceMere()).profession(Candidat.getProfession()).dateNaissance(Candidat.getDateNaissance()).langues(Candidat.getLangues()).diplomes(Candidat.getDiplomes()).experiences(Candidat.getExperiences()).build()).sujet(SujetDTO.builder().id(sujet.getId()).titre(sujet.getTitre()).description(sujet.getDescription()).thematique(sujet.getThematique()).build()).build();
+  }
 }
