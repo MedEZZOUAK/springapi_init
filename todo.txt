@@ -24,3 +24,16 @@ statuts : an cours preselectionner , accpter refuser
 adding cin and cv  ✅✅
 
 edit password profil proff :: modifypass profcontr
+
+
+///////////////////
+ (CED CONTROLLER)
+GetCandidatureByCEDID w statut = Encours // retour : nom + prenom candidat, etablissement, nom sujet , id candidature (hadi bhal getCandidaturebyProfID)
+Profil candidat kaml bla sujet
+Accepter candidature (Statut = mn Encours -> preselectionnee) sans date d'entretien
+Refuser candidature
+
+ (PROF CONTROLLER)
+Profil candidat + sujet
+Accepter candidature (Statut = mn preselectionnee -> Acceptee) avec date d'entretien (katsifet mn lfront)
+Refuser candidature
