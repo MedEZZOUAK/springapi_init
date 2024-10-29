@@ -24,7 +24,7 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
 // i have to select nom prenom from candidats table, le nom de sujet from table sujets and etablissement from structure_recherches table
     // find candidature by professeur id
 
-  @Query(value = "SELECT c.nom as nom, c.prenom as prenom, s.titre AS sujet_nom, sr.etablissement as etablissement " +
+  @Query(value = "SELECT cd.id as id, CONCAT(c.nom, ' ', c.prenom) as nom_prenom, s.titre AS sujet_nom, sr.etablissement as etablissement " +
           "FROM candidatures cd " +
           "JOIN candidats c ON cd.candidat_id = c.id " +
           "JOIN sujets s ON cd.sujet_id = s.id " +

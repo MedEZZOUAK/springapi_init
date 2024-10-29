@@ -6,9 +6,8 @@ import lombok.*;
 
 
 public interface EntretienDTO {
-  String getNom();
-  String getPrenom();
+  Long getId();
+  String getNomPrenom();
   String getSujet_nom();
   String getEtablissement();
-
 }
