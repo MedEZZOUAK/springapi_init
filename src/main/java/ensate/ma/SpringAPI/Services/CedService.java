@@ -1,19 +1,15 @@
 package ensate.ma.SpringAPI.Services;
 
 
-import ensate.ma.SpringAPI.DAO.BourseDTO;
-import ensate.ma.SpringAPI.DAO.CEDDETAILS;
-import ensate.ma.SpringAPI.DAO.CandidatureRequest;
+import ensate.ma.SpringAPI.DAO.*;
+import ensate.ma.SpringAPI.Exception.BourseNotFoundException;
+import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
 import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ensate.ma.SpringAPI.DAO.StructureRechercheDTO;
-import ensate.ma.SpringAPI.Exception.CandidatureNotFoundException;
-import ensate.ma.SpringAPI.Exception.BourseNotFoundException;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +30,8 @@ public class CedService {
 
     @Autowired
     private BourseRepo bourseRepo;
+    @Autowired
+    private CandidatRepo candidatRepo;
 
 
 
@@ -116,11 +114,8 @@ public class CedService {
 
 
   //todo : get all candidature by CED id
-  public List<CandidatureRequest> getCandidaturesByCedId(Long cedId) {
-    List<Candidature> candidatures = candidatureRepo.findByCedId(cedId);
-    return candidatures.stream()
-            .map(this::convertToDTO)
-            .collect(Collectors.toList());
+  public List<EntretienDTO> getCandidaturesByCedId(Long cedId) {
+    return candidatureRepo.findCandidaturesByCEDIdAndStatusEncours(cedId);
   }
 
   private CandidatureRequest convertToDTO(Candidature candidature) {
@@ -186,4 +181,35 @@ public List<BourseDTO> getAllBoursesByCedId(Integer cedId) {
           .collect(Collectors.toList());
 }
 
+  public Candidatdetails getCandidatByCandidatureId(Long id) {
+    //get candiature by id
+    var candidature = candidatureRepo.findById(id).orElseThrow(() -> new CandidatureNotFoundException("Candidature with id " + id + " not found"));
+    var Candidat = candidatRepo.findById(Long.valueOf(candidature.getCandidat_id())).orElseThrow(() -> new CandidatureNotFoundException("Candidat with id " + candidature.getCandidat_id() + " not found"));
+    return Candidatdetails.builder()
+      .nom(Candidat.getNom())
+      .prenom(Candidat.getPrenom())
+      .email(Candidat.getEmail())
+      .cin(Candidat.getCin())
+      .telephone(Candidat.getTelephone())
+      .langues(Candidat.getLangues())
+      .diplomes(Candidat.getDiplomes())
+      .experiences(Candidat.getExperiences())
+      .situationFamiliale(Candidat.getSituationFamiliale())
+      .nationalite(Candidat.getNationalite())
+      .prenomArabe(Candidat.getPrenomArabe())
+      .nomArabe(Candidat.getNomArabe())
+      .payeNaissance(Candidat.getPayeNaissance())
+      .adresse(Candidat.getAdresse())
+      .codePostal(Candidat.getCodePostal())
+      .handicap(Candidat.getHandicap())
+      .professionPere(Candidat.getProfessionPere())
+      .professionMere(Candidat.getProfessionMere())
+      .provincePere(Candidat.getProvincePere())
+      .provinceMere(Candidat.getProvinceMere())
+      .profession(Candidat.getProfession())
+      .dateNaissance(Candidat.getDateNaissance())
+      .id(Math.toIntExact(Candidat.getId()))
+      .candidatures(null)
+      .build();
+  }
 }

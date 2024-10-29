@@ -36,4 +36,15 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
   List<Candidature> findAllByCandidat_id(Long id);
   @Query(value = "SELECT * FROM candidatures WHERE professeur_id = :id", nativeQuery = true)
   List<Candidature> findByProfesseurId(Long id);
+
+
+
+
+  @Query(value = "SELECT cd.id as id, CONCAT(c.nom, ' ', c.prenom) as nom_prenom, s.titre AS sujet_nom, sr.etablissement as etablissement " +
+    "FROM candidatures cd " +
+    "JOIN candidats c ON cd.candidat_id = c.id " +
+    "JOIN sujets s ON cd.sujet_id = s.id " +
+    "JOIN structure_recherches sr ON s.structure_recherche_id = sr.id " +
+    "WHERE sr.ced_id = :cedId AND cd.statuts = 'Encours'", nativeQuery = true)
+  List<EntretienDTO> findCandidaturesByCEDIdAndStatusEncours(@Param("cedId") Long cedId);
 }

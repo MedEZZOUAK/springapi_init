@@ -27,9 +27,9 @@ edit password profil proff :: modifypass profcontr
 
 
 ///////////////////
- (CED CONTROLLER)
-GetCandidatureByCEDID w statut = Encours // retour : nom + prenom candidat, etablissement, nom sujet , id candidature (hadi bhal getCandidaturebyProfID)
-Profil candidat kaml bla sujet
+ (CED CONTROLLER)✅✅
+GetCandidatureByCEDID w statut = Encours // retour : nom + prenom candidat, etablissement, nom sujet , id candidature (hadi bhal getCandidaturebyProfID) ✅
+Profil candidat kaml bla sujet ✅
 Accepter candidature (Statut = mn Encours -> preselectionnee) sans date d'entretien ✅
 Refuser candidature✅
 

@@ -116,9 +116,9 @@ public class CedController {
     }
   }
 
-  // get candidature by ced id
+  // get candidature by ced id (statuts en cours)
   @GetMapping("/candidature/{id}")
-  public ResponseEntity<List<CandidatureRequest>> getCandidatures(@PathVariable Long id) {
+  public ResponseEntity<List<EntretienDTO>> getCandidatures(@PathVariable Long id) {
     return ResponseEntity.ok(cedService.getCandidaturesByCedId(id));
   }
   //Get all the professeur by ced id
@@ -160,5 +160,11 @@ public class CedController {
     public List<BourseDTO> getBoursesByCedId(@PathVariable Integer cedId) {
       return cedService.getAllBoursesByCedId(cedId);
     }
+    //candidat details by candidature id
+    @GetMapping("/candidat/{id}")
+    public Candidatdetails getCandidatByCandidatureId(@PathVariable Long id) {
+      return cedService.getCandidatByCandidatureId(id);
+    }
+
 
 }

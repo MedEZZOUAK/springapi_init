@@ -38,6 +38,5 @@ public class Candidatdetails {
   private String provinceMere;
   private String profession;
   private Date dateNaissance;
-
-
+  private Integer id;
 }
