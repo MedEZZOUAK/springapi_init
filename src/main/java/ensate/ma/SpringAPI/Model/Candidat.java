@@ -63,6 +63,8 @@ public class Candidat {
   private List<ExperienceProf> experiences;
 
   @OneToMany(mappedBy = "candidat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JsonManagedReference
+
   private List<Candidature> candidatures;
 
 
