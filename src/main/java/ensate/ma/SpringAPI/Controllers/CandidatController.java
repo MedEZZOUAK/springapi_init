@@ -190,10 +190,9 @@ public class CandidatController {
 
   @PostMapping("/deleteCandidature/{id}")
   public ResponseEntity<String> deleteCandidature(@PathVariable Long id) {
-    candidatureRepo.deleteById(Math.toIntExact(id));
-    return ResponseEntity.ok("Candidature deleted successfully");
-  }
+    return ResponseEntity.ok(candidatService.deleteCandidatureByid(id));
 
+  }
   // Get all candidatures by candidat id
   @GetMapping("/getCandidatures/{id}")
   public ResponseEntity<List<CandidaturesCandidatId>> getCandidatures(@PathVariable Long id) {

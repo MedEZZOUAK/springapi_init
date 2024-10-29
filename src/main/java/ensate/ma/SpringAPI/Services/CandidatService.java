@@ -6,10 +6,13 @@ import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,6 +23,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CandidatService {
+  private static final Logger log = LoggerFactory.getLogger(CandidatService.class);
   private final CandidatRepo candidatRepo;
   private final LangueRepo langueRepo;
   private final loginRepo loginRepo;
@@ -346,6 +350,18 @@ public class CandidatService {
 
   public byte[] getMasterReleve(Long id) {
     return diplomeRepo.findDiplomeByCandidat_idAndType(id, "Master").orElseThrow(() -> new RuntimeException("Diplome not found")).getRelevetNoteScanne();
+  }
+
+  @Transactional
+  public String deleteCandidatureByid(Long id) {
+    if (candidatureRepo.existsById(Math.toIntExact(id))) {
+      candidatureRepo.deleteCandidatureById(id);
+      log.info("Candidature deleted successfully");
+      return "Candidature deleted successfully";
+    } else {
+      log.warn("Candidature not found");
+      return "Candidature not found";
+    }
   }
 }
 

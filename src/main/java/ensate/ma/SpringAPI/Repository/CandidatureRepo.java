@@ -3,6 +3,7 @@ package ensate.ma.SpringAPI.Repository;
 import ensate.ma.SpringAPI.DAO.EntretienDTO;
 import ensate.ma.SpringAPI.Model.Candidature;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -47,4 +48,9 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
     "JOIN structure_recherches sr ON s.structure_recherche_id = sr.id " +
     "WHERE sr.ced_id = :cedId AND cd.statuts = 'Encours'", nativeQuery = true)
   List<EntretienDTO> findCandidaturesByCEDIdAndStatusEncours(@Param("cedId") Long cedId);
+
+
+  @Modifying
+@Query(value = "DELETE FROM candidatures WHERE id = :id", nativeQuery = true)
+void deleteCandidatureById(@Param("id") Long id);
 }
