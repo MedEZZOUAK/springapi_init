@@ -10,13 +10,11 @@ import ensate.ma.SpringAPI.Services.CedService;
 import ensate.ma.SpringAPI.Services.SujetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +35,7 @@ public class CandidatController {
   @Autowired
   private SujetService sujetService;
   @Autowired
-  private  CandidatureRepo candidatureRepo;
+  private CandidatureRepo candidatureRepo;
 
   @PostMapping("/delete/{id}")
   public String deleteCandidat(@PathVariable Long id) {
@@ -64,7 +62,7 @@ public class CandidatController {
 
   // todo add diplome to a candidat list of diplomes
   @PostMapping("/addDiplome/{id}")
-  public ResponseEntity<String> addDiplome(@PathVariable Long id,@RequestBody List<Diplome> diplomes) {
+  public ResponseEntity<String> addDiplome(@PathVariable Long id, @RequestBody List<Diplome> diplomes) {
     return ResponseEntity.ok().body(candidatService.addDiplome(id, diplomes));
   }
 
@@ -94,6 +92,7 @@ public class CandidatController {
   public ResponseEntity<String> addExperience(@PathVariable Long id, @RequestBody List<ExperienceDTO> experience) {
     return ResponseEntity.ok().body(candidatService.addExperience(id, experience));
   }
+
   @GetMapping("/alldetails/{id}")
   public ResponseEntity<Candidatdetails> getCandidatDetails(@PathVariable Long id) {
     Candidat candidat = candidatService.getCandidatById(id);
@@ -167,6 +166,7 @@ public class CandidatController {
     byte[] cin = candidatService.getCin(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cin.pdf").contentType(MediaType.APPLICATION_PDF).body(cin);
   }
+
   // Get Photo
   @GetMapping("/getPhoto/{id}")
   public ResponseEntity<byte[]> getPhoto(@PathVariable Long id) {
@@ -178,27 +178,29 @@ public class CandidatController {
   public ResponseEntity<String> addCandidature(@RequestBody CandidatureRequest request) {
 
     Candidature candidature = Candidature.builder()
-            .statuts(Statuts.Encours)
-            .date(null)
-            .Sujet_id(request.getSujet_id())
-            .Candidat_id(request.getCandidat_id())
-            .build();
+      .statuts(Statuts.Encours)
+      .date(null)
+      .Sujet_id(request.getSujet_id())
+      .Candidat_id(request.getCandidat_id())
+      .build();
 
     candidatureRepo.save(candidature);
     return ResponseEntity.ok("Candidature added successfully");
   }
 
-  @PostMapping("/deleteCandidature")
-  public ResponseEntity<String> deleteCandidature(Long id) {
+  @PostMapping("/deleteCandidature/{id}")
+  public ResponseEntity<String> deleteCandidature(@PathVariable Long id) {
     candidatureRepo.deleteById(Math.toIntExact(id));
     return ResponseEntity.ok("Candidature deleted successfully");
   }
+
   // Get all candidatures by candidat id
   @GetMapping("/getCandidatures/{id}")
   public ResponseEntity<List<CandidaturesCandidatId>> getCandidatures(@PathVariable Long id) {
     List<CandidaturesCandidatId> candidatures = candidatService.getCandidatures(id);
     return ResponseEntity.ok().body(candidatures);
   }
+
   // get sujet by structure id
   @GetMapping("/structure/{id}")
   public List<SujetDTO> getSujets(@PathVariable Long id) {
@@ -216,32 +218,36 @@ public class CandidatController {
       return List.of();
     }
   }
+
   @GetMapping("/GetDiplomesBacFiles/{id}")
   public ResponseEntity<byte[]> getDiplomeFiles(@PathVariable Long id) {
     byte[] bac = candidatService.getBac(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=bac.pdf").contentType(MediaType.APPLICATION_PDF).body(bac);
   }
+
   @GetMapping("/GetDiplomesLicenceFiles/{id}")
   public ResponseEntity<byte[]> getLicenceFiles(@PathVariable Long id) {
     byte[] licence = candidatService.getLicence(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=licence.pdf").contentType(MediaType.APPLICATION_PDF).body(licence);
   }
+
   @GetMapping("/GetDiplomesMasterFiles/{id}")
   public ResponseEntity<byte[]> getMasterFiles(@PathVariable Long id) {
     byte[] master = candidatService.getMaster(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=master.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
   }
+
   @GetMapping("/GetDiplomesLicenceReleveFiles/{id}")
   public ResponseEntity<byte[]> getLicenceReleveFiles(@PathVariable Long id) {
     byte[] licence = candidatService.getLicenceReleve(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=licencereleve.pdf").contentType(MediaType.APPLICATION_PDF).body(licence);
   }
+
   @GetMapping("/GetDiplomesMasterReleveFiles/{id}")
   public ResponseEntity<byte[]> getMasterReleveFiles(@PathVariable Long id) {
     byte[] master = candidatService.getMasterReleve(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=masterreleve.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
   }
-
 
 
 }

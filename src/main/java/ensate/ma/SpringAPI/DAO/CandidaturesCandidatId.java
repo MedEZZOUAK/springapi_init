@@ -15,6 +15,7 @@ public class CandidaturesCandidatId {
   private String thematique;
   private String etablissement;
   private Statuts statuts;
+  private Integer candidature_id;
 
 
 }

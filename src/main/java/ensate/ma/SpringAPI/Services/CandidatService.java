@@ -322,6 +322,7 @@ public class CandidatService {
       candidaturesCandidatId.setThematique(sujet.getThematique());
       candidaturesCandidatId.setEtablissement(sujet.getStructureRecherche().getEtablissement());
       candidaturesCandidatId.setStatuts(candidature.getStatuts());
+      candidaturesCandidatId.setCandidature_id(Math.toIntExact(candidature.getId()));
       candidaturesCandidatIds.add(candidaturesCandidatId);
     });
     return candidaturesCandidatIds;
