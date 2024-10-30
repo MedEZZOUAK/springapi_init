@@ -102,10 +102,6 @@ public class CandidatController {
     candidatdetails.setEmail(candidat.getEmail());
     candidatdetails.setTelephone(candidat.getTelephone());
     candidatdetails.setCin(candidat.getCin());
-    candidatdetails.setCandidatures(candidat.getCandidatures());
-    candidatdetails.setDiplomes(candidat.getDiplomes());
-    candidatdetails.setExperiences(candidat.getExperiences());
-    candidatdetails.setLangues(candidat.getLangues());
     candidatdetails.setSituationFamiliale(candidat.getSituationFamiliale());
     candidatdetails.setNationalite(candidat.getNationalite());
     candidatdetails.setPrenomArabe(candidat.getPrenomArabe());
@@ -120,6 +116,11 @@ public class CandidatController {
     candidatdetails.setProvinceMere(candidat.getProvinceMere());
     candidatdetails.setProfession(candidat.getProfession());
     candidatdetails.setDateNaissance(candidat.getDateNaissance());
+    candidatdetails.setId(Math.toIntExact(candidat.getId()));
+    candidatdetails.setCandidatures(candidat.getCandidatures());
+    candidatdetails.setDiplomes(candidat.getDiplomes());
+    candidatdetails.setExperiences(candidat.getExperiences());
+    candidatdetails.setLangues(candidat.getLangues());
     return ResponseEntity.ok().body(candidatdetails);
   }
 

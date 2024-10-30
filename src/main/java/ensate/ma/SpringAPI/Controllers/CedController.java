@@ -3,13 +3,11 @@ package ensate.ma.SpringAPI.Controllers;
 import ensate.ma.SpringAPI.DAO.*;
 import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.SujetRepo;
-import ensate.ma.SpringAPI.Services.CedService;
-import ensate.ma.SpringAPI.Services.ProfesseurService;
-import ensate.ma.SpringAPI.Services.SujetService;
-import ensate.ma.SpringAPI.Services.structureService;
+import ensate.ma.SpringAPI.Services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +32,9 @@ public class CedController {
   private SujetRepo sujetRepo;
   @Autowired
   private final structureService structureService;
+
+  @Autowired
+  private CandidatService candidatService;
 
   @PostMapping("/addProfesseur")
   public String addProfesseur(@RequestBody Professeur professeur) {
@@ -165,6 +166,53 @@ public class CedController {
     public Candidatdetails getCandidatByCandidatureId(@PathVariable Long id) {
       return cedService.getCandidatByCandidatureId(id);
     }
+  @GetMapping("/GetDiplomesBacFiles/{id}")
+  public ResponseEntity<byte[]> getDiplomeFiles(@PathVariable Long id) {
+    byte[] bac = candidatService.getBac(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=bac.pdf").contentType(MediaType.APPLICATION_PDF).body(bac);
+  }
+
+  @GetMapping("/GetDiplomesLicenceFiles/{id}")
+  public ResponseEntity<byte[]> getLicenceFiles(@PathVariable Long id) {
+    byte[] licence = candidatService.getLicence(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=licence.pdf").contentType(MediaType.APPLICATION_PDF).body(licence);
+  }
+
+  @GetMapping("/GetDiplomesMasterFiles/{id}")
+  public ResponseEntity<byte[]> getMasterFiles(@PathVariable Long id) {
+    byte[] master = candidatService.getMaster(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=master.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
+  }
+
+  @GetMapping("/GetDiplomesLicenceReleveFiles/{id}")
+  public ResponseEntity<byte[]> getLicenceReleveFiles(@PathVariable Long id) {
+    byte[] licence = candidatService.getLicenceReleve(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=licencereleve.pdf").contentType(MediaType.APPLICATION_PDF).body(licence);
+  }
+
+  @GetMapping("/GetDiplomesMasterReleveFiles/{id}")
+  public ResponseEntity<byte[]> getMasterReleveFiles(@PathVariable Long id) {
+    byte[] master = candidatService.getMasterReleve(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=masterreleve.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
+  }
+  // Get CIN
+  @GetMapping("/getCin/{id}")
+  public ResponseEntity<byte[]> getCin(@PathVariable Long id) {
+    byte[] cin = candidatService.getCin(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cin.pdf").contentType(MediaType.APPLICATION_PDF).body(cin);
+  }
+
+  // Get Photo
+  @GetMapping("/getPhoto/{id}")
+  public ResponseEntity<byte[]> getPhoto(@PathVariable Long id) {
+    byte[] photo = candidatService.getPhoto(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=photo.jpg").contentType(MediaType.IMAGE_JPEG).body(photo);
+  }
+  @GetMapping("/getcv/{id}")
+  public ResponseEntity<byte[]> getCv(@PathVariable Long id) {
+    byte[] cv = candidatService.getCv(id);
+    return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cv.pdf").contentType(MediaType.APPLICATION_PDF).body(cv);
+  }
 
 
 }

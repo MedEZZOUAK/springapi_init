@@ -20,10 +20,6 @@ public class Candidatdetails {
   private String email;
   private String cin;
   private String telephone;
-  private List<Candidature> candidatures;
-  private List<Langue> langues;
-  private List<Diplome> diplomes;
-  private List<ExperienceProf> experiences;
   private String situationFamiliale;
   private String nationalite;
   private String prenomArabe;
@@ -39,4 +35,8 @@ public class Candidatdetails {
   private String profession;
   private Date dateNaissance;
   private Integer id;
+  private List<Candidature> candidatures;
+  private List<Langue> langues;
+  private List<Diplome> diplomes;
+  private List<ExperienceProf> experiences;
 }
