@@ -39,4 +39,5 @@ public class Candidatdetails {
   private List<Langue> langues;
   private List<Diplome> diplomes;
   private List<ExperienceProf> experiences;
+  private Long candidat_id;
 }

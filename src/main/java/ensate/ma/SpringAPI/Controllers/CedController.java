@@ -213,6 +213,11 @@ public class CedController {
     byte[] cv = candidatService.getCv(id);
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cv.pdf").contentType(MediaType.APPLICATION_PDF).body(cv);
   }
+  //Candidature details (sujet + candidat details )by candidatureid
+  @GetMapping("/candidatureDetails/{id}")
+  public CandidatureDTO getCandidatureDetails(@PathVariable Long id) {
+    return professeurService.getCandidatureDetails(id);
+  }
 
 
 }

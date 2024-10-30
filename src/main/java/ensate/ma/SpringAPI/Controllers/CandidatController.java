@@ -84,6 +84,7 @@ public class CandidatController {
     candidatdetails.setTelephone(candidat.getTelephone());
     candidatdetails.setCin(candidat.getCin());
     candidatdetails.setCandidatures(candidat.getCandidatures());
+    candidatdetails.setCandidat_id(candidat.getId());
     return ResponseEntity.ok().body(candidatdetails);
 
   }
@@ -121,6 +122,7 @@ public class CandidatController {
     candidatdetails.setDiplomes(candidat.getDiplomes());
     candidatdetails.setExperiences(candidat.getExperiences());
     candidatdetails.setLangues(candidat.getLangues());
+    candidatdetails.setCandidat_id(candidat.getId());
     return ResponseEntity.ok().body(candidatdetails);
   }
 
