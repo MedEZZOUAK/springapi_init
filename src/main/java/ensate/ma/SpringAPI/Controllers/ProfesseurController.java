@@ -168,4 +168,10 @@ public ResponseEntity<String> accepterCandidature(@PathVariable Long id, @Reques
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=cv.pdf").contentType(MediaType.APPLICATION_PDF).body(cv);
   }
 
+  // get candidature by prof id and status Acceptee
+    @GetMapping("/candidatureAcceptee/{id}")
+    public List<DTOgene> getCandidatureAcceptee(@PathVariable Long id) {
+        return professeurService.getCandidatureAccepteeByProfId(id);
+    }
+
 }

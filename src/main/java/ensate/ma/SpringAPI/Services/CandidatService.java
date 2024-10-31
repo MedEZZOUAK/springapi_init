@@ -2,6 +2,7 @@ package ensate.ma.SpringAPI.Services;
 
 import ensate.ma.SpringAPI.DAO.AddCandidatedetailsRequest;
 import ensate.ma.SpringAPI.DAO.CandidaturesCandidatId;
+import ensate.ma.SpringAPI.DAO.DTOgene;
 import ensate.ma.SpringAPI.DAO.ExperienceDTO;
 import ensate.ma.SpringAPI.Model.*;
 import ensate.ma.SpringAPI.Repository.*;
@@ -174,7 +175,7 @@ public class CandidatService {
             .orElseThrow(() -> new RuntimeException("Candidature not found"));
 
     // Check if the candidature status is "Acceptée"
-    if (!"Acceptée".equals(candidature.getStatuts())) {
+    if (candidature.getStatuts() != Statuts.Acceptee) {
       return "Candidature non acceptée pour que vous puissiez demander une bourse";
     }
 
@@ -362,6 +363,11 @@ public class CandidatService {
       log.warn("Candidature not found");
       return "Candidature not found";
     }
+  }
+
+  // get candidature with statuts Acceptee and by prof id
+  public List<DTOgene> getCandidatureAccepteeByCandidatId(Long id) {
+    return candidatureRepo.findCandidaturesByCandidatIdAndStatusAcceptee(id);
   }
 }
 

@@ -251,6 +251,11 @@ public class CandidatController {
     return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=masterreleve.pdf").contentType(MediaType.APPLICATION_PDF).body(master);
   }
 
+  @GetMapping("/candidatureAcceptee/{id}")
+  public List<DTOgene> getCandidatureAcceptee(@PathVariable Long id) {
+    return candidatService.getCandidatureAccepteeByCandidatId(id);
+  }
+
 
 }
 

@@ -1,5 +1,6 @@
 package ensate.ma.SpringAPI.Repository;
 
+import ensate.ma.SpringAPI.DAO.DTOgene;
 import ensate.ma.SpringAPI.DAO.EntretienDTO;
 import ensate.ma.SpringAPI.Model.Candidature;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -53,4 +54,46 @@ public interface CandidatureRepo extends JpaRepository<Candidature, Integer> {
   @Modifying
 @Query(value = "DELETE FROM candidatures WHERE id = :id", nativeQuery = true)
 void deleteCandidatureById(@Param("id") Long id);
+
+  // find candidature by professeur id and status acceptee
+  // nom prenom id from candidats table and nom prenom id from professeurs table and id candidature from candidatures table and titre from sujets table and etablissement, domaine, nom from structure_recherches table
+  @Query(value = "SELECT new ensate.ma.SpringAPI.DAO.DTOgene(" +
+        "cd.id, " +
+        "CONCAT(c.nom, ' ', c.prenom), " +
+        "CONCAT(p.nom, ' ', p.prenom), " +
+        "s.titre, " +
+        "sr.nom, " +
+        "sr.etablissement, " +
+        "sr.domaine, " +
+        "c.id, " +
+        "p.id, " +
+        "cd.date) " +
+        "FROM Candidature cd " +
+        "JOIN cd.candidat c " +
+        "JOIN cd.sujet s " +
+        "JOIN s.professeur p " +
+        "JOIN s.structureRecherche sr " +
+        "WHERE p.id = :professeurId AND cd.statuts = 'Acceptee'")
+List<DTOgene> findCandidaturesByProfesseurIdAndStatusAcceptee(@Param("professeurId") Long professeurId);
+
+    // find candidature by candidat id and status acceptee
+    // nom prenom id from candidats table and nom prenom id from professeurs table and id candidature from candidatures table and titre from sujets table and etablissement, domaine, nom from structure_recherches table
+    @Query(value = "SELECT new ensate.ma.SpringAPI.DAO.DTOgene(" +
+            "cd.id, " +
+            "CONCAT(c.nom, ' ', c.prenom), " +
+            "CONCAT(p.nom, ' ', p.prenom), " +
+            "s.titre, " +
+            "sr.nom, " +
+            "sr.etablissement, " +
+            "sr.domaine, " +
+            "c.id, " +
+            "p.id, " +
+            "cd.date) " +
+            "FROM Candidature cd " +
+            "JOIN cd.candidat c " +
+            "JOIN cd.sujet s " +
+            "JOIN s.professeur p " +
+            "JOIN s.structureRecherche sr " +
+            "WHERE c.id = :candidatId AND cd.statuts = 'Acceptee'")
+  List<DTOgene> findCandidaturesByCandidatIdAndStatusAcceptee(@Param("candidatId") Long candidatId);
 }

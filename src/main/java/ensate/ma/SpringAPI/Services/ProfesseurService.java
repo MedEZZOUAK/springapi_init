@@ -138,4 +138,9 @@ public class ProfesseurService {
     //Build the candidatureDTO
     return CandidatureDTO.builder().candidatdetails(Candidatdetails.builder().nom(Candidat.getNom()).prenom(Candidat.getPrenom()).email(Candidat.getEmail()).cin(Candidat.getCin()).telephone(Candidat.getTelephone()).situationFamiliale(Candidat.getSituationFamiliale()).nationalite(Candidat.getNationalite()).prenomArabe(Candidat.getPrenomArabe()).nomArabe(Candidat.getNomArabe()).payeNaissance(Candidat.getPayeNaissance()).adresse(Candidat.getAdresse()).codePostal(Candidat.getCodePostal()).handicap(Candidat.getHandicap()).professionPere(Candidat.getProfessionPere()).professionMere(Candidat.getProfessionMere()).provincePere(Candidat.getProvincePere()).provinceMere(Candidat.getProvinceMere()).profession(Candidat.getProfession()).dateNaissance(Candidat.getDateNaissance()).candidat_id(Candidat.getId()).langues(Candidat.getLangues()).diplomes(Candidat.getDiplomes()).experiences(Candidat.getExperiences()).build()).sujet(SujetDTO.builder().id(sujet.getId()).titre(sujet.getTitre()).description(sujet.getDescription()).thematique(sujet.getThematique()).build()).build();
   }
+
+  // get candidature with statuts Acceptee and by prof id
+    public List<DTOgene> getCandidatureAccepteeByProfId(Long id) {
+        return candidatureRepo.findCandidaturesByProfesseurIdAndStatusAcceptee(id);
+    }
 }
