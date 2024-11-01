@@ -7,12 +7,13 @@ import ensate.ma.SpringAPI.Services.CandidatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/restricted")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${link_front}")
 public class AdminController {
   @Autowired
   private  AdminService cedService;

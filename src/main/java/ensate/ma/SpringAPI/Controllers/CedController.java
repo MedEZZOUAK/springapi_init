@@ -2,7 +2,6 @@ package ensate.ma.SpringAPI.Controllers;
 
 import ensate.ma.SpringAPI.DAO.*;
 import ensate.ma.SpringAPI.Model.*;
-import ensate.ma.SpringAPI.Repository.SujetRepo;
 import ensate.ma.SpringAPI.Services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/CED")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${link_front}")
 @RequiredArgsConstructor
 public class CedController {
   @Autowired
@@ -28,8 +26,6 @@ public class CedController {
   private CedService cedService;
   @Autowired
   private SujetService sujetService;
-  @Autowired
-  private SujetRepo sujetRepo;
   @Autowired
   private final structureService structureService;
 

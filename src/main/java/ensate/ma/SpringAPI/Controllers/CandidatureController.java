@@ -14,7 +14,7 @@ import java.sql.Date;
 
 @RestController
 @RequestMapping("/Candidature")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${link_front}")
 public class CandidatureController {
   // todo add candidature
   // todo delete candidature
