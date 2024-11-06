@@ -82,4 +82,9 @@ I would like to thank my team members for their contributions to this project:
 ## Rapport
 - [Rapport](GestionDoctorat.pdf)
 
+## Full project
+- You can find a docker-compose file that runs both the frontend and backend in a single command [here](https://github.com/MedEZZOUAK/Full-project.git)
+- Clone the repository and follow the instructions in the README file to run the full project
+- The frontend will be available at `http://localhost:4200`
+
 
