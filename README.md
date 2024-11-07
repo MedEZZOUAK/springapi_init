@@ -78,7 +78,7 @@ I would like to thank my team members for their contributions to this project:
 - [Salma Benaouda](https://github.com/SalmaBenaouda)
 - [Madani Ouail](https://github.com/wail00222)
 - [Bamhaouch Fatima-zahra](https://github.com/Fatibam)
-
+- [Mohammed EZ-ZOUAK](https://github.com/MedEZZOUAK)
 ## Rapport
 - [Rapport](GestionDoctorat.pdf)
 
